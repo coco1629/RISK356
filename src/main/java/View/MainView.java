@@ -16,7 +16,7 @@ public class MainView{
     private Button DefensePhase;
 
     @FXML
-    private javafx.scene.layout.Pane Pane;
+    private Pane Pane;
 
     @FXML
     private Label PlauerName1;

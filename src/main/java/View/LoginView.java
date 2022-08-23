@@ -10,11 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +30,12 @@ public class LoginView{
     private TextField user;
 
     @FXML
+    private Button register;
+
+    @FXML
+    private ImageView success;
+
+    @FXML
     private AnchorPane loginRoot;
 
     private ArrayList<TextField> textFieldArrayList;
@@ -43,6 +49,12 @@ public class LoginView{
         previous.setScene(scene);
         previous.show();
 
+    }
+
+    @FXML
+    void register(ActionEvent event) {
+        // if success, set 'success' visible then
+        success.setVisible(true);
     }
 
 }
