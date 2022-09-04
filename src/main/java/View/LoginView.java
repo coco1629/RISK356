@@ -57,6 +57,7 @@ public class LoginView{
                 Parent main = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
                 Scene scene = new Scene(main);
                 Stage previous = (Stage)loginRoot.getScene().getWindow();
+                previous.setResizable(false);
                 previous.setScene(scene);
                 previous.show();
             }
