@@ -3,6 +3,7 @@ package JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class UserDao {
@@ -97,27 +98,30 @@ public class UserDao {
     /**
      * Search
      */
-    public void findUserbyid(int id) throws Exception {
+    public boolean findUserbyid(String name) throws Exception {
         Connection conn = db.getConn();
         PreparedStatement pstm;
         ResultSet res;
 
-        String sql_find = "select * from users where id = ?";
+        String sql_find = "select * from users where name = ?";
 
         pstm = conn.prepareStatement(sql_find);
 
-        pstm.setInt(1, id);
+        pstm.setString(1, name);
 
         res = pstm.executeQuery();
-        if (res.next()) {
-            System.out.println("Succeed to find.");
-            System.out.println("id\tname\tpassword");
-            System.out.println(res.getInt(1) + "\t" +
-                    res.getString(2) + "\t" + res.getString(3));
-        } else {
-            System.out.println("Fail to find.");
-        }
+        boolean isExist = res.next();
         db.closeConn(res, pstm, conn);
+        return isExist;
+//        if (res.next()) {
+//            System.out.println("Succeed to find.");
+//            System.out.println("id\tname\tpassword");
+//            System.out.println(res.getInt(1) + "\t" +
+//                    res.getString(2) + "\t" + res.getString(3));
+//        } else {
+//            System.out.println("Fail to find.");
+//        }
+
     }
 
     /**
@@ -143,4 +147,32 @@ public class UserDao {
         db.closeConn(res, pstm, conn);
     }
 
+    public boolean checkLogin(String name, String password) throws Exception {
+        Connection conn = db.getConn();
+        PreparedStatement pstm;
+        ResultSet res;
+
+        String sql_find = "select * from users where name = ?";
+        pstm = conn.prepareStatement(sql_find);
+        pstm.setString(1,name);
+
+        res = pstm.executeQuery();
+
+        boolean isLogin = false;
+
+        if (res.next()) {
+            String passwords = res.getString(3);
+            if(password.equals(passwords))
+                isLogin = true;
+//            System.out.println("Succeed to find.");
+//            System.out.println("id\tname\tpassword");
+//            System.out.println(res.getInt(1) + "\t" +
+//                    res.getString(2) + "\t" + res.getString(3));
+        } else {
+            System.out.println("Fail to find.");
+        }
+
+        db.closeConn(res, pstm, conn);
+        return isLogin;
+    }
 }
