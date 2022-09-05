@@ -30,3 +30,5 @@ jobs:
         run: pwd
       - name: Files
         run: ls -al
+      - name: Build with Maven
+        run: mvn -B clean package --file pom.xml
