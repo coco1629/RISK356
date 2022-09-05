@@ -45,36 +45,31 @@ public class LoginView{
         //check the user name, if success
         String username = user.getText();
         String passwords = password.getText();
-        Parent main = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
-        Scene scene = new Scene(main);
-        Stage previous = (Stage)loginRoot.getScene().getWindow();
-        previous.setResizable(false);
-        previous.setScene(scene);
-        previous.show();
-//        try{
-//            if(!dao.findUserbyid(username)){
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                alert.titleProperty().set("Error");
-//                alert.headerTextProperty().set("Cannot find the account. Please register first!");
-//                alert.showAndWait();
-//                return;
-//            }
-//            if(dao.checkLogin(username,passwords)){
-//                Parent main = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
-//                Scene scene = new Scene(main);
-//                Stage previous = (Stage)loginRoot.getScene().getWindow();
-//                previous.setResizable(false);
-//                previous.setScene(scene);
-//                previous.show();
-//            }
-//
-//        }
-//        catch (Exception e){
+        try{
+            if(!dao.findUserbyid(username)){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.titleProperty().set("Error");
+                alert.headerTextProperty().set("Cannot find the account. Please register first!");
+                alert.showAndWait();
+                return;
+            }
+            if(dao.checkLogin(username,passwords)){
+                Parent main = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
+                Scene scene = new Scene(main);
+                Stage previous = (Stage)loginRoot.getScene().getWindow();
+                previous.setResizable(false);
+                previous.setScene(scene);
+                previous.show();
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
 //            Alert alert = new Alert(Alert.AlertType.INFORMATION);
 //            alert.titleProperty().set("Error");
 //            alert.headerTextProperty().set("Password invalid.");
 //            alert.showAndWait();
-//        }
+        }
 
 
 

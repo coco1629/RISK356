@@ -37,27 +37,30 @@ public class SvgUtil extends Region {
     private String pathName = "map/Risk_game_board.svg";
     private HashMap<String, CountryPath> countryPathHashMap = new HashMap<>();
 
+    private static String pressedColorCode = "#ff9900";
+
     private Properties resolutionProperties;
     /**
      * Css
      */
-    private static final StyleablePropertyFactory<SvgUtil> FACTORY = new StyleablePropertyFactory<>(
+    private static StyleablePropertyFactory<SvgUtil> FACTORY = new StyleablePropertyFactory<>(
             Region.getClassCssMetaData());
 
-    private static final CssMetaData<SvgUtil,Color> HOVER_COLOR = FACTORY.createColorCssMetaData("-hover-color",
+    private static CssMetaData<SvgUtil,Color> HOVER_COLOR = FACTORY.createColorCssMetaData("-hover-color",
             svgUtil -> svgUtil.hoverColor, Color.web("#d9f2e5"),false);
-    private static final CssMetaData<SvgUtil,Color> PRESSED_COLOR = FACTORY.createColorCssMetaData("-pressed-color",
+
+    private static CssMetaData<SvgUtil,Color> PRESSED_COLOR = FACTORY.createColorCssMetaData("-pressed-color",
             svgUtil -> svgUtil.pressedColor, Color.web("#ff9900"),false);
 
-    private static final CssMetaData<SvgUtil,Color> SELECTED_COLOR = FACTORY.createColorCssMetaData("-selected-color",
+    private static CssMetaData<SvgUtil,Color> SELECTED_COLOR = FACTORY.createColorCssMetaData("-selected-color",
             svgUtil -> svgUtil.selectedColor, Color.web("#ff9900"),false);
 
-    private static final CssMetaData<SvgUtil, Color> FILL_COLOR = FACTORY.createColorCssMetaData("-fill-color",
+    private static  CssMetaData<SvgUtil, Color> FILL_COLOR = FACTORY.createColorCssMetaData("-fill-color",
             svgUtil -> svgUtil.fillColor, Color.web("#FFFFFF"), false);
-    private final StyleableProperty<Color> fillColor;
-    private static final CssMetaData<SvgUtil, Color> STROKE_COLOR = FACTORY.createColorCssMetaData("-stroke-color",
+    private  StyleableProperty<Color> fillColor;
+    private static  CssMetaData<SvgUtil, Color> STROKE_COLOR = FACTORY.createColorCssMetaData("-stroke-color",
             svgUtil -> svgUtil.strokeColor, Color.BLACK, false);
-    private final StyleableProperty<Color> strokeColor;
+    private StyleableProperty<Color> strokeColor;
     private static final double OPACITY = 0.4d;
 
     /**
@@ -80,6 +83,10 @@ public class SvgUtil extends Region {
     private EventHandler<MouseEvent> mousePressHandler;
     private EventHandler<MouseEvent> mouseReleaseHandler;
     private EventHandler<MouseEvent> mouseExitHandler;
+
+    private CountryPath selectedPath;
+
+
     public SvgUtil(){
         pane = new Pane();
         unitPane = new Pane();
@@ -224,7 +231,21 @@ public class SvgUtil extends Region {
         loadPath();
     }
 
+    public Pane getUnitPane() {
+        return unitPane;
+    }
 
+    public void setUnitPane(Pane unitPane) {
+        this.unitPane = unitPane;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 
     public void loadPath(){
         // Create a DOM factory object
@@ -251,10 +272,10 @@ public class SvgUtil extends Region {
                 CountryPath path = new CountryPath(name,content,0);
                 countryPathHashMap.put(name, path);
 
-                path.setOnMouseEntered(new WeakEventHandler<>(_mouseEnterHandler));
+//                path.setOnMouseEntered(new WeakEventHandler<>(_mouseEnterHandler));
                 path.setOnMousePressed(new WeakEventHandler<>(_mousePressHandler));
-                path.setOnMouseReleased(new WeakEventHandler<>(_mouseReleaseHandler));
-                path.setOnMouseExited(new WeakEventHandler<>(_mouseExitHandler));
+//                path.setOnMouseReleased(new WeakEventHandler<>(_mouseReleaseHandler));
+//                path.setOnMouseExited(new WeakEventHandler<>(_mouseExitHandler));
 
                 Circle circle = new Circle(path.getText().getX() + 2,path.getText().getY() -5,12);
                 circle.setFill(Color.WHITE);
@@ -301,6 +322,7 @@ public class SvgUtil extends Region {
 
     private void handleMouseEvent(MouseEvent evt, EventHandler<MouseEvent> eventHandler) {
         final CountryPath countryPath = (CountryPath) evt.getSource();
+        selectedPath = countryPath;
         final String countryName = countryPath.getName();
         final Country country = Country.valueOf(countryName);
         final CountryPath paths = countryPathHashMap.get(countryName);
@@ -316,7 +338,10 @@ public class SvgUtil extends Region {
 ////                }
 //            }
         if (MOUSE_PRESSED == eventType) {
-            if (isSelectionEnabled()) {
+            if(paths.isOccupied()) return;
+
+            if(paths.isSelect()){
+//            if (isSelectionEnabled()) {
                 Color color;
                 if (null == getSelectedCountry()) {
                     setSelectedCountry(country);
@@ -325,16 +350,23 @@ public class SvgUtil extends Region {
                     color = null == getSelectedCountry().getColor() ? getFillColor() : getSelectedCountry().getColor();
                 }
                 paths.setFill(color);
-                System.out.println("You occupied " + countryName);
+                paths.setSelect(false);
+                System.out.println("unselected You occupied " + countryName);
+//                setSelectionEnabled(false);
 //                for (SVGPath path:countryPaths.get(getSelectedCountry().getName())){
 //                    path.setFill(color);
 //                }
             } else {
-                if (isHoverEnabled()) {
-                    paths.setFill(getPressedColor());
-                }
+                setSelectedCountry(country);
+                paths.setSelect(true);
+//                setSelectionEnabled(true);
+                paths.setFill(Color.web(pressedColorCode));
+                System.out.println("You occupied " + countryName);
+//                if (isHoverEnabled()) {
+//                    paths.setFill(getPressedColor());
+//                }
             }
-            System.out.println("You occupied " + countryName);
+//            System.out.println("You occupied " + countryName);
         }
 //        }else if (MOUSE_RELEASED == eventType){
 //            Color color;
@@ -366,22 +398,6 @@ public class SvgUtil extends Region {
 //        }
     }
 
-//    private Map<String, List<CountryPath>> createCountryPaths() {
-//        Map<String, List<CountryPath>> countryPaths = new HashMap<>();
-//
-//        countryPathHashMap.forEach((key, value) -> {
-//            String name = key;
-//            List<CountryPath> pathList = new ArrayList<>();
-//
-//            for (String path : value.toString().split(";")) {
-//                pathList.add(new CountryPath(name, path, 0));
-//            }
-//
-//            countryPaths.put(name, pathList);
-//        });
-//
-//        return countryPaths;
-//    }
 
     /**
      *Getters and setters
@@ -463,7 +479,24 @@ public class SvgUtil extends Region {
 //    public void setHoverEnabled(final boolean isEnabled) {
 //        hoverEnabled.set(isEnabled);
 //    }
-//    public void setSelectionEnabled(final boolean isEnabled) {
-//        selectionEnabled.set(isEnabled);
-//    }
+    public void setSelectionEnabled(final boolean isEnabled) {
+        selectionEnabled.set(isEnabled);
+    }
+
+    public CountryPath getSelectedPath() {
+        return selectedPath;
+    }
+
+    public void setSelectedPath(CountryPath selectedPath) {
+        this.selectedPath = selectedPath;
+    }
+
+
+    public static String getPressedColorCode() {
+        return pressedColorCode;
+    }
+
+    public static void setPressedColorCode(String pressedColorCode) {
+        SvgUtil.pressedColorCode = pressedColorCode;
+    }
 }

@@ -11,8 +11,12 @@ public class CountryPath extends SVGPath {
 
     private final String name;
     private boolean isSelect;
+
+    private boolean isOccupied = false;
+
     private final Tooltip tooltip;
     private final Text units;
+
 
     public CountryPath(final String name) {
         this(name,null,0);
@@ -66,4 +70,17 @@ public class CountryPath extends SVGPath {
         }
         units.setY(y);
     }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public boolean isOccupied() {
+        return isOccupied;
+    }
+
+    public void setOccupied(boolean occupied) {
+        isOccupied = occupied;
+    }
+
 }
