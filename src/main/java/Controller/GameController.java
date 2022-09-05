@@ -8,6 +8,8 @@ import View.LoginView;
 import View.MainView;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class GameController extends java.util.Observable{
 
     private Stage primaryStage;
@@ -24,6 +26,10 @@ public class GameController extends java.util.Observable{
         this.primaryStage = new Stage();
         primaryStage.setResizable(false);
     }
+//    public void showMainView(){
+//        mainView.AddControllerListener(this);
+//
+//    }
 
     public void setModel(GameModel model) {
         this.model = model;
@@ -60,12 +66,20 @@ public class GameController extends java.util.Observable{
     private void reinforcement(int territoryID, String country) throws Exception{
         if (model.reinforce(territoryID)){
             Territory territory = model.getTerritory(territoryID);
+            addLog("You succeeded in taking over " + country);
             UpdateTerritoryOnMap(territoryID);
         }
     }
 
     private void UpdateTerritoryOnMap(int territoryID){
         Territory territory = model.getTerritory(territoryID);
+    }
+
+    public void addLog(String log){
+        System.out.println(log);
+    }
+    public static List<Territory> getTerritoryData() {
+        return Model.Map.getTerritoryList();
     }
 
 }

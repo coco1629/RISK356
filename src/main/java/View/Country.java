@@ -2,25 +2,29 @@ package View;
 
 import javafx.scene.paint.Color;
 
+import java.util.Locale;
+
 public enum Country {
 
-    AFGHANISTAN, ALASKA, ALBERTA, ARGENTINA, BRAZIL,
-    CENTRAL_AFRICA, CENTRAL_AMERICA, CHINA,
-    EAST_AFRICA, EASTERN_AUSTRALIA, EASTERN_CANADA, EASTERN_UNITED_STATES, EGYPT,
-    GREENLAND, GREAT_BRITAIN,
-    ICELAND, INDIA, INDONESIA, IRKUTSK,
-    JAPAN,
-    KAMCHATKA,
-    MADAGASCAR, MIDDLE_EAST, MONGOLIA,
-    NEW_GUINEA, NORTH_AFRICA, NORTHERN_EUROPE, NORTHWEST_TERRITORY,
-    ONTARIO,
-    PERU,
-    RUSSIA,
-    SCANDINAVIA, SIBERIA, SOUTH_AFRICA, SOUTH_ASIA, SOUTHERN_EUROPE,
-    URAL,
-    VENEZUELA,
-    WESTERN_AUSTRALIA, WESTERN_EUROPE, WESTERN_UNITED_STATES,
-    YAKUTSK;
+    alaska,alberta,central_america,
+    eastern_united_states,greenland,northwest_territory,ontario,
+    quebec,western_united_states,
+    argentina,brazil,venezuela,peru,
+    great_britain,iceland,
+    northern_europe,scandinavia,
+    southern_europe,ukraine,
+    western_europe,congo,
+    east_africa,egypt,
+    madagascar,north_africa,
+    south_africa,afghanistan,
+    china,india,
+    irkutsk,japan,
+    kamchatka,middle_east,
+    mongolia,siam,
+    siberia,ural,
+    yakutsk,eastern_australia,
+    new_guinea,indonesia,
+    western_australia;
 
     private Color color;
     private int population;

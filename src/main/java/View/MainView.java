@@ -1,5 +1,6 @@
 package View;
 
+import Controller.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -68,7 +69,6 @@ public class MainView extends ViewBase{
 
     public MainView(){
         svgUtil = new SvgUtil();
-
     }
 
     @Override
@@ -80,4 +80,15 @@ public class MainView extends ViewBase{
         pane.setLayoutY(-50);
         rootPane.getChildren().addAll(pane);
     }
+
+    public SvgUtil getSvgUtil() {
+        return svgUtil;
+    }
+
+    @Override
+    public void AddControllerListener(GameController controller){
+        super.AddControllerListener(controller);
+        this.getSvgUtil().setController(controller);
+    }
+
 }

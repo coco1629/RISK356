@@ -1,10 +1,12 @@
 package Model;
 
+import java.util.List;
+
 public class GameModel {
 
     private currentProcess phase;
     private Map map;
-
+    private List<Player> playerList;
     private int initTroops = 10;
 
     public GameModel(){
@@ -35,5 +37,11 @@ public class GameModel {
 
     public Territory getTerritory(int id){
         return map.getTerritory(id);
+    }
+
+    public void addPlayerToPlayerList(Player player) throws Exception{
+        if (phase != currentProcess.Resgistration)
+            throw new Exception("Wrong phase");
+        playerList.add(player);
     }
 }
