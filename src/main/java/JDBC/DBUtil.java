@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 
 
 public class DBUtil {
-    //Loading JDBC。
+    //Loading JDBC.
     private String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     //Connect the server to the database.
     private String dbURL = "jdbc:sqlserver://risk123.database.windows.net:1433; DatabaseName=mySampleDatabase";
