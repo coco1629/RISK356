@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -36,6 +37,11 @@ public class InviteController implements Initializable {
 
     private Player currentplayer;
 
+    private ArrayList<String> currentPlayers;
+
+    @FXML
+    private Button refreshButton;
+
 
     public InviteController(){
 
@@ -44,8 +50,7 @@ public class InviteController implements Initializable {
 
     @FXML
     void sendInvitation(ActionEvent event) {
-        currentplayer.getClientHandler().sendObject("sendInvite");
-
+        currentplayer.getClientHandler().sendObject("send_Invite," + userList.getSelectionModel().getSelectedItem());
     }
 
 
@@ -79,22 +84,44 @@ public class InviteController implements Initializable {
 
     }
 
+    @FXML
+    void checkInvite(ActionEvent event) {
+        currentplayer.getClientHandler().readObject();
+        ObservableList<String> invites = FXCollections.observableArrayList(currentplayer.getClientHandler().getInvitePlayers());
+        inviteList.setItems(invites);
+    }
+
+
     public void showLists(){
-        try {
-//            ArrayList<String> players = new UserDao().getUsers();
-            ArrayList<String> players = new ArrayList<>();
-            System.out.println(Server.currentServerThreads.size());
-            for(ServerHandler serverHandler: Server.currentServerThreads){
-                players.add(serverHandler.getClientName());
-            }
-            ObservableList<String> items = FXCollections.observableArrayList(players);
-            System.out.println(currentplayer);
-            ObservableList<String> invites = FXCollections.observableArrayList(currentplayer.getClientHandler().getInvitePlayers());
-            userList.setItems(items);
-            inviteList.setItems(invites);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        this.currentPlayers = currentplayer.getClientHandler().getCurrentPlayers();
+        ObservableList<String> items = FXCollections.observableArrayList(this.currentPlayers);
+        ObservableList<String> invites = FXCollections.observableArrayList(currentplayer.getClientHandler().getInvitePlayers());
+        userList.setItems(items);
+        inviteList.setItems(invites);
+
+//        try {
+////            ArrayList<String> players = new UserDao().getUsers();
+//            ArrayList<String> players = new ArrayList<>();
+//            System.out.println(Server.currentServerThreads.size());
+//            for(ServerHandler serverHandler: Server.currentServerThreads){
+//                players.add(serverHandler.getClientName());
+//            }
+//            ObservableList<String> items = FXCollections.observableArrayList(players);
+//            System.out.println(currentplayer);
+//            ObservableList<String> invites = FXCollections.observableArrayList(currentplayer.getClientHandler().getInvitePlayers());
+//            userList.setItems(items);
+//            inviteList.setItems(invites);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
+    @FXML
+    void updateList(ActionEvent event) throws IOException {
+//        currentplayer.getClientHandler().connectToServer();
+        currentplayer.getClientHandler().sendObject("request_current_players,"+currentplayer.getClientHandler().getUsername());
+        currentplayer.getClientHandler().readObject();
+        showLists();
     }
 
     public Player getCurrentplayer() {

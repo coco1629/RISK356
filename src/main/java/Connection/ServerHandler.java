@@ -29,22 +29,51 @@ public class ServerHandler extends Thread {
     @Override
     public void run() {
         System.out.println("new connection accept" + clientSocket.getInetAddress());
+        System.out.println("current threads size" + Server.currentServerThreads.size());
 //        String message = "from server";
 //        while(!message.equals("END")){
 //        try {
 ////            if(function.equals("send_invite")){
+        while (true){
         String message = (String) readObject();
         String[] str = message.split(",");
+        System.out.println(message);
         if(str[0].equals("username")){
             clientName = str[1];
+            ArrayList<String> players = new ArrayList<>();
+            for(ServerHandler serverHandler:Server.currentServerThreads){
+                players.add(serverHandler.getClientName());
+            }
+            sendObject(players);
         }
-        if(str[0].equals("send_invite")){
+        if(str[0].equals("send_Invite")){
 //////                Socket target =(Socket) objectInputStream.readObject();
-            sendObject("receive_invite,"+str[1]+","+clientName);
+            for(ServerHandler serverHandler:Server.currentServerThreads){
+                System.out.println(serverHandler.getClientName());
+                if(serverHandler.getClientName().equals(str[1])){
+                    System.out.println("send to the inviter");
+                    serverHandler.sendObject("receive_invite,"+str[1]+","+clientName);
+                }
+            }
+//            sendObject("receive_invite,"+str[1]+","+clientName);
         }
         if(str[0].equals("receive_invite")){
+            System.out.println("receive");
             invitePlayers.add(str[2]);
         }
+        if(str[0].equals("request_current_players")){
+            System.out.println("update!!!");
+            ArrayList<String> players = new ArrayList<>();
+            for(ServerHandler serverHandler:Server.currentServerThreads){
+                players.add(serverHandler.getClientName());
+            }
+            sendObject(players);
+        }
+//            sendObject("",Server.currentServerThreads,);
+
+        }
+
+
 
 ////            if(message.equals("receive_invite")){
 ////            System.out.println("receive invite!!!!!");
@@ -60,21 +89,26 @@ public class ServerHandler extends Thread {
 
     }
 
-    private void sendObject(Object object) {
+    void sendObject(Object object) {
         try {
-            ObjectOutputStream targetStream = this.objectOutputStream;
-            String message = (String)object;
-            String[] str = message.split(",");
-            for(ServerHandler serverHandler: Server.currentServerThreads){
-                if(serverHandler.clientName.equals(str[1])){
-//                    if(str[])
-                    System.out.println("target stream"+str[1]);
-                    targetStream = serverHandler.objectOutputStream;
-                    break;
-                }
-            }
+//            ObjectOutputStream targetStream = this.objectOutputStream;
+//            if(object instanceof ArrayList){
+//
+//            }
+//            else{
+//            String message = (String)object;
+//            String[] str = message.split(",");
+//            for(ServerHandler serverHandler: Server.currentServerThreads){
+//                if(serverHandler.clientName.equals(str[1])){
+////                    if(str[])
+//                    System.out.println("target stream"+str[1]);
+//                    targetStream = serverHandler.objectOutputStream;
+//                    break;
+//                }
+//            }
+//            }
 //            ObjectOutputStream targetStream = new ObjectOutputStream(target.getOutputStream());
-            targetStream.writeObject(object);
+            this.objectOutputStream.writeObject(object);
         } catch (IOException ex) {
             ex.printStackTrace();
             System.out.println("Error Occurred in sendObject in ClientHandler: " + ex.toString());

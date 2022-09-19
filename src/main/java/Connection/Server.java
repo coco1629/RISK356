@@ -44,16 +44,41 @@ public class Server {
         }
     }
 
-    private void communicate() throws IOException, ClassNotFoundException {
-        String message = "from server";
-        while(!message.equals("END")){
-            message =(String) input.readObject();
-            System.out.println("server receive"+ message);
-            String send = "server: send to client";
-            output.writeObject(send);
-        }
-
-    }
+//    private void communicate() throws IOException, ClassNotFoundException {
+//        String message = "from server";
+//        while(!message.equals("END")){
+//            message = (String) input.readObject();
+//            String[] str = message.split(",");
+//            System.out.println(message);
+////            if(str[0].equals("username")){
+////                clientName = str[1];
+////                ArrayList<String> players = new ArrayList<>();
+////                for(ServerHandler serverHandler:Server.currentServerThreads){
+////                    players.add(serverHandler.getClientName());
+////                }
+////                sendObject(players);
+////            }
+////            if(str[0].equals("send_invite")){
+////////                Socket target =(Socket) objectInputStream.readObject();
+////                input.sendObject("receive_invite,"+str[1]+","+clientName);
+////            }
+////            if(str[0].equals("receive_invite")){
+////                invitePlayers.add(str[2]);
+////            }
+//            if(str[0].equals("request_current_players")){
+//                System.out.println("update!!!");
+//                ArrayList<String> players = new ArrayList<>();
+//                for(ServerHandler serverHandler:Server.currentServerThreads){
+//                    players.add(serverHandler.getClientName());
+//                }
+//                for(ServerHandler serverHandler : currentServerThreads){
+//                    if(serverHandler.getClientName().equals(str[1]))
+//                        serverHandler.sendObject(players);
+//                }
+//            }
+//        }
+//
+//    }
 
     private void setUpConnection() throws IOException {
 //        output = new ObjectOutputStream(connection.getOutputStream());
@@ -67,7 +92,7 @@ public class Server {
         connection = serverSocket.accept();
         ServerHandler serverThread=new ServerHandler(connection);
         currentServerThreads.add(serverThread);
-        System.out.println(currentServerThreads.size());
+//        System.out.println(currentServerThreads.size());
         serverThread.start();
 //        executorService.execute(serverThread);
         System.out.println("connenct to "+ connection.getInetAddress().getHostName());
