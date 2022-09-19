@@ -1,25 +1,24 @@
 package View;
 
 
-import javafx.application.Platform;
+import Connection.ClientHandler;
+import JDBC.User;
+import JDBC.UserDao;
+import Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class LoginView{
     @FXML
@@ -40,20 +39,74 @@ public class LoginView{
 
     private ArrayList<TextField> textFieldArrayList;
 
+    UserDao dao = new UserDao();
+
     @FXML
     void LoginGame(ActionEvent event) throws IOException {
         //check the user name, if success
-        Parent main = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
-        Scene scene = new Scene(main);
-        Stage previous = (Stage)loginRoot.getScene().getWindow();
-        previous.setScene(scene);
-        previous.show();
+        String username = user.getText();
+        String passwords = password.getText();
+        try{
+            if(!dao.findUserbyid(username)){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.titleProperty().set("Error");
+                alert.headerTextProperty().set("Cannot find the account. Please register first!");
+                alert.showAndWait();
+                return;
+            }
+            if(dao.checkLogin(username,passwords)){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InviteView.fxml"));
+                Parent main = loader.load();
+                Scene scene = new Scene(main);
+                Player player = new Player(username);
+                InviteController controller = loader.getController();
+                controller.setCurrentplayer(player);
+                controller.showLists();
+                Stage previous = (Stage)loginRoot.getScene().getWindow();
+                previous.setResizable(false);
+                previous.setScene(scene);
+                previous.show();
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.titleProperty().set("Error");
+//            alert.headerTextProperty().set("Password invalid.");
+//            alert.showAndWait();
+        }
+
+
+
+//        ClientHandler clientHandler1 = new ClientHandler();
+//        ClientHandler clientHandler2 = new ClientHandler();
+//        ClientHandler clientHandler3 = new ClientHandler();
+//        clientHandler1.sendObject("client 1 send");
+//        clientHandler2.sendObject("client 2 send");
+//        clientHandler3.sendObject("client 3 send");
+
 
     }
 
     @FXML
-    void register(ActionEvent event) {
+    void register(ActionEvent event) throws IOException {
         // if success, set 'success' visible then
+
+        String username = user.getText();
+        String passwords = password.getText();
+        try {
+            // this need
+            if(!dao.findUserbyid(username))
+                dao.insertUser(new User(username,passwords));
+        }
+        catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.titleProperty().set("Error");
+            alert.headerTextProperty().set("Register failed.");
+            alert.showAndWait();
+            return;
+        }
         success.setVisible(true);
     }
 
