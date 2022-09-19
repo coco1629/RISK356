@@ -1,10 +1,13 @@
 package Connection;
 
+import Model.Player;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ClientHandler {
 
@@ -16,20 +19,21 @@ public class ClientHandler {
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
+    private ArrayList<String> invitePlayers = new ArrayList<>();
 
-    public ClientHandler() throws IOException {
+    public ClientHandler(String name) throws IOException {
 //        this.socket = socket;
         try {
             Socket connection = new Socket(InetAddress.getByName(serverIP),1234);
             this.socket =connection;
             if (socket != null) {
-
                     this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                     this.objectInputStream = new ObjectInputStream(socket.getInputStream());
-
+                    sendObject("username,"+name);
                 return;
             }
         } catch (IOException ex) {
+            ex.printStackTrace();
             System.out.println("Exception Occurred in ClientThread Constructor: " + ex.toString());
         }
         clientArrayList.add(this);
@@ -51,8 +55,24 @@ public class ClientHandler {
         }
     }
 
+    public void sendObject(Object object, Socket target) {
+        try {
+            ObjectOutputStream targetStream = new ObjectOutputStream(socket.getOutputStream());
+            this.objectOutputStream.writeObject(object);
+        } catch (IOException ex) {
+            System.out.println("Error Occurred in sendObject in ClientHandler: " + ex.toString());
+        }
+    }
+
+
     public Object readObject() {
         try {
+            String message = (String) readObject();
+            String[] str = message.split(",");
+            if(str[0].equals("receive_invite")){
+                invitePlayers.add(str[2]);
+            }
+
             return this.objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Error Occurred in readObject in ClientHandler: " + ex.toString());
@@ -66,5 +86,14 @@ public class ClientHandler {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+
+    public ArrayList<String> getInvitePlayers() {
+        return invitePlayers;
+    }
+
+    public void setInvitePlayers(ArrayList<String> invitePlayers) {
+        this.invitePlayers = invitePlayers;
     }
 }

@@ -1,7 +1,10 @@
 package Model;
 
+import Connection.ClientHandler;
+import View.Country;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 public class Player implements Serializable {
@@ -9,12 +12,15 @@ public class Player implements Serializable {
     private String name;
     private int territoryCount;
 
+    private ClientHandler clientHandler;
 
-    public Player(Color color,String name){
+    public Player(String name) throws IOException {
         super();
-        this.color = color;
+//        this.color = color;
         this.name = name;
         this.territoryCount = 0;
+        this.clientHandler = new ClientHandler(name);
+//        color =
     }
 
     public void addTerritory() {
@@ -29,4 +35,15 @@ public class Player implements Serializable {
         return name;
     }
 
+    public void occupyCountry(Country country, int num){
+
+    }
+
+    public ClientHandler getClientHandler() {
+        return clientHandler;
+    }
+
+    public void setClientHandler(ClientHandler clientHandler) {
+        this.clientHandler = clientHandler;
+    }
 }

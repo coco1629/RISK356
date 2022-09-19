@@ -3,6 +3,7 @@ package JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 
 public class UserDao {
@@ -178,5 +179,29 @@ public class UserDao {
     }
     Connection conn = db.getConn();
     PreparedStatement pstm;
+
+    public ArrayList<String> getUsers() throws Exception {
+        Connection conn = db.getConn();
+        ArrayList<String> users = new ArrayList<>();
+        PreparedStatement pstm;
+        ResultSet res;
+
+        String sql_find = "select * from users ";
+
+        pstm = conn.prepareStatement(sql_find);
+
+        res = pstm.executeQuery();
+        System.out.println("Loading...");
+        System.out.println("id\tname\tpassword");
+        while (res.next()) {
+            users.add(res.getString(2));
+//            System.out.println(res.getInt(1) + "\t" +
+//            res.getString(2) + "\t" + res.getString(3));
+        }
+        db.closeConn(res, pstm, conn);
+        return users;
+    }
+
+
 
 }

@@ -4,6 +4,7 @@ package View;
 import Connection.ClientHandler;
 import JDBC.User;
 import JDBC.UserDao;
+import Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,8 +55,13 @@ public class LoginView{
                 return;
             }
             if(dao.checkLogin(username,passwords)){
-                Parent main = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InviteView.fxml"));
+                Parent main = loader.load();
                 Scene scene = new Scene(main);
+                Player player = new Player(username);
+                InviteController controller = loader.getController();
+                controller.setCurrentplayer(player);
+                controller.showLists();
                 Stage previous = (Stage)loginRoot.getScene().getWindow();
                 previous.setResizable(false);
                 previous.setScene(scene);
@@ -91,7 +97,8 @@ public class LoginView{
         String passwords = password.getText();
         try {
             // this need
-            dao.insertUser(new User(123,username,passwords));
+            if(!dao.findUserbyid(username))
+                dao.insertUser(new User(username,passwords));
         }
         catch (Exception e){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

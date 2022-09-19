@@ -111,9 +111,9 @@ public class MainView extends ViewBase{
     void occupy(ActionEvent event) {
 
         svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
-//        System.out.println(svgUtil.getSelectedCountry().getPopulation());
         svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
         svgUtil.getSelectedPath().setOccupied(true);
+        this.player.occupyCountry(svgUtil.getSelectedCountry(),numBox.getValue());
 
     }
 

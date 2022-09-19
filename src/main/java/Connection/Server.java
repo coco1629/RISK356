@@ -5,8 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.ArrayList;
 
 public class Server {
 
@@ -17,6 +16,9 @@ public class Server {
     ObjectOutputStream output;
     ObjectInputStream input;
 
+    public static ArrayList<ServerHandler> currentServerThreads = new ArrayList<>();
+
+    public static ArrayList<String> currentClients = new ArrayList<>();
 
     public Server(ServerSocket serverSocket){
         this.serverSocket = serverSocket;
@@ -64,6 +66,8 @@ public class Server {
         System.out.println("wait for connection");
         connection = serverSocket.accept();
         ServerHandler serverThread=new ServerHandler(connection);
+        currentServerThreads.add(serverThread);
+        System.out.println(currentServerThreads.size());
         serverThread.start();
 //        executorService.execute(serverThread);
         System.out.println("connenct to "+ connection.getInetAddress().getHostName());
@@ -90,4 +94,27 @@ public class Server {
         }
     }
 
+    public ServerSocket getServerSocket() {
+        return serverSocket;
+    }
+
+    public void setServerSocket(ServerSocket serverSocket) {
+        this.serverSocket = serverSocket;
+    }
+
+    public Socket getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Socket connection) {
+        this.connection = connection;
+    }
+
+    public ArrayList<ServerHandler> getCurrentServerThreads() {
+        return currentServerThreads;
+    }
+
+    public void setCurrentServerThreads(ArrayList<ServerHandler> currentServerThreads) {
+        Server.currentServerThreads = currentServerThreads;
+    }
 }
