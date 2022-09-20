@@ -20,6 +20,7 @@ public class Player implements Serializable {
         this.name = name;
         this.territoryCount = 0;
         this.clientHandler = new ClientHandler(name);
+//        clientHandler.start();
 //        color =
     }
 

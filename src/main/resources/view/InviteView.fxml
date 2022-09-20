@@ -9,20 +9,22 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.InviteController">
    <children>
-      <Button fx:id="invite" layoutX="53.0" layoutY="329.0" mnemonicParsing="false" onAction="#sendInvitation" prefHeight="23.0" prefWidth="90.0" text="Invite" />
+      <Button fx:id="invite" layoutX="43.0" layoutY="329.0" mnemonicParsing="false" onAction="#sendInvitation" prefHeight="23.0" prefWidth="90.0" text="Invite" />
       <ListView fx:id="userList" layoutX="43.0" layoutY="88.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="57.0" layoutY="42.0" text="You Can Invite: ">
+      <Label layoutX="24.0" layoutY="42.0" prefHeight="30.0" prefWidth="179.0" text="You Can Invite: ">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Button fx:id="next" layoutX="170.0" layoutY="329.0" mnemonicParsing="false" onAction="#createGame" prefHeight="23.0" prefWidth="90.0" text="Next" />
+      <Button fx:id="next" layoutX="158.0" layoutY="329.0" mnemonicParsing="false" onAction="#createGame" prefHeight="23.0" prefWidth="90.0" text="Next" />
       <ListView fx:id="inviteList" layoutX="354.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="354.0" layoutY="42.0" text="You Can Accept: ">
+      <Label layoutX="329.0" layoutY="42.0" text="You Can Accept: ">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Button fx:id="acceptButton" layoutX="437.0" layoutY="329.0" mnemonicParsing="false" onAction="#acceptInvite" prefHeight="23.0" prefWidth="90.0" text="Accept" />
+      <Button fx:id="acceptButton" layoutX="402.0" layoutY="329.0" mnemonicParsing="false" onAction="#acceptInvite" prefHeight="23.0" prefWidth="103.0" text="Accept" />
+      <Button fx:id="refreshButton" layoutX="115.0" layoutY="294.0" mnemonicParsing="false" onAction="#updateList" text="Refresh" />
+      <Button layoutX="427.0" layoutY="294.0" mnemonicParsing="false" onAction="#checkInvite" text="Refresh" />
    </children>
 </AnchorPane>
