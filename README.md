@@ -106,5 +106,13 @@ The above is the basic content.
 
 ****
 
+## Format for adding updates and questions ##
+****
 
+Cancy Yang 2022.9.23  
 
+Content: Updated the README.md  
+
+Need to be improved: Nothing.  
+
+****
