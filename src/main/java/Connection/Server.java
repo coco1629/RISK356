@@ -1,22 +1,23 @@
 package Connection;
 
+import Model.Player;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Server {
-
 
     private ServerSocket serverSocket;
     private Socket connection;
 
-    ObjectOutputStream output;
-    ObjectInputStream input;
 
-    public static ArrayList<ServerHandler> currentServerThreads = new ArrayList<>();
+    static HashMap<String,ServerHandler> handlerHashMap = new HashMap<>();
 
     public static ArrayList<String> currentClients = new ArrayList<>();
 
@@ -28,11 +29,59 @@ public class Server {
         try{
 
             while(true){
-                waitForConnection();
+                connection = serverSocket.accept();
+
+
+//                TempThread thread = new TempThread(connection);
+                SessionData sessionData = new SessionData();
+                ServerHandler serverThread=new ServerHandler(connection,sessionData);
+//                ObjectOutputStream output = new ObjectOutputStream(connection.getOutputStream());
+//                ObjectInputStream input = new ObjectInputStream(connection.getInputStream());
+//                thread.start();
+//                ServerHandler serverThread=new ServerHandler(connection,new SessionData());
+                serverThread.start();
+                ObjectOutputStream output = serverThread.getObjectOutputStream();
+                ObjectInputStream input = serverThread.getObjectInputStream();
+                System.out.println("new client");
+                while(true){
+                    Operation operation = (Operation) input.readObject();
+                    if(operation == Operation.CREATE_SESSION){
+//                        thread.stop();
+                        String string = (String) input.readObject();
+                        sessionData = (SessionData) input.readObject();
+                        serverThread.setSessionData(sessionData);
+//                        currentServerThreads.add(serverThread);
+                        handlerHashMap.put(string,serverThread);
+//                        serverThread.start();
+                        break;
+                    }
+                    if(operation == Operation.JOIN_SESSION){
+//                        Set<String> set = handlerHashMap.keySet();
+//                        ArrayList<String> rooms = new ArrayList<>(set);
+//                        output.writeObject(rooms);
+//                        System.out.println("server send rooms");
+                        String string = (String) input.readObject();
+                        String person = (String) input.readObject();
+                        if (handlerHashMap.containsKey(string)) {  // either the key the server sent is right or wrong!!
+                            handlerHashMap.get(string).addStreams(input, output, person);
+                            System.out.println("add streams");
+                            break;
+                        } else {
+                            output.writeObject(Operation.JOIN_SESSION_FAILED);
+                        }
+                    }
+                    if(operation == Operation.SHOW_ROOMS){
+                        Set<String> set = handlerHashMap.keySet();
+                        ArrayList<String> rooms = new ArrayList<>(set);
+                        output.writeObject(rooms);
+                        System.out.println("server send rooms");
+                    }
+
+                }
+
 //                setUpConnection();
 //                communicate();
 //                Socket socket = serverSocket.accept();
-                System.out.println("new client");
 //                Client client = new Client(socket);
 //                Thread thread = new Thread(client);
 //                thread.start();
@@ -44,60 +93,6 @@ public class Server {
         }
     }
 
-//    private void communicate() throws IOException, ClassNotFoundException {
-//        String message = "from server";
-//        while(!message.equals("END")){
-//            message = (String) input.readObject();
-//            String[] str = message.split(",");
-//            System.out.println(message);
-////            if(str[0].equals("username")){
-////                clientName = str[1];
-////                ArrayList<String> players = new ArrayList<>();
-////                for(ServerHandler serverHandler:Server.currentServerThreads){
-////                    players.add(serverHandler.getClientName());
-////                }
-////                sendObject(players);
-////            }
-////            if(str[0].equals("send_invite")){
-////////                Socket target =(Socket) objectInputStream.readObject();
-////                input.sendObject("receive_invite,"+str[1]+","+clientName);
-////            }
-////            if(str[0].equals("receive_invite")){
-////                invitePlayers.add(str[2]);
-////            }
-//            if(str[0].equals("request_current_players")){
-//                System.out.println("update!!!");
-//                ArrayList<String> players = new ArrayList<>();
-//                for(ServerHandler serverHandler:Server.currentServerThreads){
-//                    players.add(serverHandler.getClientName());
-//                }
-//                for(ServerHandler serverHandler : currentServerThreads){
-//                    if(serverHandler.getClientName().equals(str[1]))
-//                        serverHandler.sendObject(players);
-//                }
-//            }
-//        }
-//
-//    }
-
-    private void setUpConnection() throws IOException {
-//        output = new ObjectOutputStream(connection.getOutputStream());
-//        output.flush();
-//        input = new ObjectInputStream(connection.getInputStream());
-//        System.out.println("stream set up!");
-    }
-
-    private void waitForConnection() throws IOException{
-        System.out.println("wait for connection");
-        connection = serverSocket.accept();
-        ServerHandler serverThread=new ServerHandler(connection);
-        currentServerThreads.add(serverThread);
-//        System.out.println(currentServerThreads.size());
-        serverThread.start();
-//        executorService.execute(serverThread);
-        System.out.println("connenct to "+ connection.getInetAddress().getHostName());
-
-    }
 
     public void closeServer(){
         try{
@@ -135,11 +130,11 @@ public class Server {
         this.connection = connection;
     }
 
-    public ArrayList<ServerHandler> getCurrentServerThreads() {
-        return currentServerThreads;
-    }
-
-    public void setCurrentServerThreads(ArrayList<ServerHandler> currentServerThreads) {
-        Server.currentServerThreads = currentServerThreads;
-    }
+//    public ArrayList<ServerHandler> getCurrentServerThreads() {
+//        return currentServerThreads;
+//    }
+//
+//    public void setCurrentServerThreads(ArrayList<ServerHandler> currentServerThreads) {
+//        Server.currentServerThreads = currentServerThreads;
+//    }
 }

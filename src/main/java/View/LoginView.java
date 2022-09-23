@@ -55,13 +55,14 @@ public class LoginView{
                 return;
             }
             if(dao.checkLogin(username,passwords)){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InviteView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/JoinView.fxml"));
                 Parent main = loader.load();
                 Scene scene = new Scene(main);
-                Player player = new Player(username);
-                InviteController controller = loader.getController();
-                controller.setCurrentplayer(player);
-                controller.showLists();
+//                Player player = new Player(username);
+                JoinController controller = loader.getController();
+//                controller.setCurrentPlayer(player);
+                controller.setUserName(username);
+//                controller.showLists();
                 Stage previous = (Stage)loginRoot.getScene().getWindow();
                 previous.setResizable(false);
                 previous.setScene(scene);

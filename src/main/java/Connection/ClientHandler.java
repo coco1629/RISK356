@@ -42,9 +42,9 @@ public class ClientHandler{
             if (socket != null) {
                 this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 this.objectInputStream = new ObjectInputStream(socket.getInputStream());
-                sendObject("username,"+this.username);
-                readObject();
-                System.out.println(currentPlayers.size());
+//                sendObject("username,"+this.username);
+//                readObject();
+//                System.out.println(currentPlayers.size());
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -73,26 +73,42 @@ public class ClientHandler{
     }
 
 
-    public void readObject() {
+    public Object readObject() {
         try {
-            Object obj = this.objectInputStream.readObject();
-            if(obj instanceof ArrayList){
-                this.currentPlayers = (ArrayList<String>) obj;
-                return;
-            }
-            else{
-                String message = (String) obj;
-                System.out.println(message);
-                String[] str = message.split(",");
-                if(str[0].equals("receive_invite")){
-                    System.out.println("add to invite");
-                    invitePlayers.add(str[2]);
-                }
-            }
+            return this.objectInputStream.readObject();
+//            if(obj instanceof ArrayList){
+//                this.currentPlayers = (ArrayList<String>) obj;
+//                return;
+//            }
+//            else{
+//                String message = (String) obj;
+//                System.out.println(message);
+//                String[] str = message.split(",");
+//                if(str[0].equals("receive_invite")){
+//                    System.out.println("add to invite");
+//                    invitePlayers.add(str[2]);
+//                }
+//            }
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Error Occurred in readObject in ClientHandler: " + ex.toString());
         }
+        return null;
     }
+
+    public ArrayList<Object> startListeningOrders() {
+        try {
+            ArrayList<Object> data = (ArrayList<Object>) this.objectInputStream.readObject();
+            if (data == null) {
+//                showError("");
+                System.out.println("null");
+            }
+            return data;
+        } catch (IOException | ClassNotFoundException | ClassCastException ex) {
+            System.out.println("Error Occurred in startListeningOrders in ClientHandler: " + ex.toString());
+            return null;
+        }
+    }
+
 
     public String getUsername() {
         return username;

@@ -27,20 +27,31 @@ public class MainView extends ViewBase{
     private Pane Pane;
 
     @FXML
-    private Label PlauerName1;
+    private Label PlayerName1;
 
     @FXML
-    private Label PlauerName2;
+    private Label PlayerName2;
 
     @FXML
-    private Label PlauerName3;
+    private Label PlayerName3;
 
     @FXML
-    private Label PlauerName4;
+    private Label PlayerName4;
+
+    @FXML
+    private Label PlayerName5;
+
+    @FXML
+    private Label PlayerName6;
 
     @FXML
     private Button SkipPhase;
 
+    @FXML
+    private Button TransferPhase;
+
+    @FXML
+    private ImageView imageView;
 
     @FXML
     private Button nextPhase;
@@ -50,12 +61,6 @@ public class MainView extends ViewBase{
 
     @FXML
     private Button occupyButton;
-
-    @FXML
-    private Button TransferPhase;
-
-    @FXML
-    private ImageView imageView;
 
     @FXML
     private Pane panePlayerColor1;
@@ -70,11 +75,21 @@ public class MainView extends ViewBase{
     private Pane panePlayerColor4;
 
     @FXML
+    private Pane panePlayerColor5;
+
+    @FXML
+    private Pane panePlayerColor6;
+
+    @FXML
     private AnchorPane rootPane;
 
     private SvgUtil svgUtil;
 
     private Player player;
+
+//    private int playerNum;
+//
+//    private int currentNum = 0;
 
     private int troops = 10;
 
