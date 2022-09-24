@@ -8,10 +8,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public class Player implements Serializable {
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     private Color color;
     private String name;
     private int territoryCount;
@@ -50,5 +46,9 @@ public class Player implements Serializable {
 
     public void setClientHandler(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }
