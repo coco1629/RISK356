@@ -109,10 +109,19 @@ The above is the basic content.
 ## Format for adding updates and questions ##
 ****
 
-Cancy Yang 2022.9.23  
+Cancy Yang 2022.8.25  
 
 Content: Updated the README.md  
 
 Need to be improved: Nothing.  
+
+****
+****
+
+Cancy Yang 2022.8.26   
+
+Content: Try to finish the sql server, but there is also something wrong.  
+
+Need to be improved: Connect to remote sql server.  
 
 ****
