@@ -125,3 +125,12 @@ Content: Try to finish the sql server, but there is also something wrong.
 Need to be improved: Connect to remote sql server.  
 
 ****
+****
+
+Shawn Liu 2022.8.26   
+
+Content: Success to draw map.  
+
+Need to be improved: Nothing.  
+
+****
