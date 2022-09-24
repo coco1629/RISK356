@@ -140,3 +140,11 @@ Content: Learn skills about scene builder.
 Need to be improved: Draw login view tomorrow.  
 
 ****
+
+Coco Wang 2022.8.27   
+
+Content: Draw login view.  
+
+Need to be improved: Nothing.  
+
+****
