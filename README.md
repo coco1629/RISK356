@@ -172,3 +172,11 @@ Content: Learn Help to connect remote server.
 Need to be improved: Nothing.  
 
 ****
+
+Cancy & Coco 2022.8.30   
+
+Content: Success to connect remote sql server.  
+
+Need to be improved: Set a table for user name and password.  
+
+****
