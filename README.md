@@ -116,7 +116,6 @@ Content: Updated the README.md
 Need to be improved: Nothing.  
 
 ****
-****
 
 Cancy Yang 2022.8.26   
 
@@ -125,12 +124,19 @@ Content: Try to finish the sql server, but there is also something wrong.
 Need to be improved: Connect to remote sql server.  
 
 ****
-****
 
 Shawn Liu 2022.8.26   
 
 Content: Success to draw map.  
 
 Need to be improved: Nothing.  
+
+****
+
+Coco Wang 2022.8.26  
+
+Content: Learn skills about scene builder.  
+
+Need to be improved: Draw login view tomorrow.  
 
 ****
