@@ -164,3 +164,11 @@ Content: Do some basic functions.
 Need to be improved: I'm doing some basic framework, so the functions can't be done.   
 
 ****
+
+Coco Wang 2022.8.29   
+
+Content: Learn Help to connect remote server.  
+
+Need to be improved: Nothing.  
+
+****
