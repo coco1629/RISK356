@@ -156,3 +156,11 @@ Content: Nothing.
 Need to be improved: I applied for Azure, and I will learn how to use it.  
 
 ****
+
+Shawn Liu 2022.8.29   
+
+Content: Do some basic functions.  
+
+Need to be improved: I'm doing some basic framework, so the functions can't be done.   
+
+****
