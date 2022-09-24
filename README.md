@@ -148,3 +148,11 @@ Content: Draw login view.
 Need to be improved: Nothing.  
 
 ****
+
+Cancy Yang 2022.8.28   
+
+Content: Nothing.  
+
+Need to be improved: I applied for Azure, and I will learn how to use it.  
+
+****
