@@ -128,8 +128,10 @@ public class UserDao {
 
     /**
      * Calculate.
+     *
+     * @return
      */
-    public void countUser() throws Exception {
+    public int countUser() throws Exception {
         Connection conn = db.getConn();
         PreparedStatement pstm;
         ResultSet res;
@@ -145,8 +147,8 @@ public class UserDao {
         } else {
             System.out.println("No information");
         }
-
         db.closeConn(res, pstm, conn);
+        return count;
     }
 
     public boolean checkLogin(String name, String password) throws Exception {
