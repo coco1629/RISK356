@@ -95,10 +95,11 @@ The master of the project is master.
 └── ./target/generated-sources  
 └── ./target/generated-sources/annotations
 
-## Framework ##
+## Tools ##
 
 * Maven - Dependent property management
-* Springboot
+* Sql server
+* JDBC
 * MVC
 * Microsoft Azure
 
