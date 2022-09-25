@@ -1,9 +1,7 @@
-package View;
+package Model;
 
 import javafx.geometry.Bounds;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.Region;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 

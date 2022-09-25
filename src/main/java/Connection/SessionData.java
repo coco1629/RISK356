@@ -1,7 +1,6 @@
 package Connection;
 
-import Model.Player;
-import View.Country;
+import Model.Country;
 
 import java.io.Serializable;
 

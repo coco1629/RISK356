@@ -55,7 +55,7 @@ public class ClientHandler{
     }
 
     public void sendObject(Object object) {
-        System.out.println("send to server");
+//        System.out.println("send to server");
         try {
             this.objectOutputStream.writeObject(object);
         } catch (IOException ex) {
@@ -97,6 +97,18 @@ public class ClientHandler{
 
     public ArrayList<Object> startListeningOrders() {
         try {
+//            ArrayList<Object> data = new ArrayList<>();
+//            while (true){
+//                Object object = this.objectInputStream.readObject();
+//                try{
+//                    String obj = (String) object;
+//                    if(obj.equals("End"))
+//                        break;
+//                }
+//                catch (Exception e){
+//                    data.add(object);
+//                }
+//            }
             ArrayList<Object> data = (ArrayList<Object>) this.objectInputStream.readObject();
             if (data == null) {
 //                showError("");
@@ -104,7 +116,8 @@ public class ClientHandler{
             }
             return data;
         } catch (IOException | ClassNotFoundException | ClassCastException ex) {
-            System.out.println("Error Occurred in startListeningOrders in ClientHandler: " + ex.toString());
+            ex.printStackTrace();
+//            System.out.println("Error Occurred in startListeningOrders in ClientHandler: " + ex.toString());
             return null;
         }
     }

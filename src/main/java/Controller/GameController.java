@@ -3,7 +3,7 @@ package Controller;
 import Model.GameModel;
 import Model.Territory;
 import Model.currentProcess;
-import View.Country;
+import Model.Country;
 import View.LoginView;
 import View.MainView;
 import javafx.stage.Stage;

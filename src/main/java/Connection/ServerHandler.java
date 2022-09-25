@@ -1,6 +1,6 @@
 package Connection;
 
-import Model.Player;
+import Model.Country;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,6 +27,10 @@ public class ServerHandler extends Thread {
 
     private SessionData sessionData;
 
+    private int allowedPlayers;
+
+    private GameBoard gameBoard = new GameBoard();
+
     private ArrayList<String> invitePlayers = new ArrayList<>();
 
     private final Operation[] colors = new Operation[]{
@@ -51,12 +55,13 @@ public class ServerHandler extends Thread {
         if (this.currentCount < this.sessionData.getNumberOfAllowedPlayers()) {
             this.objectOutputStreams.add(objectOutputStream);
             this.objectInputStreams.add(objectInputStream);
-            this.sendObject(new Object[]{Operation.JOIN_SESSION_SUCCESS}, this.objectOutputStreams.get(this.currentCount));
+//            this.sendObject(new Object[]{Operation.JOIN_SESSION_SUCCESS}, this.objectOutputStreams.get(this.currentCount));
             this.people.add(person);
             if (this.currentCount == (this.sessionData.getNumberOfAllowedPlayers() - 1)) {
+                System.out.println(this.currentCount);
                 this.sendAllPlayersNamesSymbols();
             }
-            this.currentCount += 1;
+            this.currentCount+=1;
             return;
         }
         this.sendObject(Operation.JOIN_SESSION_FAILED, this.objectOutputStreams.get(this.currentCount));
@@ -129,16 +134,31 @@ public class ServerHandler extends Thread {
     private void sendAllPlayersNamesSymbols() {
         ArrayList<Object> finalArray = new ArrayList<>();
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
+            System.out.println("allowed players: "+i);
             Object[] data = new Object[]{this.colors[i], people.get(i)};
+            System.out.println(this.colors[i].name());
+            System.out.println(people.get(i));
             finalArray.add(data);
         }
-        this.sendObjectToAll(finalArray);
+        this.sendArrayListToAll(finalArray);
+//        this.sendObjectToAll(finalArray);
 //        this.sendMovePermissions(this.currentActivePlayer);
     }
 
     private void sendObjectToAll(Object object) {
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
             this.sendObject(object, this.objectOutputStreams.get(i));
+        }
+        for(int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++){
+            this.sendObject("End", this.objectOutputStreams.get(i));
+        }
+
+    }
+
+    private void sendArrayListToAll(ArrayList<Object> objs){
+        for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
+            System.out.println(i);
+            this.sendObject(objs, this.objectOutputStreams.get(i));
         }
     }
 
@@ -175,6 +195,14 @@ public class ServerHandler extends Thread {
         return this.objectOutputStreams.get(currentPlayer);
     }
 
+    public void fixRoomOwnerName(String str){
+        people.set(0,str);
+    }
 
 
+    public void occupyCountry(Object[] obj) {
+        Country country = (Country) obj[0];
+        int num = (int) obj[1];
+
+    }
 }

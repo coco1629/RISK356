@@ -1,6 +1,8 @@
 package View;
 
 import Controller.GameController;
+import Model.Country;
+import Model.CountryPath;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.beans.property.ObjectProperty;
@@ -15,7 +17,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

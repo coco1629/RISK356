@@ -50,57 +50,73 @@ public class JoinController {
 
     private String userName;
 
+    private String roomNameStr;
+
     @FXML
     void createSession(ActionEvent event) throws IOException {
         this.currentPlayer = new Player(userName);
         currentPlayer.getClientHandler().sendObject(Operation.CREATE_SESSION);
         currentPlayer.getClientHandler().sendObject(roomName.getText());
-        SessionData data = new SessionData(currentPlayer.getName(),Operation.CREATE_SESSION,Integer.parseInt(roomSize.getText()));
+        this.roomNameStr = roomName.getText();
+//        System.out.println("create game:"+userName);
+        SessionData data = new SessionData(userName,Operation.CREATE_SESSION,Integer.parseInt(roomSize.getText()));
         currentPlayer.getClientHandler().sendObject(data);
-//        Stage secondStage = new Stage();
-//        Label label = new Label("Waiting for players...");
-//        StackPane pane = new StackPane(label);
-//        Scene secondScene = new Scene(pane,200,150);
-//        secondStage.show();
-        changeScene();
+        Stage secondStage = new Stage();
+        Label label = new Label("Waiting for players...");
+        StackPane pane = new StackPane(label);
+        Scene secondScene = new Scene(pane,200,150);
+        secondStage.setScene(secondScene);
+        secondStage.show();
+        changeScene(secondStage);
     }
 
     @FXML
     void joinSession(ActionEvent event) throws IOException {
-        System.out.println(currentPlayer.getName());
+//        System.out.println(currentPlayer.getName());
         currentPlayer.getClientHandler().sendObject(Operation.JOIN_SESSION);
         System.out.println("join session");
-        currentPlayer.getClientHandler().sendObject(roomList.getSelectionModel().getSelectedItem());
+        this.roomNameStr = roomList.getSelectionModel().getSelectedItem();
+        currentPlayer.getClientHandler().sendObject(this.roomNameStr);
         currentPlayer.getClientHandler().sendObject(userName);
-        changeScene();
+//        System.out.println(userName);
+        Stage secondStage = new Stage();
+        Label label = new Label("Waiting for players...");
+        StackPane pane = new StackPane(label);
+        Scene secondScene = new Scene(pane,200,150);
+        secondStage.setScene(secondScene);
+        secondStage.show();
+        changeScene(secondStage);
     }
 
 
     @FXML
     void showRoom(ActionEvent event) throws IOException {
         this.currentPlayer = new Player(userName);
-        currentPlayer.getClientHandler().sendObject(Operation.SHOW_ROOMS);
+        this.currentPlayer.getClientHandler().sendObject(Operation.SHOW_ROOMS);
         System.out.println("send show rooms");
-        ArrayList<String> rooms = (ArrayList<String>) currentPlayer.getClientHandler().readObject();
+        ArrayList<String> rooms = (ArrayList<String>) this.currentPlayer.getClientHandler().readObject();
         ObservableList<String> roomItems = FXCollections.observableArrayList(rooms);
         roomList.setItems(roomItems);
     }
 
-    public void changeScene() throws IOException {
-//        ArrayList<Object> playersList = currentPlayer.getClientHandler().startListeningOrders();
-//        if(playersList != null){
-//            secondStage.close();
+    public void changeScene(Stage secondStage) throws IOException {
+        ArrayList<Object> playersList = this.currentPlayer.getClientHandler().startListeningOrders();
+        if(playersList != null) {
+            secondStage.close();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
             Parent main = loader.load();
             Scene scene = new Scene(main);
             MainView controller = loader.getController();
+            currentPlayer.setAllPlayers(playersList);
             controller.setPlayer(currentPlayer);
-            Stage previous = (Stage)root.getScene().getWindow();
+            controller.setPlayersNumOnPane();
+            controller.setColor(currentPlayer.getColor());
+            controller.setRoomName(this.roomNameStr);
+            Stage previous = (Stage) root.getScene().getWindow();
             previous.setResizable(false);
             previous.setScene(scene);
             previous.show();
-//        }
-
+        }
     }
 
     public Player getCurrentPlayer() {
@@ -118,4 +134,5 @@ public class JoinController {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
 }

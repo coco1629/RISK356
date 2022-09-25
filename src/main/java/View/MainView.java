@@ -11,6 +11,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -87,6 +88,10 @@ public class MainView extends ViewBase{
 
     private Player player;
 
+    private Color color;
+
+    private String roomName;
+
 //    private int playerNum;
 //
 //    private int currentNum = 0;
@@ -95,7 +100,8 @@ public class MainView extends ViewBase{
 
     public MainView(){
         svgUtil = new SvgUtil();
-        SvgUtil.setPressedColorCode("#c3d6e8");
+//        SvgUtil.setPressedColorCode("#59a869");
+//        SvgUtil.setPressedColorCode(player.getColor());
 //        player = new Player(Color.PINK,"ww");
     }
 
@@ -128,7 +134,7 @@ public class MainView extends ViewBase{
         svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
         svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
         svgUtil.getSelectedPath().setOccupied(true);
-        this.player.occupyCountry(svgUtil.getSelectedCountry(),numBox.getValue());
+        this.player.occupyCountry(svgUtil.getSelectedCountry(),numBox.getValue(),roomName);
 
     }
 
@@ -146,6 +152,42 @@ public class MainView extends ViewBase{
         this.player = player;
     }
 
+    public void setPlayersNumOnPane(){
+        System.out.println(this.player.getName());
+//        System.out.println(this.player.getAllPlayers().size());
+        switch (this.player.getAllPlayers().size()){
+            case 2:
+                PlayerName3.setVisible(false);
+                panePlayerColor3.setVisible(false);
+                PlayerName4.setVisible(false);
+                panePlayerColor4.setVisible(false);
+                PlayerName5.setVisible(false);
+                panePlayerColor5.setVisible(false);
+                PlayerName6.setVisible(false);
+                panePlayerColor6.setVisible(false);
+                break;
+            case 3:
+                PlayerName4.setVisible(false);
+                panePlayerColor4.setVisible(false);
+                PlayerName5.setVisible(false);
+                panePlayerColor5.setVisible(false);
+                PlayerName6.setVisible(false);
+                panePlayerColor6.setVisible(false);
+                break;
+            case 4:
+                PlayerName5.setVisible(false);
+                panePlayerColor5.setVisible(false);
+                PlayerName6.setVisible(false);
+                panePlayerColor6.setVisible(false);
+            case 5:
+                PlayerName6.setVisible(false);
+                panePlayerColor6.setVisible(false);
+
+        }
+    }
+
+
+
     public SvgUtil getSvgUtil() {
         return svgUtil;
     }
@@ -157,4 +199,21 @@ public class MainView extends ViewBase{
 //    }
 
 
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+//        System.out.println(String.valueOf(this.color));
+        SvgUtil.setPressedColorCode(String.valueOf(this.color));
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
 }

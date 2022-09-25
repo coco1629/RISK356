@@ -1,7 +1,5 @@
 package Connection;
 
-import Model.Player;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -42,7 +40,7 @@ public class Server {
                 serverThread.start();
                 ObjectOutputStream output = serverThread.getObjectOutputStream();
                 ObjectInputStream input = serverThread.getObjectInputStream();
-                System.out.println("new client");
+//                System.out.println("new client");
                 while(true){
                     Operation operation = (Operation) input.readObject();
                     if(operation == Operation.CREATE_SESSION){
@@ -50,6 +48,7 @@ public class Server {
                         String string = (String) input.readObject();
                         sessionData = (SessionData) input.readObject();
                         serverThread.setSessionData(sessionData);
+                        serverThread.fixRoomOwnerName(sessionData.getPlayer());
 //                        currentServerThreads.add(serverThread);
                         handlerHashMap.put(string,serverThread);
 //                        serverThread.start();
@@ -62,11 +61,14 @@ public class Server {
 //                        System.out.println("server send rooms");
                         String string = (String) input.readObject();
                         String person = (String) input.readObject();
+//                        System.out.println(string+"m"+person);
                         if (handlerHashMap.containsKey(string)) {  // either the key the server sent is right or wrong!!
                             handlerHashMap.get(string).addStreams(input, output, person);
-                            System.out.println("add streams");
+//                            output.writeObject(handlerHashMap.get(string));
+//                            System.out.println("add streams");
                             break;
                         } else {
+//                            System.out.println("add failed");
                             output.writeObject(Operation.JOIN_SESSION_FAILED);
                         }
                     }
@@ -74,7 +76,17 @@ public class Server {
                         Set<String> set = handlerHashMap.keySet();
                         ArrayList<String> rooms = new ArrayList<>(set);
                         output.writeObject(rooms);
-                        System.out.println("server send rooms");
+//                        System.out.println("server send rooms");
+                    }
+                    if(operation == Operation.OCCUPY){
+                        String string = (String) input.readObject();
+                        Object[] obj = (Object[]) input.readObject();
+//                        Country country = (Country) obj[0];
+//                        int num = (int) obj[1];
+                        if (handlerHashMap.containsKey(string)) {  // either the key the server sent is right or wrong!!
+                            handlerHashMap.get(string).occupyCountry(obj);
+                        }
+
                     }
 
                 }
