@@ -27,8 +27,8 @@ jobs:
         with:
           java-version: 18
       - name: Build with Maven
-        run: src/test/java
-        working-directory: ${{github.workspace}}
+        run: test
+        working-directory: ./src/test/java
       - uses: ashley-taylor/junit-report-annotations-action@master
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
