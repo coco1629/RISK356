@@ -28,7 +28,7 @@ jobs:
           java-version: 17
       - name: Build with Maven
         run:
-          cat test/java
+          cat src/test/java
       - uses: ashley-taylor/junit-report-annotations-action@master
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
