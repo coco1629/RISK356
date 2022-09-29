@@ -28,9 +28,9 @@ jobs:
           java-version: 17
       - name: Build with Maven
         run:
-          cat DBUtilTest.java
-          cat PlayerTest.java
-          cat TerritoryTest.java
+          cat src/test/java/JDBC/DBUtilTest.java
+          cat src/test/java/Model/PlayerTest.java
+          cat src/test/java/Model/TerritoryTest.java
       - uses: ashley-taylor/junit-report-annotations-action@master
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
