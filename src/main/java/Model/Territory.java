@@ -16,8 +16,8 @@ public class Territory implements Serializable {
 
     public Territory(int id){
         this.id = id;
-        owner = -1;
         units = -1;
+        owner = -1;
     }
 
     public int getId() {
