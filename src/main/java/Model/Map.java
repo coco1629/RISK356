@@ -1,7 +1,5 @@
 package Model;
 
-import View.Country;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

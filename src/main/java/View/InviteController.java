@@ -39,6 +39,8 @@ public class InviteController implements Initializable {
 
     private ArrayList<String> currentPlayers;
 
+    private String userName;
+
     @FXML
     private Button refreshButton;
 
@@ -131,4 +133,5 @@ public class InviteController implements Initializable {
     public void setCurrentplayer(Player currentplayer) {
         this.currentplayer = currentplayer;
     }
+
 }

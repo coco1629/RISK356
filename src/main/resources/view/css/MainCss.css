@@ -11,27 +11,27 @@
 }
 
 .cardPanel1 {
-    -fx-background-color: #ff4000;
+    -fx-background-color: red;
 }
 
 .cardPanel2 {
-    -fx-background-color: #0040ff;
+    -fx-background-color: blue;
 }
 
 .cardPanel3 {
-    -fx-background-color: #000000;
+    -fx-background-color: orange;
 }
 
 .cardPanel4 {
-    -fx-background-color: #f2f20d;
+    -fx-background-color: pink;
 }
 
 .cardPanel5 {
-    -fx-background-color: #19e64d;
+    -fx-background-color: yellow;
 }
 
 .cardPanel6 {
-    -fx-background-color: #fe59c2;
+    -fx-background-color: gray;
 }
 
 .text-area *.text {
