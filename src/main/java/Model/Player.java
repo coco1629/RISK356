@@ -21,6 +21,8 @@ public class Player implements Serializable {
 
     private HashMap<String,Color> playersColorMap = new HashMap<>();
 
+    private ArrayList<Country> occupiedCountries = new ArrayList<>();
+
 
     public Player(String name) throws IOException {
         super();
@@ -44,11 +46,11 @@ public class Player implements Serializable {
         return name;
     }
 
-    public void occupyCountry(Country country, int num, String roomName){
-        this.clientHandler.sendObject(Operation.OCCUPY);
-        this.clientHandler.sendObject(roomName);
-        this.clientHandler.sendObject(new Object[]{country, num});
-    }
+//    public void occupyCountries(ArrayList<Country> countries, int num, String roomName){
+//        this.clientHandler.sendObject(Operation.OCCUPY);
+//        this.clientHandler.sendObject(roomName);
+//        this.clientHandler.sendObject(new Object[]{this.name,countries, num});
+//    }
 
     public ClientHandler getClientHandler() {
         return clientHandler;
@@ -101,5 +103,25 @@ public class Player implements Serializable {
                 }
             }
         }
+    }
+
+    public HashMap<String, Color> getPlayersColorMap() {
+        return playersColorMap;
+    }
+
+    public void setPlayersColorMap(HashMap<String, Color> playersColorMap) {
+        this.playersColorMap = playersColorMap;
+    }
+
+    public ArrayList<Country> getOccupiedCountries() {
+        return occupiedCountries;
+    }
+
+    public void setOccupiedCountries(ArrayList<Country> occupiedCountries) {
+        this.occupiedCountries = occupiedCountries;
+    }
+
+    public void addToOccupiedCountries(Country country){
+        occupiedCountries.add(country);
     }
 }

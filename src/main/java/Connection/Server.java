@@ -1,5 +1,8 @@
 package Connection;
 
+import Model.Country;
+import Model.GameModel;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -30,28 +33,33 @@ public class Server {
                 connection = serverSocket.accept();
 
 
-//                TempThread thread = new TempThread(connection);
-                SessionData sessionData = new SessionData();
-                ServerHandler serverThread=new ServerHandler(connection,sessionData);
+                ServerThread thread = new ServerThread(connection);
+//                SessionData sessionData = new SessionData();
+//                ServerHandler serverThread=new ServerHandler(connection,sessionData);
 //                ObjectOutputStream output = new ObjectOutputStream(connection.getOutputStream());
 //                ObjectInputStream input = new ObjectInputStream(connection.getInputStream());
-//                thread.start();
+                thread.start();
 //                ServerHandler serverThread=new ServerHandler(connection,new SessionData());
-                serverThread.start();
-                ObjectOutputStream output = serverThread.getObjectOutputStream();
-                ObjectInputStream input = serverThread.getObjectInputStream();
+//                serverThread.start();
+//                ObjectOutputStream output = serverThread.getObjectOutputStream();
+//                ObjectInputStream input = serverThread.getObjectInputStream();
+                ObjectOutputStream output = thread.getObjectOutputStream();
+                ObjectInputStream input = thread.getObjectInputStream();
 //                System.out.println("new client");
                 while(true){
                     Operation operation = (Operation) input.readObject();
+                    System.out.println(operation);
                     if(operation == Operation.CREATE_SESSION){
 //                        thread.stop();
                         String string = (String) input.readObject();
+                        SessionData sessionData = new SessionData();
                         sessionData = (SessionData) input.readObject();
+                        ServerHandler serverThread=new ServerHandler(connection,input,output,sessionData);
                         serverThread.setSessionData(sessionData);
                         serverThread.fixRoomOwnerName(sessionData.getPlayer());
 //                        currentServerThreads.add(serverThread);
                         handlerHashMap.put(string,serverThread);
-//                        serverThread.start();
+                        serverThread.start();
                         break;
                     }
                     if(operation == Operation.JOIN_SESSION){
@@ -78,18 +86,22 @@ public class Server {
                         output.writeObject(rooms);
 //                        System.out.println("server send rooms");
                     }
-                    if(operation == Operation.OCCUPY){
-                        String string = (String) input.readObject();
-                        Object[] obj = (Object[]) input.readObject();
-//                        Country country = (Country) obj[0];
-//                        int num = (int) obj[1];
-                        if (handlerHashMap.containsKey(string)) {  // either the key the server sent is right or wrong!!
-                            handlerHashMap.get(string).occupyCountry(obj);
-                        }
 
-                    }
+
 
                 }
+//                Operation operation = (Operation) input.readObject();
+//                if(operation == Operation.OCCUPY){
+//                    String string = (String) input.readObject();
+//                    System.out.println("occupy!!!!!!!");
+//                    Object[] obj = (Object[]) input.readObject();
+//                    //                        System.out.println("occupy!!!!!!!");
+//                    //                        Country country = (Country) obj[0];
+//                    //                        int num = (int) obj[1];
+//                    if (handlerHashMap.containsKey(string)) {
+//                        handlerHashMap.get(string).occupyCountries(obj);
+//                    }
+//                }
 
 //                setUpConnection();
 //                communicate();

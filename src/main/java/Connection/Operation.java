@@ -13,6 +13,8 @@ public enum Operation implements Serializable {
 
     SHOW_ROOMS,
 
+    UPDATE,
+
     INVITE,
 
     OCCUPY,

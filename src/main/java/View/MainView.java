@@ -1,8 +1,13 @@
 package View;
 
+import Connection.GameBoard;
+import Connection.Operation;
+import Model.Country;
 import Model.Player;
+import Model.Territory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,9 +20,10 @@ import javafx.scene.paint.Color;
 
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class MainView extends ViewBase{
+public class MainView implements Initializable {
     @FXML
     private Button AttackPhase;
 
@@ -134,7 +140,35 @@ public class MainView extends ViewBase{
         svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
         svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
         svgUtil.getSelectedPath().setOccupied(true);
-        this.player.occupyCountry(svgUtil.getSelectedCountry(),numBox.getValue(),roomName);
+        this.player.addToOccupiedCountries(svgUtil.getSelectedCountry());
+
+//        this.player.occupyCountry(svgUtil.getSelectedCountry(),numBox.getValue(),roomName);
+
+    }
+
+    @FXML
+    void nextPhase(ActionEvent event) {
+        System.out.println("next");
+        System.out.println(this.player.getClientHandler());
+        this.player.getClientHandler().sendObject(Operation.OCCUPY);
+        System.out.println("send occupy");
+        this.player.getClientHandler().sendObject(roomName);
+        this.player.getClientHandler().sendObject(new Object[]{this.player.getName(),this.player.getOccupiedCountries(), roomName});
+//        this.player.occupyCountries(this.player.getOccupiedCountries(),numBox.getValue(),roomName);
+//        this.player.getClientHandler().sendObject(roomName);
+//        this.player.getClientHandler().sendObject(Operation.UPDATE);
+        ArrayList<Territory> obj = (ArrayList<Territory>) this.player.getClientHandler().readObject();
+//        String name = (String) obj[0];
+//        Country country = (Country) obj[1];
+//        int num = (int) obj[2];
+        for(Territory territory: obj){
+            Country country = Country.valueOf(territory.getName());
+            svgUtil.setPathColor(this.player.getPlayersColorMap().get(country.getName()),country);
+        }
+    }
+
+    @FXML
+    void skipPhase(ActionEvent event) {
 
     }
 
@@ -212,6 +246,7 @@ public class MainView extends ViewBase{
     public String getRoomName() {
         return roomName;
     }
+
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;

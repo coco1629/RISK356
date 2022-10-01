@@ -75,18 +75,20 @@
                   <Font size="11.0" />
                </font>
             </Button>
-            <Button fx:id="SkipPhase" layoutX="256.0" layoutY="55.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="143.0" stylesheets="@css/MainCss.css" text="Skip">
+            <Button fx:id="SkipPhase" layoutX="256.0" layoutY="55.0" mnemonicParsing="false" onAction="#skipPhase" prefHeight="24.0" prefWidth="143.0" stylesheets="@css/MainCss.css" text="Skip">
                <font>
                   <Font size="11.0" />
                </font>
             </Button>
             <Spinner fx:id="numBox" focusTraversable="false" layoutX="626.0" layoutY="23.0" prefHeight="23.0" prefWidth="92.0" />
-            <Button fx:id="nextPhase" layoutX="409.0" layoutY="55.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="143.0" stylesheets="@css/MainCss.css" text="Next">
+            <Button fx:id="nextPhase" layoutX="409.0" layoutY="55.0" mnemonicParsing="false" onAction="#nextPhase" prefHeight="24.0" prefWidth="143.0" stylesheets="@css/MainCss.css" text="Next">
                <font>
                   <Font size="11.0" />
                </font>
             </Button>
             <Button fx:id="occupyButton" layoutX="741.0" layoutY="21.0" mnemonicParsing="false" onAction="#occupy" prefHeight="26.0" prefWidth="50.0" text="OK!" />
+            <Label layoutX="626.0" layoutY="56.0" prefHeight="23.0" prefWidth="79.0" text="Left Troops:" visible="false" />
+            <Label fx:id="troopsNum" layoutX="718.0" layoutY="60.0" />
          </children>
       </Pane>
    </children>
