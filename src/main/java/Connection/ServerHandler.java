@@ -1,6 +1,8 @@
 package Connection;
 
 import Model.Country;
+import Model.GameModel;
+import Model.Territory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,6 +24,8 @@ public class ServerHandler extends Thread {
 
     private final ArrayList<ObjectOutputStream> objectOutputStreams = new ArrayList<>();
     private final ArrayList<ObjectInputStream> objectInputStreams = new ArrayList<>();
+    private GameModel gameModel;
+
 
     private final ArrayList<String> people = new ArrayList<>();
 
@@ -29,7 +33,6 @@ public class ServerHandler extends Thread {
 
     private int allowedPlayers;
 
-    private GameBoard gameBoard = new GameBoard();
 
     private ArrayList<String> invitePlayers = new ArrayList<>();
 
@@ -39,12 +42,14 @@ public class ServerHandler extends Thread {
 
     private String function;
 
-    public ServerHandler(Socket socket,SessionData sessionData) throws IOException {
+    public ServerHandler(Socket socket,ObjectInputStream inputStream, ObjectOutputStream objectOutputStream,SessionData sessionData) throws IOException {
 //        this.clientName = name;
         this.clientSocket = socket;
         this.people.add(sessionData.getPlayer());
-        this.objectOutputStreams.add(new ObjectOutputStream(socket.getOutputStream()));
-        this.objectInputStreams.add(new ObjectInputStream(socket.getInputStream()));
+        this.objectOutputStreams.add(objectOutputStream);
+        this.objectInputStreams.add(inputStream);
+//        this.objectOutputStreams.add(new ObjectOutputStream(socket.getOutputStream()));
+//        this.objectInputStreams.add(new ObjectInputStream(socket.getInputStream()));
         currentServerThreads.add(this);
         this.sessionData =sessionData;
         this.currentCount += 1;
@@ -59,6 +64,7 @@ public class ServerHandler extends Thread {
             this.people.add(person);
             if (this.currentCount == (this.sessionData.getNumberOfAllowedPlayers() - 1)) {
                 System.out.println(this.currentCount);
+                this.gameModel = new GameModel(people);
                 this.sendAllPlayersNamesSymbols();
             }
             this.currentCount+=1;
@@ -69,46 +75,6 @@ public class ServerHandler extends Thread {
 
     @Override
     public void run() {
-//        while (true){
-//        String message = (String) readObject();
-//        String[] str = message.split(",");
-//        System.out.println(message);
-//        if(str[0].equals("username")){
-//            clientName = str[1];
-//            ArrayList<String> players = new ArrayList<>();
-//            for(ServerHandler serverHandler:currentServerThreads){
-//                players.add(serverHandler.getClientName());
-//            }
-//            sendObject(players);
-//        }
-//        if(str[0].equals("send_Invite")){
-////////                Socket target =(Socket) objectInputStream.readObject();
-//            for(ServerHandler serverHandler:currentServerThreads){
-//                System.out.println(serverHandler.getClientName());
-//                if(serverHandler.getClientName().equals(str[1])){
-//                    System.out.println("send to the inviter");
-//                    serverHandler.sendObject("receive_invite,"+str[1]+","+clientName);
-//                }
-//            }
-////            sendObject("receive_invite,"+str[1]+","+clientName);
-//        }
-//        if(str[0].equals("receive_invite")){
-//            System.out.println("receive");
-//            invitePlayers.add(str[2]);
-//        }
-//        if(str[0].equals("request_current_players")){
-//            System.out.println("update!!!");
-//            ArrayList<String> players = new ArrayList<>();
-//            for(ServerHandler serverHandler:currentServerThreads){
-//                players.add(serverHandler.getClientName());
-//            }
-//            sendObject(players);
-//        }
-////            sendObject("",Server.currentServerThreads,);
-//
-//        }
-
-
 
     }
 
@@ -136,24 +102,29 @@ public class ServerHandler extends Thread {
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
             System.out.println("allowed players: "+i);
             Object[] data = new Object[]{this.colors[i], people.get(i)};
-            System.out.println(this.colors[i].name());
-            System.out.println(people.get(i));
+//            System.out.println(this.colors[i].name());
+//            System.out.println(people.get(i));
             finalArray.add(data);
         }
         this.sendArrayListToAll(finalArray);
 //        this.sendObjectToAll(finalArray);
-//        this.sendMovePermissions(this.currentActivePlayer);
+//        this.listenUpdate(this.currentActivePlayer);
     }
 
     private void sendObjectToAll(Object object) {
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
             this.sendObject(object, this.objectOutputStreams.get(i));
         }
-        for(int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++){
-            this.sendObject("End", this.objectOutputStreams.get(i));
-        }
+//        for(int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++){
+//            this.sendObject("End", this.objectOutputStreams.get(i));
+//        }
 
     }
+
+    private void listenUpdate(int currentActivePlayer) {
+
+    }
+
 
     private void sendArrayListToAll(ArrayList<Object> objs){
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
@@ -197,12 +168,16 @@ public class ServerHandler extends Thread {
 
     public void fixRoomOwnerName(String str){
         people.set(0,str);
+
+    }
+
+    public void createGameBoard(){
+
     }
 
 
-    public void occupyCountry(Object[] obj) {
-        Country country = (Country) obj[0];
-        int num = (int) obj[1];
 
-    }
+
+
+
 }

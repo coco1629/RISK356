@@ -1,42 +1,60 @@
 package Model;
 
+import java.awt.*;
 import java.io.Serializable;
 
 public class Territory implements Serializable {
 
 
-    private int owner;//Owner of land
-    private int units;//Number of territorial troops
-    private int id;
+//    private int owner;//Owner of land
+//    private int units;//Number of territorial troops
+    private Color color;
+    private String onwner;
+    private String name;
+    private int num=0;
+
 
     @Override
     public void finalize() throws Throwable{
 
     }
 
-    public Territory(int id){
-        this.id = id;
-        owner = -1;
-        units = -1;
+    public Territory(String name){
+        this.name = name;
+        this.onwner = null;
+//        owner = -1;
+//        units = -1;
     }
 
-    public int getId() {
-        return id;
+    public Color getColor() {
+        return color;
     }
 
-    public int getOwner() {
-        return owner;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
-    public int getUnits() {
-        return units;
+    public String getOnwner() {
+        return onwner;
     }
 
-    public void setOwner(int owner) {
-        this.owner = owner;
+    public void setOnwner(String onwner) {
+        this.onwner = onwner;
     }
 
-    public void setUnits(int units) {
-        this.units = units;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 }
