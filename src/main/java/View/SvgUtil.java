@@ -176,11 +176,11 @@ public class SvgUtil extends Region {
         final CountryPath countryPath = (CountryPath) evt.getSource();
         selectedPath = countryPath;
         final String countryName = countryPath.getName();
-        System.out.println(countryName);
+//        System.out.println(countryName);
         final Country country = Country.valueOf(countryName);
-        System.out.println(country);
+//        System.out.println(country);
         final CountryPath paths = countryPathHashMap.get(countryName);
-        System.out.println(paths);
+//        System.out.println(paths);
         final EventType<? extends MouseEvent> eventType = evt.getEventType();
 
 //        if (MOUSE_ENTERED == eventType){
@@ -206,7 +206,7 @@ public class SvgUtil extends Region {
                 }
                 paths.setFill(color);
                 paths.setSelect(false);
-                System.out.println("unselected You occupied " + countryName);
+//                System.out.println("unselected You occupied " + countryName);
 //                setSelectionEnabled(false);
 //                for (SVGPath path:countryPaths.get(getSelectedCountry().getName())){
 //                    path.setFill(color);
@@ -217,7 +217,7 @@ public class SvgUtil extends Region {
                 paths.setSelect(true);
 //                setSelectionEnabled(true);
                 paths.setFill(Color.web(pressedColorCode));
-                System.out.println("You occupied " + countryName);
+//                System.out.println("You occupied " + countryName);
 //                if (isHoverEnabled()) {
 //                    paths.setFill(getPressedColor());
 //                }
@@ -285,7 +285,9 @@ public class SvgUtil extends Region {
     }
 
     public void setPathColor(Color color,Country country){
-        CountryPath paths = countryPathHashMap.get(country);
+        CountryPath paths = countryPathHashMap.get(country.getName());
+//        System.out.println(color);
+//        System.out.println(paths);
         paths.setOccupied(true);
         paths.setFill(color);
         paths.getText().setText(String.valueOf(country.getPopulation()));
@@ -305,5 +307,10 @@ public class SvgUtil extends Region {
 
     public static void setPressedColorCode(String pressedColorCode) {
         SvgUtil.pressedColorCode = pressedColorCode;
+    }
+
+    public void setCountryTroops(Country country, int num){
+        CountryPath paths = countryPathHashMap.get(country.getName());
+        paths.getText().setText(String.valueOf(num));
     }
 }

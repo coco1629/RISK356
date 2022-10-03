@@ -18,7 +18,7 @@ public class GameModel {
         this.countryArrayList = new ArrayList<>();
         this.playerList = playerList;
         for (Country country : Country.values()){
-            countryArrayList.add(new Territory(country.getName()));
+            countryArrayList.add(new Territory(country.getName(),null,country.getPopulation()));
         }
         phase = currentProcess.Preparation;
         switch (playerList.size()) {

@@ -72,37 +72,44 @@ public class Player implements Serializable {
                 String name = (String) array[1];
 //                System.out.println(name);
                 Operation operation = (Operation) array[0];
-                if(Objects.equals(name, this.name)){
-                    switch (operation) {
-                        case RED -> {
+
+                switch (operation) {
+                    case RED -> {
+                        if(Objects.equals(name, this.name))
 //                            System.out.println("red");
                             this.color = Color.RED;
-                            playersColorMap.put(name, Color.RED);
-                        }
-                        case BLUE -> {
-                            this.color = Color.BLUE;
-                            playersColorMap.put(name, Color.BLUE);
-                        }
-                        case PINK -> {
-                            this.color = Color.PINK;
-                            playersColorMap.put(name, Color.PINK);
-                        }
-                        case YELLOW -> {
-                            this.color = Color.YELLOW;
-                            playersColorMap.put(name, Color.YELLOW);
-                        }
-                        case ORANGE -> {
-                            this.color = Color.ORANGE;
-                            playersColorMap.put(name, Color.ORANGE);
-                        }
-                        case GRAY -> {
-                            this.color = Color.GRAY;
-                            playersColorMap.put(name, Color.GRAY);
-                        }
+                        playersColorMap.put(name, Color.RED);
                     }
+                    case BLUE -> {
+                        if(Objects.equals(name, this.name))
+                            this.color = Color.BLUE;
+                        playersColorMap.put(name, Color.BLUE);
+                    }
+                    case PINK -> {
+                        if(Objects.equals(name, this.name))
+                            this.color = Color.PINK;
+                        playersColorMap.put(name, Color.PINK);
+                    }
+                    case YELLOW -> {
+                        if(Objects.equals(name, this.name))
+                            this.color = Color.YELLOW;
+                        playersColorMap.put(name, Color.YELLOW);
+                    }
+                    case ORANGE -> {
+                        if(Objects.equals(name, this.name))
+                            this.color = Color.ORANGE;
+                        playersColorMap.put(name, Color.ORANGE);
+                    }
+                    case GRAY -> {
+                        if(Objects.equals(name, this.name))
+                            this.color = Color.GRAY;
+                        playersColorMap.put(name, Color.GRAY);
+                    }
+
                 }
             }
         }
+        System.out.println(playersColorMap.toString());
     }
 
     public HashMap<String, Color> getPlayersColorMap() {
@@ -122,6 +129,6 @@ public class Player implements Serializable {
     }
 
     public void addToOccupiedCountries(Country country){
-        occupiedCountries.add(country);
+        this.occupiedCountries.add(country);
     }
 }

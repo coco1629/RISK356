@@ -140,30 +140,57 @@ public class MainView implements Initializable {
         svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
         svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
         svgUtil.getSelectedPath().setOccupied(true);
-        this.player.addToOccupiedCountries(svgUtil.getSelectedCountry());
-
+        Country country = svgUtil.getSelectedCountry();
+        country.setPopulation(numBox.getValue());
+        this.player.addToOccupiedCountries(country);
 //        this.player.occupyCountry(svgUtil.getSelectedCountry(),numBox.getValue(),roomName);
 
     }
 
     @FXML
     void nextPhase(ActionEvent event) {
-        System.out.println("next");
-        System.out.println(this.player.getClientHandler());
+//        System.out.println("next");
+//        System.out.println(this.player.getClientHandler());
         this.player.getClientHandler().sendObject(Operation.OCCUPY);
-        System.out.println("send occupy");
-        this.player.getClientHandler().sendObject(roomName);
-        this.player.getClientHandler().sendObject(new Object[]{this.player.getName(),this.player.getOccupiedCountries(), roomName});
+//        System.out.println("send occupy");
+//        this.player.getClientHandler().sendObject(roomName);
+        this.player.getClientHandler().sendObject(this.player.getName());
+//        for (Country country : this.player.getOccupiedCountries()){
+//            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
+//        }
+        this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
+        for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
+            Country country =this.player.getOccupiedCountries().get(i);
+//            System.out.println(country.getName() + "troops num " + country.getPopulation());
+            this.player.getClientHandler().sendObject(country);
+            this.player.getClientHandler().sendObject(country.getPopulation());
+//            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
+        }
+
 //        this.player.occupyCountries(this.player.getOccupiedCountries(),numBox.getValue(),roomName);
 //        this.player.getClientHandler().sendObject(roomName);
 //        this.player.getClientHandler().sendObject(Operation.UPDATE);
-        ArrayList<Territory> obj = (ArrayList<Territory>) this.player.getClientHandler().readObject();
+//        Object object =  this.player.getClientHandler().readObject();
+//        System.out.println(object.toString());
+//        this.player.getClientHandler().sendObject(Operation.UPDATE);
+        int num = (int) this.player.getClientHandler().readObject();
+        ArrayList<Territory> obj = new ArrayList<>();
+        for(int i = 0; i <num; i++){
+            Territory territory = (Territory) this.player.getClientHandler().readObject();
+            obj.add(territory);
+        }
+//        Object array =  this.player.getClientHandler().readObject();
+//        ArrayList<Territory> obj = (ArrayList<Territory>)array;
 //        String name = (String) obj[0];
 //        Country country = (Country) obj[1];
 //        int num = (int) obj[2];
         for(Territory territory: obj){
+//            System.out.println(territory.getName() + " " + territory.getOwner() + " num: " + territory.getNum());
             Country country = Country.valueOf(territory.getName());
-            svgUtil.setPathColor(this.player.getPlayersColorMap().get(country.getName()),country);
+            country.setPopulation(territory.getNum());
+//            System.out.println(this.player.getPlayersColorMap());
+            svgUtil.setPathColor(this.player.getPlayersColorMap().get(territory.getOwner()),country);
+            svgUtil.setCountryTroops(country,territory.getNum());
         }
     }
 
