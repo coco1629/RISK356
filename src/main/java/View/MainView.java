@@ -1,6 +1,6 @@
 package View;
 
-import Connection.GameBoard;
+//import Connection.GameBoard;
 import Connection.Operation;
 import Model.Country;
 import Model.Player;
