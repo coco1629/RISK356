@@ -1,5 +1,7 @@
 package Model;
 
+import Functions.Card;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +12,12 @@ public class GameModel {
     private currentProcess phase;
     private HashMap<String,Integer> troopsMap = new HashMap<>();
     private ArrayList<String> playerList;
+    private Player currentPlayer;
     private ArrayList<Territory> countryArrayList;
     private int initTroops = 10;
+    public final static String[] cards = {"infantry","cavalry","artillery"};
+    public static int cardsValue = 5;
+    public static boolean disable = false;
 
 
     public GameModel(ArrayList<String> playerList){
@@ -104,5 +110,54 @@ public class GameModel {
 
     public void setInitTroops(int initTroops) {
         this.initTroops = initTroops;
+    }
+
+    public boolean validExchange(String card1, String card2, String card3){
+        if (card1.equals(card2) && card2.equals(card3)){
+            return currentPlayer.getCards().get(card1) >= 1 && currentPlayer.getCards().get(card2) >= 1 && currentPlayer.getCards().get(card3) >= 1;
+        }
+        if(!card1.equals(card2) && !card2.equals(card3) && !card1.equals(card3)){
+            return currentPlayer.getCards().get(card1) >= 1 && currentPlayer.getCards().get(card2) >= 1 &&
+                    currentPlayer.getCards().get(card3) >= 1;
+        }
+        return false;
+
+    }
+    public void trade(ArrayList<Card> cards){
+        String card1 = cards.get(0).cardType.toString().toLowerCase();
+        String card2 = cards.get(0).cardType.toString().toLowerCase();
+        String card3 = cards.get(0).cardType.toString().toLowerCase();
+        if (!validExchange(card1, card2, card3)){
+            CardModel.getInstance().setInvalidInfo(1);
+            CardModel.getInstance().update();
+            return;
+        }
+        CardModel.getInstance().setInvalidInfo(0);
+        CardModel.getInstance().update();
+        currentPlayer.handle(card1, card2, card3);
+        currentPlayer.exchangeArmy();
+        CardModel.getInstance().update();
+    }
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player p) {
+        currentPlayer = p;
+    }
+    public void addArmy(){
+        CardModel.getInstance().setCurrentPlayer(currentPlayer);
+        CardModel.getInstance().update();
+
+    }
+    public void quitCard(){
+        if(currentPlayer.getAllCards() >= 5){
+            CardModel.getInstance().setInvalidInfo(3);
+            CardModel.getInstance().update();
+        }
+        CardModel.getInstance().hide();
+        disable = false;
+//        currentPlayer.addArmy
+
     }
 }

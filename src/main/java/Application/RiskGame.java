@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 public class RiskGame extends Application {
 
     @Override
@@ -14,7 +15,7 @@ public class RiskGame extends Application {
         try {
             // Read file fxml and draw interface.
             Parent root = FXMLLoader.load(getClass()
-                    .getResource("/view/LoginView.fxml"));
+                    .getResource("/view/Card.fxml"));
             primaryStage.setResizable(false);
             primaryStage.setTitle("Risk Game");
             primaryStage.setScene(new Scene(root));

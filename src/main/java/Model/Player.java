@@ -2,13 +2,13 @@ package Model;
 
 import Connection.ClientHandler;
 import Connection.Operation;
+import Functions.Card;
+import Functions.CardType;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 public class Player implements Serializable {
     private Color color;
@@ -23,6 +23,9 @@ public class Player implements Serializable {
 
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
 
+    private HashMap<String, Integer> cards;
+    private int cardsArmy;
+
 
     public Player(String name) throws IOException {
         super();
@@ -30,6 +33,10 @@ public class Player implements Serializable {
         this.name = name;
         this.territoryCount = 0;
         this.clientHandler = new ClientHandler(name);
+        cards = new HashMap<>();
+        cards.put("infantry", 0);
+        cards.put("cavalry", 0);
+        cards.put("artillery", 0);
 //        clientHandler.start();
 //        color =
     }
@@ -131,4 +138,52 @@ public class Player implements Serializable {
     public void addToOccupiedCountries(Country country){
         this.occupiedCountries.add(country);
     }
+
+    public int getAllCards(){
+        int n = 0;
+        for(String key: cards.keySet()){
+            n += cards.get(key);
+        }
+        return n;
+    }
+    public List<Card> getPlayerCardList(){
+        List<Card> playerCards = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry:cards.entrySet()){
+            if(entry.getKey().equals(CardType.ARTILLERY.toString().toLowerCase()))
+                for (int i=0; i < entry.getValue(); i ++){
+                    playerCards.add(new Card(CardType.ARTILLERY));
+                }
+            if(entry.getKey().equals(CardType.CAVALRY.toString().toLowerCase()))
+                for (int i=0; i < entry.getValue(); i ++){
+                    playerCards.add(new Card(CardType.CAVALRY));
+                }
+            if(entry.getKey().equals(CardType.INFANTRY.toString().toLowerCase()))
+                for (int i=0; i < entry.getValue(); i ++){
+                    playerCards.add(new Card(CardType.INFANTRY));
+                }
+        }
+        return playerCards;
+
+    }
+    public HashMap<String, Integer> getCards(){
+        return cards;
+    }
+    public int getCardsArmy(){return cardsArmy;}
+    public void handle(String card1, String card2, String card3){
+        cards.put(card1, cards.get(card1) - 1);
+        cards.put(card2, cards.get(card2) - 1);
+        cards.put(card3, cards.get(card3) - 1);
+        CardModel.getInstance().update();
+
+    }
+    public void exchangeArmy(){
+        cardsArmy += GameModel.cardsValue;
+        GameModel.cardsValue += 5;
+
+    }
+    public void addArmy(){
+        
+        
+    }
+
 }
