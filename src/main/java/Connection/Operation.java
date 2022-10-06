@@ -15,7 +15,7 @@ public enum Operation implements Serializable {
 
     UPDATE,
 
-    INVITE,
+    NEXT_PHASE,
 
     OCCUPY,
 

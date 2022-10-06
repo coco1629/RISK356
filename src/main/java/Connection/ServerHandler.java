@@ -33,6 +33,8 @@ public class ServerHandler extends Thread {
 
     private SessionData sessionData;
 
+    private Server server;
+
     private int allowedPlayers;
 
 
@@ -73,9 +75,18 @@ public class ServerHandler extends Thread {
             this.people.add(person);
             if (this.currentCount == (this.sessionData.getNumberOfAllowedPlayers() - 1)) {
 //                System.out.println(this.currentCount);
-                this.gameModel = new GameModel(people);
+//                this.gameModel = new GameModel(people);
+                Server.getGameModel().setPlayerList(people);
+                System.out.println(Server.getGameModel().getPlayerList());
                 this.setAllPlayersThreads();
                 this.sendAllPlayersNamesSymbols();
+                switch (people.size()) {
+                    case 2 -> this.sendObjectToAll(50); // test
+                    case 3 -> this.sendObjectToAll(35);
+                    case 4 -> this.sendObjectToAll(30);
+                    case 5 -> this.sendObjectToAll(25);
+                    case 6 -> this.sendObjectToAll(20);
+                }
 
             }
             this.currentCount+=1;
@@ -143,7 +154,7 @@ public class ServerHandler extends Thread {
 //        this.listenUpdate(this.currentActivePlayer);
     }
 
-    private void sendObjectToAll(Object object) {
+    public void sendObjectToAll(Object object) {
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
             this.sendObject(object, this.objectOutputStreams.get(i));
         }
@@ -153,12 +164,8 @@ public class ServerHandler extends Thread {
 
     }
 
-    private void listenUpdate(int currentActivePlayer) {
 
-    }
-
-
-    private void sendArrayListToAll(ArrayList<Object> objs){
+    public void sendArrayListToAll(ArrayList<Object> objs){
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
 //            System.out.println(i);
             this.sendObject(objs, this.objectOutputStreams.get(i));

@@ -75,21 +75,32 @@
                   <Font size="11.0" />
                </font>
             </Button>
-            <Button fx:id="SkipPhase" layoutX="256.0" layoutY="55.0" mnemonicParsing="false" onAction="#skipPhase" prefHeight="24.0" prefWidth="143.0" stylesheets="@css/MainCss.css" text="Skip">
+            <Button fx:id="SkipPhase" layoutX="256.0" layoutY="55.0" mnemonicParsing="false" onAction="#skipPhase" prefHeight="24.0" prefWidth="79.0" stylesheets="@css/MainCss.css" text="Skip">
                <font>
                   <Font size="11.0" />
                </font>
             </Button>
             <Spinner fx:id="numBox" focusTraversable="false" layoutX="626.0" layoutY="23.0" prefHeight="23.0" prefWidth="92.0" />
-            <Button fx:id="nextPhase" layoutX="409.0" layoutY="55.0" mnemonicParsing="false" onAction="#nextPhase" prefHeight="24.0" prefWidth="143.0" stylesheets="@css/MainCss.css" text="Next">
+            <Button fx:id="nextPhase" layoutX="465.0" layoutY="55.0" mnemonicParsing="false" onAction="#nextPhase" prefHeight="24.0" prefWidth="87.0" stylesheets="@css/MainCss.css" text="Next">
                <font>
                   <Font size="11.0" />
                </font>
             </Button>
             <Button fx:id="occupyButton" layoutX="741.0" layoutY="21.0" mnemonicParsing="false" onAction="#occupy" prefHeight="26.0" prefWidth="50.0" text="OK!" />
-            <Label layoutX="626.0" layoutY="56.0" prefHeight="23.0" prefWidth="79.0" text="Left Troops:" visible="false" />
+            <Label layoutX="626.0" layoutY="56.0" prefHeight="23.0" prefWidth="79.0" text="Left Troops:" />
             <Label fx:id="troopsNum" layoutX="718.0" layoutY="60.0" />
+            <Label fx:id="phase" layoutX="359.0" layoutY="58.0" prefHeight="19.0" prefWidth="79.0" text="Preparation">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
+      <Label layoutX="30.0" layoutY="385.0" text="Instructions:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="instructions" layoutX="14.0" layoutY="417.0" prefHeight="184.0" prefWidth="122.0" wrapText="true" />
    </children>
 </AnchorPane>

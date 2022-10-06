@@ -193,7 +193,15 @@ public class SvgUtil extends Region {
 ////                }
 //            }
         if (MOUSE_PRESSED == eventType) {
-            if(paths.isOccupied()) return;
+//            paths.setStroke();
+
+            if(paths.isOccupied()){
+                if(paths.getStrokeWidth() == 3)
+                    paths.setStrokeWidth(1);
+                else
+                    paths.setStrokeWidth(3);
+                return;
+            }
 
             if(paths.isSelect()){
 //            if (isSelectionEnabled()) {
@@ -206,6 +214,7 @@ public class SvgUtil extends Region {
                 }
                 paths.setFill(color);
                 paths.setSelect(false);
+                paths.setStrokeWidth(1);
 //                System.out.println("unselected You occupied " + countryName);
 //                setSelectionEnabled(false);
 //                for (SVGPath path:countryPaths.get(getSelectedCountry().getName())){
@@ -217,6 +226,7 @@ public class SvgUtil extends Region {
                 paths.setSelect(true);
 //                setSelectionEnabled(true);
                 paths.setFill(Color.web(pressedColorCode));
+
 //                System.out.println("You occupied " + countryName);
 //                if (isHoverEnabled()) {
 //                    paths.setFill(getPressedColor());
@@ -224,6 +234,7 @@ public class SvgUtil extends Region {
             }
 //            System.out.println("You occupied " + countryName);
         }
+
 //        }else if (MOUSE_RELEASED == eventType){
 //            Color color;
 //            if (isSelectionEnabled()){

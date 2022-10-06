@@ -1,10 +1,13 @@
 package View;
 
-//import Connection.GameBoard;
 import Connection.Operation;
 import Model.Country;
 import Model.Player;
 import Model.Territory;
+import Model.currentProcess;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -90,6 +93,9 @@ public class MainView implements Initializable {
     @FXML
     private AnchorPane rootPane;
 
+    @FXML
+    private Label phase;
+
     private SvgUtil svgUtil;
 
     private Player player;
@@ -97,6 +103,12 @@ public class MainView implements Initializable {
     private Color color;
 
     private String roomName;
+
+    @FXML
+    private Label troopsNum;
+
+    @FXML
+    private Label instructions;
 
 //    private int playerNum;
 //
@@ -106,6 +118,8 @@ public class MainView implements Initializable {
 
     public MainView(){
         svgUtil = new SvgUtil();
+
+
 //        SvgUtil.setPressedColorCode("#59a869");
 //        SvgUtil.setPressedColorCode(player.getColor());
 //        player = new Player(Color.PINK,"ww");
@@ -119,17 +133,8 @@ public class MainView implements Initializable {
         group.setScaleY(1.2);
         group.setLayoutX(-140);
         group.setLayoutY(-50);
-
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,50,1);
         numBox.setValueFactory(valueFactory);
-
-//        group.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler(){
-//
-//                }
-//        );
-//        group.getChildren().get(0).addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-//
-//        });
         rootPane.getChildren().addAll(group);
 
     }
@@ -137,27 +142,42 @@ public class MainView implements Initializable {
     @FXML
     void occupy(ActionEvent event) {
 
-        svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
-        svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
-        svgUtil.getSelectedPath().setOccupied(true);
-        Country country = svgUtil.getSelectedCountry();
-        country.setPopulation(numBox.getValue());
-        this.player.addToOccupiedCountries(country);
+        if(svgUtil.getSelectedPath() != null){
+            if(numBox.getValue() <= this.player.getAllowedTroops()){
+                if(this.player.getPhase() == currentProcess.Fortify || this.player.getPhase() == currentProcess.Preparation){
+                    svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
+                    svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
+                    svgUtil.getSelectedPath().setOccupied(true);
+                    Country country = svgUtil.getSelectedCountry();
+                    country.setPopulation(numBox.getValue());
+                    this.player.setAllowedTroops(this.player.getAllowedTroops() - numBox.getValue());
+                    troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+                    this.player.addToOccupiedCountries(country);
+                }
+
+                if(this.player.getPhase() == currentProcess.Attack){
+
+                }
+
+                if(this.player.getPhase() == currentProcess.Fortify){
+
+                }
+
+            }
+
+        }
+
+
+
 //        this.player.occupyCountry(svgUtil.getSelectedCountry(),numBox.getValue(),roomName);
 
     }
 
     @FXML
     void nextPhase(ActionEvent event) {
-//        System.out.println("next");
-//        System.out.println(this.player.getClientHandler());
+
         this.player.getClientHandler().sendObject(Operation.OCCUPY);
-//        System.out.println("send occupy");
-//        this.player.getClientHandler().sendObject(roomName);
         this.player.getClientHandler().sendObject(this.player.getName());
-//        for (Country country : this.player.getOccupiedCountries()){
-//            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
-//        }
         this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
         for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
             Country country =this.player.getOccupiedCountries().get(i);
@@ -167,31 +187,6 @@ public class MainView implements Initializable {
 //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
         }
 
-//        this.player.occupyCountries(this.player.getOccupiedCountries(),numBox.getValue(),roomName);
-//        this.player.getClientHandler().sendObject(roomName);
-//        this.player.getClientHandler().sendObject(Operation.UPDATE);
-//        Object object =  this.player.getClientHandler().readObject();
-//        System.out.println(object.toString());
-//        this.player.getClientHandler().sendObject(Operation.UPDATE);
-        int num = (int) this.player.getClientHandler().readObject();
-        ArrayList<Territory> obj = new ArrayList<>();
-        for(int i = 0; i <num; i++){
-            Territory territory = (Territory) this.player.getClientHandler().readObject();
-            obj.add(territory);
-        }
-//        Object array =  this.player.getClientHandler().readObject();
-//        ArrayList<Territory> obj = (ArrayList<Territory>)array;
-//        String name = (String) obj[0];
-//        Country country = (Country) obj[1];
-//        int num = (int) obj[2];
-        for(Territory territory: obj){
-//            System.out.println(territory.getName() + " " + territory.getOwner() + " num: " + territory.getNum());
-            Country country = Country.valueOf(territory.getName());
-            country.setPopulation(territory.getNum());
-//            System.out.println(this.player.getPlayersColorMap());
-            svgUtil.setPathColor(this.player.getPlayersColorMap().get(territory.getOwner()),country);
-            svgUtil.setCountryTroops(country,territory.getNum());
-        }
     }
 
     @FXML
@@ -214,7 +209,7 @@ public class MainView implements Initializable {
     }
 
     public void setPlayersNumOnPane(){
-        System.out.println(this.player.getName());
+//        System.out.println(this.player.getName());
 //        System.out.println(this.player.getAllPlayers().size());
         switch (this.player.getAllPlayers().size()){
             case 2:
@@ -245,6 +240,37 @@ public class MainView implements Initializable {
                 panePlayerColor6.setVisible(false);
 
         }
+        troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+        new Thread(() ->{
+            while(true){
+                boolean isUpdated = this.player.getClientHandler().receiveUpdated();
+//                System.out.println(isUpdated);
+                if(isUpdated){
+                    int num = (int) this.player.getClientHandler().readObject();
+                    ArrayList<Territory> obj = new ArrayList<>();
+                    for(int i = 0; i <num; i++){
+                        Territory territory = (Territory) this.player.getClientHandler().readObject();
+                        obj.add(territory);
+                    }
+                    for(Territory territory: obj){
+                        Country country = Country.valueOf(territory.getName());
+//                        System.out.println(country.getName());
+                        country.setPopulation(territory.getNum());
+                        svgUtil.setPathColor(this.player.getPlayersColorMap().get(territory.getOwner()),country);
+                        svgUtil.setCountryTroops(country,territory.getNum());
+//                        System.out.println("updated");
+                    }
+                    if(obj.size() == 2){
+                        this.player.nextPhase();
+                        Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
+//                        System.out.println(this.player.getPhase());
+                    }
+                }
+            }
+
+        }).start();
+
+
     }
 
 
@@ -273,7 +299,6 @@ public class MainView implements Initializable {
     public String getRoomName() {
         return roomName;
     }
-
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;

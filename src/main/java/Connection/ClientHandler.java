@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ClientHandler{
 
@@ -147,4 +148,10 @@ public class ClientHandler{
     public void setCurrentPlayers(ArrayList<String> currentPlayers) {
         this.currentPlayers = currentPlayers;
     }
+
+    public boolean receiveUpdated(){
+        return (boolean) Objects.requireNonNull(this.readObject());
+    }
+
+
 }
