@@ -95,10 +95,11 @@ The master of the project is master.
 └── ./target/generated-sources  
 └── ./target/generated-sources/annotations
 
-## Framework ##
+## Tools ##
 
 * Maven - Dependent property management
-* Springboot
+* Sql server
+* JDBC
 * MVC
 * Microsoft Azure
 
@@ -106,5 +107,77 @@ The above is the basic content.
 
 ****
 
+## Format for adding updates and questions ##
+****
 
+Cancy Yang 2022.8.25  
 
+Content: Updated the README.md  
+
+Need to be improved: Nothing.  
+
+****
+
+Cancy Yang 2022.8.26   
+
+Content: Try to finish the sql server, but there is also something wrong.  
+
+Need to be improved: Connect to remote sql server.  
+
+****
+
+Shawn Liu 2022.8.26   
+
+Content: Success to draw map.  
+
+Need to be improved: Nothing.  
+
+****
+
+Coco Wang 2022.8.26  
+
+Content: Learn skills about scene builder.  
+
+Need to be improved: Draw login view tomorrow.  
+
+****
+
+Coco Wang 2022.8.27   
+
+Content: Draw login view.  
+
+Need to be improved: Nothing.  
+
+****
+
+Cancy Yang 2022.8.28   
+
+Content: Nothing.  
+
+Need to be improved: I applied for Azure, and I will learn how to use it.  
+
+****
+
+Shawn Liu 2022.8.29   
+
+Content: Do some basic functions.  
+
+Need to be improved: I'm doing some basic framework, so the functions can't be done.   
+
+****
+
+Coco Wang 2022.8.29   
+
+Content: Learn Help to connect remote server.  
+
+Need to be improved: Nothing.  
+
+****
+
+Cancy & Coco 2022.8.30   
+
+Content: Success to connect remote sql server.  
+
+Need to be improved: Set a table for user name and password.  
+
+****
