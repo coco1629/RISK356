@@ -13,7 +13,7 @@ public class ClientHandler{
     private Socket socket;
     private String username;
 //    private String
-    private String serverIP;
+    private String serverIP = "104.208.109.169";
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
@@ -51,7 +51,7 @@ public class ClientHandler{
             ex.printStackTrace();
             System.out.println("Exception Occurred in ClientThread Constructor: " + ex.toString());
         }
-//        System.out.println("connecting");
+        System.out.println("connecting");
 
     }
 
