@@ -161,15 +161,12 @@ public class MainView implements Initializable {
 
                 if(this.player.getPhase() == currentProcess.Fortify){
 
+
                 }
 
             }
 
         }
-
-
-
-//        this.player.occupyCountry(svgUtil.getSelectedCountry(),numBox.getValue(),roomName);
 
     }
 
@@ -258,9 +255,12 @@ public class MainView implements Initializable {
                         country.setPopulation(territory.getNum());
                         svgUtil.setPathColor(this.player.getPlayersColorMap().get(territory.getOwner()),country);
                         svgUtil.setCountryTroops(country,territory.getNum());
+//                        if(territory.getOwner().equals(this.player.getName())){
+//                            this.player.getAllPlayers(
+//                        }
 //                        System.out.println("updated");
                     }
-                    if(obj.size() == 2){
+                    if(obj.size() == 2 && this.player.getPhase() == currentProcess.Preparation){
                         this.player.nextPhase();
                         Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
 //                        System.out.println(this.player.getPhase());
@@ -270,9 +270,11 @@ public class MainView implements Initializable {
 
         }).start();
 
-
     }
 
+    public boolean isWin(){
+        return this.player.getOccupiedCountries().size() == 42;
+    }
 
 
     public SvgUtil getSvgUtil() {
@@ -303,4 +305,8 @@ public class MainView implements Initializable {
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
+
+
+
+
 }

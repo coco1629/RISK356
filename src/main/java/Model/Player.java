@@ -27,6 +27,8 @@ public class Player implements Serializable {
 
     private currentProcess phase = currentProcess.Preparation;
 
+//    private ArrayList<Territory> ownedTerritories = new ArrayList<>();
+
 
     public Player(String name) throws IOException {
         super();
@@ -171,4 +173,12 @@ public class Player implements Serializable {
     public void setPhase(currentProcess phase) {
         this.phase = phase;
     }
+
+//    public ArrayList<Territory> getOwnedTerritories() {
+//        return ownedTerritories;
+//    }
+//
+//    public void setOwnedTerritories(ArrayList<Territory> ownedTerritories) {
+//        this.ownedTerritories = ownedTerritories;
+//    }
 }
