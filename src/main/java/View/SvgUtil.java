@@ -1,7 +1,6 @@
 package View;
 
-import Model.Country;
-import Model.CountryPath;
+import Model.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
@@ -34,7 +33,7 @@ public class SvgUtil extends Region {
     private Group group;
     private String pathName = "map/Risk_game_board.svg";
     private HashMap<String, CountryPath> countryPathHashMap = new HashMap<>();
-
+    private Player currentPlayer;
     private static String pressedColorCode = "#ff9900";
 
     /**
@@ -54,6 +53,9 @@ public class SvgUtil extends Region {
     private EventHandler<MouseEvent> mouseExitHandler;
 
     private CountryPath selectedPath;
+    private ArrayList<CountryPath> twoSelectedPaths = new ArrayList<>();
+    private currentProcess phase = currentProcess.Preparation;
+    private ArrayList<Territory> territories = new ArrayList<>();
 
 
     public SvgUtil(){
@@ -174,10 +176,18 @@ public class SvgUtil extends Region {
 
     private void handleMouseEvent(MouseEvent evt, EventHandler<MouseEvent> eventHandler) {
         final CountryPath countryPath = (CountryPath) evt.getSource();
+//        CountryPath previousSelected = selectedPath;
+        if(getSelectedCountry() != null && selectedPath.getText().getText().equals("0")){
+            selectedPath.setSelect(false);
+            selectedPath.setFill(Color.WHITE);
+//            System.out.println("previous = 0, cancel select");
+        }
         selectedPath = countryPath;
+
         final String countryName = countryPath.getName();
 //        System.out.println(countryName);
         final Country country = Country.valueOf(countryName);
+
 //        System.out.println(country);
         final CountryPath paths = countryPathHashMap.get(countryName);
 //        System.out.println(paths);
@@ -191,46 +201,121 @@ public class SvgUtil extends Region {
 ////                for (SVGPath path:paths){
 ////                    path.setFill(color);
 ////                }
-//            }
+//            }`
         if (MOUSE_PRESSED == eventType) {
 //            paths.setStroke();
-
-            if(paths.isOccupied()){
-                if(paths.getStrokeWidth() == 3)
+            if(this.phase == currentProcess.Attack){
+                if(this.twoSelectedPaths.contains(paths)){
                     paths.setStrokeWidth(1);
-                else
-                    paths.setStrokeWidth(3);
+//                    System.out.println("remove");
+                    this.twoSelectedPaths.remove(paths);
+//                    System.out.println(twoSelectedPaths.size());
+                }
+                else {
+                    if(this.twoSelectedPaths.size() == 0){
+                        for(Territory t: this.territories){
+                            if(t.getName().equals(paths.getName()) && t.getOwner().equals(this.currentPlayer.getName())){
+                                if(t.getNum() > 1){
+//                                    System.out.println(">1");
+                                    this.twoSelectedPaths.add(paths);
+                                }
+//                                else System.out.println("<=1");
+
+                            }
+                        }
+                    }
+                    else{
+                        if(this.twoSelectedPaths.size() == 1){
+                            if(isNeighbor() && !isOwnedTerrtory(paths.getName())){
+                                this.twoSelectedPaths.add(paths);
+                            }
+                            else {
+                                for(Territory t: this.territories){
+                                    if(t.getName().equals(paths.getName()) && t.getOwner().equals(this.currentPlayer.getName())){
+                                        if(t.getNum() > 1){
+                                            this.twoSelectedPaths.get(0).setStrokeWidth(1);
+                                            this.twoSelectedPaths.set(0,paths);
+                                        }
+//                                        else System.out.println("<=1");
+
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            if(this.twoSelectedPaths.size() == 2) {
+                                if (isNeighbor() && !isOwnedTerrtory(paths.getName())){
+
+                                    this.twoSelectedPaths.get(1).setStrokeWidth(1);
+                                    this.twoSelectedPaths.set(1, paths);
+
+
+                                }
+                                else {
+                                    for(CountryPath path: twoSelectedPaths){
+                                        path.setStrokeWidth(1);
+                                    }
+                                    twoSelectedPaths.clear();
+                                    for(Territory t: this.territories){
+                                        if(t.getName().equals(paths.getName()) && t.getOwner().equals(this.currentPlayer.getName())){
+                                            if(t.getNum() > 1){
+//                                    System.out.println(">1");
+                                                this.twoSelectedPaths.add(paths);
+                                            }
+//                                else System.out.println("<=1");
+
+                                        }
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            for(CountryPath path: twoSelectedPaths){
+                path.setStrokeWidth(3);
+            }
+            if(paths.isOccupied()){
                 return;
             }
 
-            if(paths.isSelect()){
-//            if (isSelectionEnabled()) {
-                Color color;
-                if (null == getSelectedCountry()) {
-                    setSelectedCountry(country);
-                    color = Color.WHITE;
-                } else {
-                    color = null == getSelectedCountry().getColor() ? getFillColor() : getSelectedCountry().getColor();
-                }
-                paths.setFill(color);
-                paths.setSelect(false);
-                paths.setStrokeWidth(1);
-//                System.out.println("unselected You occupied " + countryName);
-//                setSelectionEnabled(false);
-//                for (SVGPath path:countryPaths.get(getSelectedCountry().getName())){
-//                    path.setFill(color);
-//                }
-            } else {
-                System.out.println(country);
-                setSelectedCountry(country);
-                paths.setSelect(true);
-//                setSelectionEnabled(true);
-                paths.setFill(Color.web(pressedColorCode));
+            if(this.phase == currentProcess.Preparation){
 
-//                System.out.println("You occupied " + countryName);
-//                if (isHoverEnabled()) {
-//                    paths.setFill(getPressedColor());
-//                }
+                if(paths.isSelect()){
+    //            if (isSelectionEnabled()) {
+                    Color color;
+                    if (null == getSelectedCountry()) {
+                        setSelectedCountry(country);
+                        color = Color.WHITE;
+                    } else {
+                        color = null == getSelectedCountry().getColor() ? getFillColor() : getSelectedCountry().getColor();
+                    }
+                    paths.setFill(Color.WHITE);
+                    paths.setSelect(false);
+                    paths.setStrokeWidth(1);
+//                    System.out.println("unselected You occupied " + countryName);
+    //                setSelectionEnabled(false);
+    //                for (SVGPath path:countryPaths.get(getSelectedCountry().getName())){
+    //                    path.setFill(color);
+
+                } else {
+//
+//                    else{
+//                    if(previousSelected != selectedPath){
+                        setSelectedCountry(country);
+                        paths.setSelect(true);
+                        paths.setFill(Color.web(pressedColorCode));
+//                        System.out.println("select");
+
+
+//                    }
+    //                System.out.println("You occupied " + countryName);
+    //                if (isHoverEnabled()) {
+    //                    paths.setFill(getPressedColor());
+    //                }
+                }
             }
 //            System.out.println("You occupied " + countryName);
         }
@@ -263,6 +348,15 @@ public class SvgUtil extends Region {
 //        if (null != eventHandler){
 //            eventHandler.handle(evt);
 //        }
+    }
+
+    private boolean isOwnedTerrtory(String name) {
+        for(Territory t: this.territories){
+            if(t.getName().equals(name) && t.getOwner().equals(this.currentPlayer.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -323,5 +417,41 @@ public class SvgUtil extends Region {
     public void setCountryTroops(Country country, int num){
         CountryPath paths = countryPathHashMap.get(country.getName());
         paths.getText().setText(String.valueOf(num));
+    }
+
+    public ArrayList<CountryPath> getTwoSelectedPaths() {
+        return twoSelectedPaths;
+    }
+
+    public void setTwoSelectedPaths(ArrayList<CountryPath> twoSelectedPaths) {
+        this.twoSelectedPaths = twoSelectedPaths;
+    }
+
+    public currentProcess getPhase() {
+        return phase;
+    }
+
+    public boolean isNeighbor(){
+        return true;
+    }
+
+    public void setPhase(currentProcess phase) {
+        this.phase = phase;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public ArrayList<Territory> getTerritories() {
+        return territories;
+    }
+
+    public void setTerritories(ArrayList<Territory> territories) {
+        this.territories = territories;
     }
 }

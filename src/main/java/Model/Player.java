@@ -23,7 +23,11 @@ public class Player implements Serializable {
 
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
 
+    private ArrayList<Territory> territories = new ArrayList<>();
+
     private int allowedTroops;
+
+    private int leftTroops;
 
     private currentProcess phase = currentProcess.Preparation;
 
@@ -115,7 +119,7 @@ public class Player implements Serializable {
                 }
             }
         }
-        System.out.println(playersColorMap.toString());
+//        System.out.println(playersColorMap.toString());
     }
 
     public HashMap<String, Color> getPlayersColorMap() {
@@ -174,7 +178,15 @@ public class Player implements Serializable {
         this.phase = phase;
     }
 
-//    public ArrayList<Territory> getOwnedTerritories() {
+    public ArrayList<Territory> getTerritories() {
+        return territories;
+    }
+
+    public void setTerritories(ArrayList<Territory> territories) {
+        this.territories = territories;
+    }
+
+    //    public ArrayList<Territory> getOwnedTerritories() {
 //        return ownedTerritories;
 //    }
 //

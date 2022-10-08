@@ -1,14 +1,12 @@
 package View;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -19,6 +17,19 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class DiceController implements Initializable {
+
+    @FXML
+    private Label attackCountry;
+
+    @FXML
+    private Label attackTroopsNum;
+
+    @FXML
+    private Label defendCountry;
+
+    @FXML
+    private Label defendTroopsNum;
+
 
     @FXML
     private ImageView diceImage;
@@ -61,7 +72,14 @@ public class DiceController implements Initializable {
 
     private int[] defendResults = {0,0};
 
+    private int attackTroopsChange = 0;
 
+    private int defendTroopsChange = 0;
+
+    private ToggleGroup toggleGroup = new ToggleGroup();
+
+    @FXML
+    private Label success;
 
     @FXML
     void roll(ActionEvent event) throws InterruptedException {
@@ -79,7 +97,7 @@ public class DiceController implements Initializable {
                     diceImage.setImage(new Image(file.toURI().toString()));
                     Thread.sleep(50);
                 }
-                System.out.println("dice 1 " + num);
+//                System.out.println("dice 1 " + num);
                 attackResults[0] = num;
 //                Arrays.sort(attackResults);
                 rollButton.setDisable(false);
@@ -90,25 +108,27 @@ public class DiceController implements Initializable {
         vectors.add(thread);
         thread.start();
 
-        Thread thread2 = new Thread(() -> {
-            try {
-                int num = 0;
-                for (int i = 0; i < 15; i++) {
-                    num = random.nextInt(6)+1;
-                    File file = new File("src/main/resources/view/img/dice" + (num)+".png");
-                    diceImage2.setImage(new Image(file.toURI().toString()));
-                    Thread.sleep(50);
+        if(twoDices.isSelected() || threeDices.isSelected()){
+            Thread thread2 = new Thread(() -> {
+                try {
+                    int num = 0;
+                    for (int i = 0; i < 15; i++) {
+                        num = random.nextInt(6)+1;
+                        File file = new File("src/main/resources/view/img/dice" + (num)+".png");
+                        diceImage2.setImage(new Image(file.toURI().toString()));
+                        Thread.sleep(50);
+                    }
+    //                System.out.println("dice 2 " + num);
+                    attackResults[1] = num;
+    //                Arrays.sort(attackResults);
+                    rollButton.setDisable(false);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                System.out.println("dice 2 " + num);
-                attackResults[1] = num;
-//                Arrays.sort(attackResults);
-                rollButton.setDisable(false);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        vectors.add(thread2);
-        thread2.start();
+            });
+            vectors.add(thread2);
+            thread2.start();
+        }
 
         if(threeDices.isSelected()){
             Thread thread3 = new Thread(){
@@ -121,7 +141,7 @@ public class DiceController implements Initializable {
                             diceImage3.setImage(new Image(file.toURI().toString()));
                             Thread.sleep(50);
                         }
-                        System.out.println("dice 3 " + num);
+//                        System.out.println("dice 3 " + num);
                         attackResults[2] = num;
 //                        Arrays.sort(attackResults);
                         rollButton.setDisable(false);
@@ -143,7 +163,7 @@ public class DiceController implements Initializable {
                     diceImage4.setImage(new Image(file.toURI().toString()));
                     Thread.sleep(50);
                 }
-                System.out.println("dice 4 " + num);
+//                System.out.println("dice 4 " + num);
                 defendResults[0] = num;
 //                Arrays.sort(defendResults);
                 rollButton.setDisable(false);
@@ -164,7 +184,7 @@ public class DiceController implements Initializable {
                         diceImage5.setImage(new Image(file.toURI().toString()));
                         Thread.sleep(50);
                     }
-                    System.out.println("dice 5 " + num);
+//                    System.out.println("dice 5 " + num);
                     defendResults[1] = num;
 //                    Arrays.sort(defendResults);
                     rollButton.setDisable(false);
@@ -192,6 +212,8 @@ public class DiceController implements Initializable {
             }
             Arrays.sort(attackResults);
             Arrays.sort(defendResults);
+            System.out.println(Arrays.toString(attackResults));
+            System.out.println(Arrays.toString(defendResults));
             int attackDiceNum = 0;
             int defendDiceNum = 0;
             for(int i = 0 ; i < 3; i++){
@@ -202,6 +224,70 @@ public class DiceController implements Initializable {
                 if(defendResults[i]!=0)
                     defendDiceNum++;
             }
+            if(attackDiceNum == 1 || defendDiceNum == 1){
+                if(attackResults[2] > defendResults[1]){
+//                    winner = attacker;
+                    defendTroopsChange -= 1;
+                    defendNum -= 1;
+                }
+                else {
+//                    winner = defender;
+                    attackTroopsChange -= 1;
+                    attackNum -= 1;
+                }
+            }
+            else {
+                if(attackResults[2] > defendResults[1]){
+                    defendTroopsChange -= 1;
+                    defendNum -= 1;
+                }
+                else {
+                    attackTroopsChange -= 1;
+                    attackNum -= 1;
+                }
+                if(attackResults[1] > defendResults[0]){
+                    defendTroopsChange -= 1;
+                    defendNum -= 1;
+                }
+                else {
+                    attackTroopsChange -= 1;
+                    attackNum -= 1;
+                }
+
+            }
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    attackTroopsNum.setText(String.valueOf(attackNum));
+                    defendTroopsNum.setText(String.valueOf(defendNum));
+                }
+            });
+//            System.out.println("attack Num" + attackNum);
+//            System.out.println("defend Num" + defendNum);
+            if(attackNum == 2){
+                threeDices.setDisable(true);
+                diceImage3.setVisible(false);
+            }
+            if(attackNum <= 1){
+//                threeDices.setDisable(true);
+//                diceImage3.setVisible(false);
+//                twoDices.setDisable(true);
+//                diceImage2.setVisible(false);
+                winner = defender;
+                rollButton.setDisable(true);
+            }
+            if(defendNum == 1){
+                diceImage5.setVisible(false);
+            }
+            if(defendNum <= 0){
+                winner = attacker;
+                success.setVisible(true);
+                rollButton.setDisable(true);
+            }
+//            if(attackNum <= 0){
+//                winner = defender;
+//                rollButton.setDisable(true);
+//            }
 
 //            System.out.println(Arrays.toString(attackResults));
 //            System.out.println(Arrays.toString(defendResults));
@@ -213,23 +299,66 @@ public class DiceController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ToggleGroup toggleGroup = new ToggleGroup();
+
         twoDices.setToggleGroup(toggleGroup);
         threeDices.setToggleGroup(toggleGroup);
         oneDice.setToggleGroup(toggleGroup);
+//        if(attackNum == 2){
+//            threeDices.setVisible(false);
+//            diceImage3.setVisible(false);
+//        }
+//        if(attackNum == 1){
+//            threeDices.setVisible(false);
+//            diceImage3.setVisible(false);
+//            twoDices.setVisible(false);
+//            diceImage2.setVisible(false);
+//        }
+//        if(defendNum == 1){
+//            diceImage5.setVisible(false);
+//        }
+//        attackTroopsNum.setText(String.valueOf(attackNum));
+//        defendTroopsNum.setText(String.valueOf(defendNum));
+//        toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+//            @Override
+//            public void changed(final ObservableValue<? extends Toggle> observable, final Toggle oldValue, final Toggle newValue) {
+//                RadioButton r = (RadioButton)newValue;
+//                if(r.getText().equals("2 dices")){
+//                    diceImage3.setVisible(false);
+//                    diceImage.setVisible(true);
+//                    diceImage2.setVisible(true);
+//                }
+//                if(r.getText().equals("1 dice")){
+//                    diceImage3.setVisible(false);
+//                    diceImage2.setVisible(false);
+//                    diceImage.setVisible(true);
+//                }
+//                if(r.getText().equals("3 dices")){
+//                    diceImage3.setVisible(true);
+//                    diceImage2.setVisible(true);
+//                    diceImage.setVisible(true);
+//                }
+//            }
+//        });
+    }
+
+    public void initDice(){
         if(attackNum == 2){
-            threeDices.setVisible(false);
+            threeDices.setDisable(true);
             diceImage3.setVisible(false);
+            twoDices.setSelected(true);
         }
         if(attackNum == 1){
-            threeDices.setVisible(false);
+            threeDices.setDisable(true);
             diceImage3.setVisible(false);
-            twoDices.setVisible(false);
+            twoDices.setDisable(true);
             diceImage2.setVisible(false);
+            oneDice.setSelected(true);
         }
         if(defendNum == 1){
             diceImage5.setVisible(false);
         }
+        attackTroopsNum.setText(String.valueOf(attackNum));
+        defendTroopsNum.setText(String.valueOf(defendNum));
         toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(final ObservableValue<? extends Toggle> observable, final Toggle oldValue, final Toggle newValue) {

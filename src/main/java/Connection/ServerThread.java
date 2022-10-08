@@ -72,10 +72,22 @@ public class ServerThread extends Thread{
                         for(int i = 0; i < territories.size(); i++){
                             sendObjectToAll(this.territories.get(i));
                         }
-                        if(territories.size() == 2){
+                        if(territories.size() == 4){
                             Server.getGameModel().nextPhase();
                         }
                         sendObjectToAll(false);
+                        break;
+                    case ATTACK:
+                        ArrayList<Territory> territoryArrayList = (ArrayList<Territory>) readObject();
+//                        String defender = (String) readObject();
+//                        String messageToDefender = (String) readObject();
+                        server.setTerritories(territoryArrayList);
+                        this.territories = territoryArrayList;
+                        sendObjectToAll(true);
+                        sendObjectToAll(territories.size());
+                        for(int i = 0; i < territories.size(); i++){
+                            sendObjectToAll(this.territories.get(i));
+                        }
                         break;
                     case CREATE_SESSION:
                         String string = (String) objectInputStream.readObject();

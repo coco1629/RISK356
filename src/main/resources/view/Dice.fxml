@@ -58,5 +58,32 @@
             <Font size="14.0" />
          </font>
       </RadioButton>
+      <Label fx:id="attackCountry" layoutX="104.0" layoutY="24.0" text="AttackCountry">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="defendCountry" layoutX="402.0" layoutY="24.0" text="DefendCountry">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="402.0" layoutY="305.0" text="Attacker:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="attackTroopsNum" layoutX="478.0" layoutY="307.0" prefHeight="15.0" prefWidth="72.0" />
+      <Label fx:id="defendTroopsNum" layoutX="478.0" layoutY="341.0" prefHeight="15.0" prefWidth="72.0" />
+      <Label layoutX="402.0" layoutY="339.0" text="Defender:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="success" layoutX="253.0" layoutY="107.0" prefHeight="34.0" prefWidth="113.0" text="Success!" textFill="#e60000" visible="false">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
