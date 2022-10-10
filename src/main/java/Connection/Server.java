@@ -170,11 +170,6 @@ public class Server {
         this.updateplayers = updateplayers;
     }
 
-    //    public ArrayList<ServerHandler> getCurrentServerThreads() {
-//        return currentServerThreads;
-//    }
-//
-//    public void setCurrentServerThreads(ArrayList<ServerHandler> currentServerThreads) {
-//        Server.currentServerThreads = currentServerThreads;
-//    }
+
+
 }

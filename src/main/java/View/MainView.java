@@ -34,9 +34,6 @@ public class MainView implements Initializable {
     private Button AttackPhase;
 
     @FXML
-    private Button DefensePhase;
-
-    @FXML
     private Pane Pane;
 
     @FXML
@@ -56,9 +53,6 @@ public class MainView implements Initializable {
 
     @FXML
     private Label PlayerName6;
-
-    @FXML
-    private Button SkipPhase;
 
     @FXML
     private Button TransferPhase;
@@ -122,6 +116,8 @@ public class MainView implements Initializable {
 
     private ArrayList<Territory> territories = new ArrayList<>();
 
+    private boolean waitForNext = false;
+
 //    private int playerNum;
 //
 //    private int currentNum = 0;
@@ -152,7 +148,7 @@ public class MainView implements Initializable {
 
         if(svgUtil.getSelectedPath() != null){
             if(numBox.getValue() <= this.player.getAllowedTroops()){
-                if(this.player.getPhase() == currentProcess.Fortify || this.player.getPhase() == currentProcess.Preparation){
+                if(this.player.getPhase() == currentProcess.Preparation){
                     svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
                     svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
                     svgUtil.getSelectedPath().setOccupied(true);
@@ -163,13 +159,20 @@ public class MainView implements Initializable {
                     this.player.addToOccupiedCountries(country);
                 }
 
-                if(this.player.getPhase() == currentProcess.Fortify){
-
-
-                }
-
             }
 
+        }
+        if(this.player.getPhase() == currentProcess.Preparation){
+            this.player.getClientHandler().sendObject(Operation.OCCUPY);
+            this.player.getClientHandler().sendObject(this.player.getName());
+            this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
+            for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
+                Country country =this.player.getOccupiedCountries().get(i);
+                //            System.out.println(country.getName() + "troops num " + country.getPopulation());
+                this.player.getClientHandler().sendObject(country);
+                this.player.getClientHandler().sendObject(country.getPopulation());
+                //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
+            }
         }
 
     }
@@ -177,28 +180,20 @@ public class MainView implements Initializable {
     @FXML
     void nextPhase(ActionEvent event) {
 
-        this.player.getClientHandler().sendObject(Operation.OCCUPY);
-        this.player.getClientHandler().sendObject(this.player.getName());
-        this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
-        for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
-            Country country =this.player.getOccupiedCountries().get(i);
-//            System.out.println(country.getName() + "troops num " + country.getPopulation());
-            this.player.getClientHandler().sendObject(country);
-            this.player.getClientHandler().sendObject(country.getPopulation());
-//            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
+        if(this.player.getPhase() == currentProcess.Attack || this.player.getPhase() == currentProcess.Fortify){
+            this.player.getClientHandler().sendObject(Operation.NEXT_PHASE);
+            waitForNext = true;
+//            System.out.println("send next phase");
         }
 
     }
 
-    @FXML
-    void skipPhase(ActionEvent event) {
-
-    }
 
 
     @FXML
     void attack(ActionEvent event) {
         try {
+
             if(svgUtil.getTwoSelectedPaths().size() == 2){
 //                CountryPath attackCountry =
                 CountryPath attackCountryPath = svgUtil.getTwoSelectedPaths().get(0);
@@ -220,9 +215,9 @@ public class MainView implements Initializable {
                     }
                 }
                 controller.setAttackNum(Integer.parseInt(attackCountryPath.getText().getText()));
-                System.out.println("attack num" + attackCountryPath.getText().getText());
+//                System.out.println("attack num" + attackCountryPath.getText().getText());
                 controller.setDefendNum(Integer.parseInt(defendCountryPath.getText().getText()));
-                System.out.println("defend num" + defendCountryPath.getText().getText());
+//                System.out.println("defend num" + defendCountryPath.getText().getText());
                 controller.initDice();
                 Stage stage = new Stage();
                 stage.setScene(scene);
@@ -238,7 +233,6 @@ public class MainView implements Initializable {
                     public void handle(WindowEvent event) {
                         isDraw[0] = Objects.equals(controller.getWinner(), "");
                         isWin[0] = Objects.equals(controller.getWinner(), player.getName());
-                        System.out.println(isWin[0]);
                         attackerNum[0] = controller.getAttackNum();
                         defenderNum[0] = controller.getDefendNum();
                         if(isWin[0]){
@@ -267,9 +261,9 @@ public class MainView implements Initializable {
                         }
                         if (!isWin[0] && !isDraw[0]){
                             for(int i = 0; i < territories.size();i++){
-//                                if(territories.get(i).getName().equals(defendCountryPath.getName())){
-//                                    territories.get(i).setNum(defenderNum[0]-1);
-//                                }
+                                if(territories.get(i).getName().equals(defendCountryPath.getName())){
+                                    territories.get(i).setNum(defenderNum[0]);
+                                }
                                 if(territories.get(i).getName().equals(attackCountryPath.getName())){
 //                                    territories.get(i).setOwner(controller.getDefender());
 //                                    System.out.println(controller.getDefender());
@@ -277,7 +271,11 @@ public class MainView implements Initializable {
                                 }
                             }
                         }
-//                        svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
+                        for( CountryPath p : svgUtil.getTwoSelectedPaths()){
+                            p.setStrokeWidth(1);
+                        }
+                        svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
+                        svgUtil.deleteArrow();
                         player.getClientHandler().sendObject(Operation.ATTACK);
                         player.getClientHandler().sendObject(territories);
 
@@ -298,7 +296,42 @@ public class MainView implements Initializable {
 
     @FXML
     void transfer(ActionEvent event) {
+        if(this.player.getPhase() == currentProcess.Fortify){
+            if(svgUtil.getTwoSelectedPaths().size() == 2){
+                CountryPath fromPath = svgUtil.getTwoSelectedPaths().get(0);
+                CountryPath toPath = svgUtil.getTwoSelectedPaths().get(1);
+                boolean success = true;
+                for(Territory territory: territories){
+                    if(territory.getName().equals(fromPath.getName())){
+                        if(territory.getNum() > numBox.getValue())
+                            territory.setNum(territory.getNum() - numBox.getValue());
+                        else{
+                            success = false;
+//                            System.out.println("fail to transfer");
+                        }
 
+                    }
+                }
+
+                if(success){
+//                    System.out.println("transfer success");
+                    for(Territory territory: territories){
+                        if(territory.getName().equals(toPath.getName())){
+                            territory.setNum(territory.getNum() + numBox.getValue());
+                        }
+                    }
+                }
+
+                this.player.getClientHandler().sendObject(Operation.FORTIFY);
+                this.player.getClientHandler().sendObject(territories);
+                for( CountryPath p : svgUtil.getTwoSelectedPaths()){
+                    p.setStrokeWidth(1);
+                }
+                svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
+                svgUtil.deleteArrow();
+
+            }
+        }
     }
 
     public void setPlayersNumOnPane(){
@@ -358,7 +391,7 @@ public class MainView implements Initializable {
                             for(Territory t : this.territories){
                                 if(this.player.getOccupiedCountries().contains(Country.valueOf(t.getName())) && !Objects.equals(t.getOwner(), this.player.getName())){
                                     leftTroops = leftTroops + Country.valueOf(t.getName()).getPopulation();
-                                    System.out.println(leftTroops);
+//                                    System.out.println(leftTroops);
                                     ArrayList<Country> updated = this.player.getOccupiedCountries();
                                     updated.remove(Country.valueOf(t.getName()));
                                     this.player.setOccupiedCountries(updated);
@@ -379,13 +412,24 @@ public class MainView implements Initializable {
 //                        }
 //                        System.out.println("updated");
                     }
-                    if(obj.size() >= 4 && this.player.getPhase() == currentProcess.Preparation){
+                    if(obj.size() >= 6 && this.player.getPhase() == currentProcess.Preparation){
                         this.player.nextPhase();
                         Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
                         svgUtil.setPhase(this.player.getPhase());
 //                        System.out.println(this.player.getPhase());
                     }
-
+                    if(waitForNext){
+                        boolean isNext = this.player.getClientHandler().receiveUpdated();
+//                        System.out.println("isNext" + isNext);
+                        if(isNext){
+                            this.player.nextPhase();
+//                            System.out.println("fortify");
+                            Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
+                            svgUtil.setPhase(this.player.getPhase());
+                            svgUtil.setTwoSelectedPaths(new ArrayList<>());
+                            waitForNext = false;
+                        }
+                    }
 
                 }
             }
