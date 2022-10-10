@@ -2,6 +2,8 @@ package Model;
 
 import Connection.ClientHandler;
 import Connection.Operation;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
@@ -30,6 +32,7 @@ public class Player implements Serializable {
     private int leftTroops;
 
     private currentProcess phase = currentProcess.Preparation;
+    private ObservableList<Card> cards = FXCollections.observableArrayList();
 
 //    private ArrayList<Territory> ownedTerritories = new ArrayList<>();
 
@@ -193,4 +196,92 @@ public class Player implements Serializable {
 //    public void setOwnedTerritories(ArrayList<Territory> ownedTerritories) {
 //        this.ownedTerritories = ownedTerritories;
 //    }
+    public ObservableList<Card> getCards()
+    {
+        return cards;
+    }
+
+    public ArrayList<Card> getCardList()
+    {
+        ArrayList<Card> card = new ArrayList<Card>();
+        for(Card c: cards)
+        {
+            card.add(c);
+        }
+        return card;
+    }
+
+    /**
+     * This method adds a card to player
+     *
+     * @param card the card being added to player
+     */
+    public void addCard(Card card)
+    {
+        cards.add(card);
+    }
+
+    /**
+     * This method removes the card from player
+     *
+     * @param card the card to be removed from player
+     */
+    public void removeCard(Card card) {
+        for (Card c : cards) {
+            if (c.getCatagory().equals(card.getCatagory())) {
+                c.setOwner(null);
+                cards.remove(c);
+                break;
+            }
+        }
+    }
+    public void setCards(ObservableList<Card> cards)
+    {
+        this.cards = cards;
+    }
+    public boolean checkIfCardsMaximum()
+    {
+        System.out.println("check if maximum: " + (getCards().size()));
+        return (getCards().size() >= 5);
+    }
+
+    /**
+     * This method is used to validate the cards the player chooses to exchange
+     *
+     * @param selectedCards A list of cards the player chooses to exchange for
+     * armies
+     * @return The result corresponding to the category of cards the player
+     * chooses
+     */
+    public boolean cardValidation(ObservableList<Card> selectedCards)
+    {
+        return (((selectedCards.get(0).getCatagory().equals(selectedCards.get(1).getCatagory()))
+                && (selectedCards.get(0).getCatagory().equals(selectedCards.get(2).getCatagory())))
+                || ((!(selectedCards.get(0).getCatagory().equals(selectedCards.get(1).getCatagory())))
+                && (!(selectedCards.get(0).getCatagory().equals(selectedCards.get(2).getCatagory())))
+                && (!(selectedCards.get(1).getCatagory().equals(selectedCards.get(2).getCatagory())))));
+    }
+
+    /**
+     * This method is used to remove the cards which the player chooses to
+     * exchange
+     *
+     * @param observableList A list of cards the player chooses to exchange for
+     * armies
+     *
+     */
+    public void exchangeCards(ObservableList<Card> observableList)
+    {
+        for (Card c : observableList)
+        {
+            removeCard(c);
+        }
+    }
+    private boolean playerLost = false;
+    public boolean isPlayerLost()
+    {
+        return playerLost;
+    }
+
+
 }

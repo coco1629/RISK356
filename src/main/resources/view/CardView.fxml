@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CardController">
+   <children>
+      <AnchorPane prefHeight="250.0" prefWidth="400.0">
+         <children>
+            <Button layoutX="217.0" layoutY="206.0" mnemonicParsing="false" onAction="#skipExchangeHandler" text="Skip" />
+            <Button layoutX="107.0" layoutY="206.0" mnemonicParsing="false" onAction="#tradeCard" text="Trade Cards" />
+            <ListView fx:id="yourCard" layoutX="14.0" layoutY="28.0" onMouseClicked="#yourCardHandler" prefHeight="111.0" prefWidth="172.0" />
+            <ListView fx:id="tradeCard" layoutX="187.0" layoutY="28.0" onMouseClicked="#yourTradeHandler" prefHeight="111.0" prefWidth="172.0" />
+            <Label layoutX="72.0" layoutY="153.0" text="Your cards" />
+            <Label layoutX="227.0" layoutY="153.0" text="Label" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

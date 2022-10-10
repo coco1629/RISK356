@@ -14,7 +14,7 @@ public class RiskGame extends Application {
         try {
             // Read file fxml and draw interface.
             Parent root = FXMLLoader.load(getClass()
-                    .getResource("/view/LoginView.fxml"));
+                    .getResource("/view/CardView.fxml"));
             primaryStage.setResizable(false);
             primaryStage.setTitle("Risk Game");
             primaryStage.setScene(new Scene(root));
