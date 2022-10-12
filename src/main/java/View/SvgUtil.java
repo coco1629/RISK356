@@ -33,6 +33,7 @@ public class SvgUtil extends Region {
     private Group group;
     private String pathName = "map/Risk_game_board.svg";
     private HashMap<String, CountryPath> countryPathHashMap = new HashMap<>();
+    private static HashMap<String, Continent>  countryContinentHashMap = new HashMap<>();
     private Player currentPlayer;
     private static String pressedColorCode = "#ff9900";
 
@@ -132,7 +133,21 @@ public class SvgUtil extends Region {
                 Country country = Country.valueOf(name);
                 CountryPath path = new CountryPath(name,content,0);
                 countryPathHashMap.put(name, path);
+                if(i<=9){
+                    countryContinentHashMap.put(name,Continent.NORTH_AMERICA);
+                }
+                if(i >=10 && i <= 13)
+                    countryContinentHashMap.put(name,Continent.SOUTH_AMERICA);
+                if(i >= 14 &&  i<= 20)
+                    countryContinentHashMap.put(name,Continent.EUROPE);
+                if(i >= 21 && i <= 26 )
+                    countryContinentHashMap.put(name,Continent.AFRICA);
+                if(i >= 27 && i <= 38)
+                    countryContinentHashMap.put(name,Continent.ASIA);
+                if(i > 38)
+                    countryContinentHashMap.put(name,Continent.AUSTRALIA);
 
+//                System.out.println(countryContinentHashMap);
 //                path.setOnMouseEntered(new WeakEventHandler<>(_mouseEnterHandler));
                 path.setOnMousePressed(new WeakEventHandler<>(_mousePressHandler));
 //                path.setOnMouseReleased(new WeakEventHandler<>(_mouseReleaseHandler));
@@ -184,12 +199,19 @@ public class SvgUtil extends Region {
 
     private void handleMouseEvent(MouseEvent evt, EventHandler<MouseEvent> eventHandler) {
         final CountryPath countryPath = (CountryPath) evt.getSource();
-//        CountryPath previousSelected = selectedPath;
+        CountryPath previousSelected = selectedPath;
         if(getSelectedCountry() != null && selectedPath.getText().getText().equals("0")){
             selectedPath.setSelect(false);
             selectedPath.setFill(Color.WHITE);
 //            System.out.println("previous = 0, cancel select");
         }
+        if(this.phase == currentProcess.Reinforcement){
+            selectedPath.setStrokeWidth(1);
+            if(previousSelected != countryPath){
+                selectedPath.setSelect(false);
+            }
+        }
+
         selectedPath = countryPath;
 
         final String countryName = countryPath.getName();
@@ -216,7 +238,14 @@ public class SvgUtil extends Region {
                 if(this.twoSelectedPaths.contains(paths)){
                     paths.setStrokeWidth(1);
 //                    System.out.println("remove");
+                    if (paths.getName().equals(twoSelectedPaths.get(0).getName())) {
+                        startX = endX;
+                        startY = endY;
+                    }
+
                     this.twoSelectedPaths.remove(paths);
+                    deleteArrow();
+
 //                    System.out.println(twoSelectedPaths.size());
                 }
                 else {
@@ -280,7 +309,16 @@ public class SvgUtil extends Region {
                 if(this.twoSelectedPaths.contains(paths)){
                     paths.setStrokeWidth(1);
 //                    System.out.println("remove");
-                    this.twoSelectedPaths.remove(paths);
+                    if (paths.getName().equals(twoSelectedPaths.get(0).getName())) {
+                        startX = endX;
+                        startY = endY;
+                        this.twoSelectedPaths.get(1).setStrokeWidth(1);
+                        this.twoSelectedPaths.get(1).setSelect(false);
+                        this.twoSelectedPaths.clear();
+                    }
+                    else
+                        this.twoSelectedPaths.remove(paths);
+                    deleteArrow();
 //                    System.out.println(twoSelectedPaths.size());
                 }
                 else {
@@ -352,17 +390,17 @@ public class SvgUtil extends Region {
                 }
                 showArrow();
             }
+
             for(CountryPath path: twoSelectedPaths){
                 path.setStrokeWidth(3);
             }
-            if(paths.isOccupied()){
-                return;
-            }
-
 
 
 
             if(this.phase == currentProcess.Preparation){
+                if(paths.isOccupied()){
+                    return;
+                }
 
                 if(paths.isSelect()){
                     Color color;
@@ -384,6 +422,24 @@ public class SvgUtil extends Region {
 
                 }
             }
+
+            if(this.phase == currentProcess.Reinforcement){
+                if(isOwnedTerrtory(paths.getName())){
+                    if(paths.isSelect()){
+                        paths.setStrokeWidth(1);
+                        paths.setSelect(false);
+//                        System.out.println("unselect");
+                    }
+                    else {
+                        setSelectedCountry(country);
+                        paths.setSelect(true);
+//                        System.out.println("select");
+                        paths.setStrokeWidth(3);
+                    }
+                }
+            }
+
+
         }
 
     }
@@ -516,6 +572,28 @@ public class SvgUtil extends Region {
         }
         catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    public static HashMap<String, Continent> getCountryContinentHashMap() {
+        return countryContinentHashMap;
+    }
+
+    public static void setCountryContinentHashMap(HashMap<String, Continent> countryContinentHashMap) {
+        SvgUtil.countryContinentHashMap = countryContinentHashMap;
+    }
+
+    public HashMap<String, CountryPath> getCountryPathHashMap() {
+        return countryPathHashMap;
+    }
+
+    public void setCountryPathHashMap(HashMap<String, CountryPath> countryPathHashMap) {
+        this.countryPathHashMap = countryPathHashMap;
+    }
+
+    public void unselectAllPaths(){
+        for(CountryPath path: countryPathHashMap.values()){
+            path.setSelect(false);
         }
     }
 

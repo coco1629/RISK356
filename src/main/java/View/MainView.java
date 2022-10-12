@@ -174,20 +174,35 @@ public class MainView implements Initializable {
                 //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
             }
         }
+        if(this.player.getPhase() == currentProcess.Reinforcement){
+            svgUtil.getSelectedCountry().setPopulation(numBox.getValue() + svgUtil.getSelectedCountry().getPopulation());
+            this.player.setAllowedTroops(this.player.getAllowedTroops() - numBox.getValue());
+            troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+            Country country = svgUtil.getSelectedCountry();
+            for(Territory territory: territories){
+                if(territory.getName().equals(country.getName())){
+                    territory.setNum(territory.getNum() + numBox.getValue());
+                    svgUtil.getSelectedPath().getText().setText(String.valueOf(territory.getNum()));
+                }
+            }
+            this.player.getClientHandler().sendObject(Operation.REINFORCE);
+            this.player.getClientHandler().sendObject(territories);
+        }
 
     }
 
     @FXML
     void nextPhase(ActionEvent event) {
 
-        if(this.player.getPhase() == currentProcess.Attack || this.player.getPhase() == currentProcess.Fortify){
+        if(this.player.getPhase() == currentProcess.Attack || this.player.getPhase() == currentProcess.Fortify || this.player.getPhase() == currentProcess.Reinforcement){
             this.player.getClientHandler().sendObject(Operation.NEXT_PHASE);
             waitForNext = true;
-//            System.out.println("send next phase");
+            if(this.player.getPhase() == currentProcess.Fortify){
+                this.player.getClientHandler().sendObject(SvgUtil.getCountryContinentHashMap());
+            }
         }
 
     }
-
 
 
     @FXML
@@ -371,6 +386,11 @@ public class MainView implements Initializable {
         new Thread(() ->{
             while(true){
                 boolean isUpdated = this.player.getClientHandler().receiveUpdated();
+                if(this.player.getPhase() == currentProcess.Fortify && waitForNext && !isUpdated){
+                    int newNum = (int) this.player.getClientHandler().readObject();
+                    this.player.setAllowedTroops(this.player.getAllowedTroops() + newNum);
+                    Platform.runLater(()->troopsNum.setText(String.valueOf(this.player.getAllowedTroops())));
+                }
 //                System.out.println(isUpdated);
                 if(isUpdated){
                     int num = (int) this.player.getClientHandler().readObject();
@@ -412,8 +432,9 @@ public class MainView implements Initializable {
 //                        }
 //                        System.out.println("updated");
                     }
-                    if(obj.size() >= 6 && this.player.getPhase() == currentProcess.Preparation){
+                    if(obj.size() >= 42 && this.player.getPhase() == currentProcess.Preparation){
                         this.player.nextPhase();
+                        svgUtil.unselectAllPaths();
                         Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
                         svgUtil.setPhase(this.player.getPhase());
 //                        System.out.println(this.player.getPhase());
@@ -424,6 +445,7 @@ public class MainView implements Initializable {
                         if(isNext){
                             this.player.nextPhase();
 //                            System.out.println("fortify");
+                            svgUtil.unselectAllPaths();
                             Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
                             svgUtil.setPhase(this.player.getPhase());
                             svgUtil.setTwoSelectedPaths(new ArrayList<>());

@@ -1,7 +1,10 @@
 package Connection;
 
+import Model.Continent;
 import Model.Country;
 import Model.Territory;
+import Model.currentProcess;
+import View.SvgUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,6 +24,7 @@ public class ServerThread extends Thread{
     private Server server;
     private HashMap<String,ServerHandler> handlerHashMap = new HashMap<>();
     private String roomName = "";
+    HashMap<String, Continent> countryMap = new HashMap<>();
 
     public ServerThread(Socket socket) throws IOException {
         this.socket = socket;
@@ -72,17 +76,14 @@ public class ServerThread extends Thread{
                         for(int i = 0; i < territories.size(); i++){
                             sendObjectToAll(this.territories.get(i));
                         }
-                        if(territories.size() >= 6){
+                        if(territories.size() >= 42){
                             Server.getGameModel().nextPhase();
                             server.setUpdateplayers(0);
                         }
                         sendObjectToAll(false);
                         break;
-                    case ATTACK:
+                    case ATTACK,REINFORCE:
                         ArrayList<Territory> territoryArrayList = (ArrayList<Territory>) readObject();
-//                        String defender = (String) readObject();
-//                        String messageToDefender = (String) readObject();
-
                         this.territories = territoryArrayList;
                         server.setTerritories(territoryArrayList);
                         sendObjectToAll(true);
@@ -101,19 +102,43 @@ public class ServerThread extends Thread{
                         }
                         break;
                     case NEXT_PHASE:
-                        this.territories = server.getTerritories();
-                        server.setUpdateplayers(server.getUpdateplayers()+1);
-//                        System.out.println("update players" + server.getUpdateplayers());
-                        if(server.getUpdateplayers()==this.serverThreads.size()+1){
-                            sendObjectToAll(true);
-                            sendObjectToAll(territories.size());
-                            for(int i = 0; i < territories.size(); i++){
-                                sendObjectToAll(this.territories.get(i));
+                        if(Server.getGameModel().getPhase() == currentProcess.Attack){
+                            this.territories = server.getTerritories();
+                            server.setUpdateplayers(server.getUpdateplayers()+1);
+    //                        System.out.println("update players" + server.getUpdateplayers());
+                            if(server.getUpdateplayers()==this.serverThreads.size()+1){
+                                sendObjectToAll(true);
+                                sendObjectToAll(territories.size());
+                                for(int i = 0; i < territories.size(); i++){
+                                    sendObjectToAll(this.territories.get(i));
+                                }
+                                sendObjectToAll(true);
+    //                            System.out.println("finish update");
+                                server.setUpdateplayers(0);
+                                Server.getGameModel().nextPhase();
                             }
-                            sendObjectToAll(true);
-//                            System.out.println("finish update");
-                            server.setUpdateplayers(0);
-                            Server.getGameModel().nextPhase();
+                        }
+                        else {
+                            if(Server.getGameModel().getPhase() == currentProcess.Fortify){
+                                this.territories = server.getTerritories();
+                                server.setUpdateplayers(server.getUpdateplayers()+1);
+                                countryMap = (HashMap<String, Continent>) readObject();
+                                sendObject(false);
+                                int allocateTroops = allocateTroops(this.getName());
+                                sendObject(allocateTroops);
+//                                int allocateTroops = allocateTroops(this.getName());
+//                                sendObject(allocateTroops);
+                                if(server.getUpdateplayers()==this.serverThreads.size()+1){
+                                    sendObjectToAll(true);
+                                    sendObjectToAll(territories.size());
+                                    for(int i = 0; i < territories.size(); i++){
+                                        sendObjectToAll(this.territories.get(i));
+                                    }
+                                    sendObjectToAll(true);
+                                    server.setUpdateplayers(0);
+                                    Server.getGameModel().nextPhase();
+                                }
+                            }
                         }
                         break;
 
@@ -161,6 +186,69 @@ public class ServerThread extends Thread{
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public int allocateTroops(String name){
+        int num = 0;
+        int totalCountry = 0;
+        int extra = 0;
+        int cards = 0;
+
+//        System.out.println(countryMap);
+//        System.out.println(this.getName());
+        HashMap<Continent,ArrayList<String>> playerMap = new HashMap<>();
+
+        for(Territory territory: this.territories){
+            if(territory.getOwner().equals(this.getName())){
+                Continent continent = countryMap.get(territory.getName());
+                if(playerMap.containsKey(continent)){
+                    ArrayList<String> temp = playerMap.get(continent);
+                    temp.add(territory.getName());
+                    playerMap.put(continent,temp);
+                }
+                else {
+                    ArrayList<String> countries = new ArrayList<>();
+                    countries.add(territory.getName());
+                    playerMap.put(continent,countries);
+                }
+                totalCountry++;
+                System.out.println(continent.toString() + playerMap.get(continent).toString());
+
+            }
+        }
+        for(Continent continent : playerMap.keySet()){
+            switch (continent){
+                case ASIA -> {
+                    if(playerMap.get(continent).size() == 12){
+                        extra += 7;
+                    }
+                }
+                case NORTH_AMERICA-> {
+                    if(playerMap.get(continent).size() == 9){
+                        extra += 5;
+                    }
+                }
+                case EUROPE -> {
+                    if(playerMap.get(continent).size() == 7){
+                        extra += 5;
+                    }
+                }
+                case AFRICA -> {
+                    if(playerMap.get(continent).size() == 6){
+                        extra += 3;
+                    }
+                }
+                case SOUTH_AMERICA, AUSTRALIA -> {
+                    if(playerMap.get(continent).size() == 4){
+                        extra += 2;
+                    }
+                }
+            }
+        }
+        System.out.println("countries" + totalCountry);
+        System.out.println("extra" + extra);
+        num = totalCountry / 3 + extra + cards;
+        return num;
     }
 
 

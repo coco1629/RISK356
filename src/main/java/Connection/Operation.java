@@ -23,6 +23,8 @@ public enum Operation implements Serializable {
 
     FORTIFY,
 
+    REINFORCE,
+
     RED,
 
     BLUE,
