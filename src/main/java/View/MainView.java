@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -26,6 +27,7 @@ import javafx.stage.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -117,6 +119,16 @@ public class MainView implements Initializable {
     private ArrayList<Territory> territories = new ArrayList<>();
 
     private boolean waitForNext = false;
+
+    private Model model;
+    private CardView card;
+    private CheckBox[] cbs;
+    @FXML private Button trade;
+    @FXML private Button cancelCardView;
+    @FXML private Button closeButton;
+    @FXML private Label currentPlayerName;
+    @FXML private Label textToShow;
+    @FXML private VBox cardVbox;
 
 //    private int playerNum;
 //
@@ -332,6 +344,37 @@ public class MainView implements Initializable {
 
             }
         }
+    }
+    @FXML
+    private void cancelCardView(ActionEvent event) {
+        model.quitCards();
+        if(CardModel.getInstance().readyToQuit()) {
+            Stage stage = (Stage) cancelCardView.getScene().getWindow();
+            stage.close();
+        }
+    }
+//    @FXML
+//    private void checkTrade(ActionEvent event) {
+//        trade.setDisable(false);
+//        textToShow.setText(null);
+////        currentPlayer = CardModel.getInstance().getCurrentPlayer();
+//        List<Card> selectedCards = CardModel.getInstance().retrieveSelectedCardsFromCheckbox
+//                (this.player.getPlayerCardList(),cbs);
+//        if (selectedCards.size() == 3) {
+//            model.trade((ArrayList<Card>) selectedCards);
+//        }
+//    }
+    @FXML
+    void cardview(ActionEvent event) throws IOException {
+        Stage previous = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Card.fxml"));
+        Parent main = loader.load();
+        Scene scene = new Scene(main);
+
+        previous.setResizable(false);
+        previous.setScene(scene);
+        previous.show();
+
     }
 
     public void setPlayersNumOnPane(){

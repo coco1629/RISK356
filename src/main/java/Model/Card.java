@@ -1,77 +1,67 @@
-/**
- * Necessary to create a card.
- *
- * @author Natheepan
- * @version 3.0
- */
 package Model;
 
 
-public class Card
-{
 
-    private String category;
-    private Player owner;
+/**
+ * Define classe of Card
+ */
+public class Card  {
+
+    public CardType cardType;
+    private Country territory;
 
     /**
-     * This method is used to construct a new card
-     *
-     * @param category The type of card
+     * constructor
+     * @param cardType the type of card
      */
-    public Card(String category)
-    {
-        this.category = category;
-        this.owner = null;
+    public Card(CardType cardType) {
+        this.cardType = cardType;
     }
 
     /**
-     * This method is used to construct a new card
-     *
-     * @param category The type of card
-     * @param owner The owner of card
+     * Get card type
+     * @return cardType
      */
-    public Card(String category, Player owner)
-    {
-        this.category = category;
-        this.owner = owner;
+    public CardType getCardType() {
+        return cardType;
     }
 
     /**
-     * This method returns the category and the owner for the type of card
+     * Get territory
+     * @return Country(territory)
      */
-    public String toString()
-    {
-        return category + " " + owner;
+    public Country getTerritory() {
+        return territory;
+    }
+
+
+    /**
+     * Set Country(territory)
+     * @param territory territory(country)
+     */
+    public void setTerritory(Country territory) {
+        this.territory = territory;
     }
 
     /**
-     * This method gets the type of card
-     *
-     * @return category returns the type of card
+     * Verify if obj is a card
+     * @param obj object
+     * @return true, if the same card; false, if not a card instance
      */
-    public String getCatagory()
-    {
-        return category;
-    }
+    @Override
+    public boolean equals(Object obj) {
 
-    /**
-     * This method gets the name of the owner for the type of card
-     *
-     * @return owner returns the owner of the card
-     */
-    public Player getOwner()
-    {
-        return owner;
-    }
+        if (obj == this) {
+            return true;
+        }
 
-    /**
-     * This method sets the owner for the the type of card
-     *
-     * @param player name of the owner of the card
-     */
-    public void setOwner(Player player)
-    {
-        this.owner = player;
+        if (!(obj instanceof Card)) {
+            return false;
+        }
+
+        Card card = (Card) obj;
+        return card.getCardType().toString().equalsIgnoreCase(cardType.toString())
+                && card.getTerritory().equals(territory);
     }
 
 }

@@ -1,188 +1,148 @@
-/**
- * Necessary for handling card exchange logic for reinforcement phase
- * * The JavaFx part is done by DKM
- * The logic part is done by Tianyi
- *
- * @author DKM
- * @author Tianyi
- * @version 3.0
- *
- *
- */
 package View;
 
-import java.net.URL;
-import java.util.Observable;
-import java.util.ResourceBundle;
 
-import Model.ActionModel;
 import Model.Card;
-
-
-import Model.Player;
-import Model.PlayerPhaseModel;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import Model.Player;
 
-public class CardController extends Observable implements Initializable
-{
+import java.util.ArrayList;
+import java.util.List;
+import Model.Model;
+import Model.CardModel;
 
+/**
+ * Handle event when user interact with CardView
+ */
+public class CardController {
+
+    @FXML private Button trade;
+    @FXML private Button cancelCardView;
+    @FXML private Button closeButton;
+    @FXML private Label currentPlayerName;
+    @FXML private Label textToShow;
+    @FXML private VBox cardVbox;
+
+    private List<Card> playerCards;
+    private CheckBox[] cbs;
+    private Model model;
+    private CardView card;
+    private Player currentPlayer;
+
+
+    /**
+     * Get corresponding reference of Model, CardView and MapController
+     * @param model is the reference of Model
+     * @param card is the reference of CardView
+     */
+    public void init(Model model, CardView card) {
+        this.model = model;
+        this.card = card;
+    }
+
+    /**
+     * Handle cancelling CardView event
+     * @param event the Action event
+     */
     @FXML
-    ListView<Card> yourCard;
+    private void cancelCardView(ActionEvent event) {
+        model.quitCards();
+        if(CardModel.getInstance().readyToQuit()) {
+            Stage stage = (Stage) cancelCardView.getScene().getWindow();
+            stage.close();
+        }
+    }
 
-    @FXML
-    ListView<Card> tradeCard;
-
-    private int reinforcement;
-
-    ActionModel actions;
-    Player player;
-
-    ObservableList<Card> yourObservableList = FXCollections.observableArrayList();
-    ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
-
-    public void renderView()
-    {
-        yourCard.setCellFactory(param -> new ListCell<Card>()
-        {
-            @Override
-            protected void updateItem(Card card, boolean empty)
-            {
-                super.updateItem(card, empty);
-                if (empty || card == null || card.getCatagory() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(card.getCatagory());
-                }
+    /**
+     * handle close card window by red button
+     */
+    public void closeRequest(){
+        if(!cancelCardView.isDisable()) {
+            model.quitCards();
+            if (CardModel.getInstance().readyToQuit()) {
+                Stage stage = (Stage) cancelCardView.getScene().getWindow();
+                stage.close();
             }
-        });
-        tradeCard.setCellFactory(param -> new ListCell<Card>()
-        {
-            @Override
-            protected void updateItem(Card card, boolean empty)
-            {
-                super.updateItem(card, empty);
-                if (empty || card == null || card.getCatagory() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(card.getCatagory());
-                }
-            }
-        });
-    }
-
-
-    /**
-     * This method is data binding for connection between controller and UI.
-     *
-     * @see javafx.fxml.Initializable
-     */
-    @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
-        actions = ActionModel.getActionModel();
-        yourCard.setItems(yourObservableList);
-        tradeCard.setItems(tradeObservableList);
-        yourObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
-        player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
-        renderView();
+        }else{
+            System.out.println("just close");
+        }
     }
 
     /**
-     * This method is used to update the cards the player owned and the cards
-     * the player chooses to exchange
+     * if the exchange operation is valid
+     * @param event the Action event
      */
     @FXML
-    public void yourCardHandler()
-    {
-        if (yourCard.getSelectionModel().getSelectedItem() != null && tradeCard.getItems().size() < 3)
-        {
-            Card card = yourCard.getSelectionModel().getSelectedItem();
-            tradeCard.getItems().add(card);
-            yourCard.getItems().remove(card);
-
+    private void checkTrade(ActionEvent event) {
+        trade.setDisable(false);
+        textToShow.setText(null);
+//        currentPlayer = CardModel.getInstance().getCurrentPlayer();
+        List<Card> selectedCards = CardModel.getInstance().retrieveSelectedCardsFromCheckbox
+                (this.currentPlayer.getPlayerCardList(),cbs);
+        if (selectedCards.size() == 3) {
+            model.trade((ArrayList<Card>) selectedCards);
         }
     }
 
     /**
-     * This method is used to update the cards the player owned and the cards
-     * the player chooses to exchange.
+     * initiate CardView
      */
-    @FXML
-    public void yourTradeHandler()
-    {
-        if (tradeCard.getSelectionModel().getSelectedItem() != null)
-        {
-            Card card = tradeCard.getSelectionModel().getSelectedItem();
-            yourCard.getItems().add(card);
-            tradeCard.getItems().remove(card);
+    public void autoInitializeController() {
+        cardVbox.getChildren().clear();
+        currentPlayer = CardModel.getInstance().getCurrentPlayer();
+        currentPlayerName.setText("All Cards Of Player : " + currentPlayer.getName());
+        textToShow.setStyle("-fx-text-fill: red");
+        if(CardModel.getInstance().finishExchange()){
+            textToShow.setStyle("-fx-text-fill: green");
         }
+        textToShow.setText(CardModel.getInstance().getInvalidInfo());
+        playerCards = currentPlayer.getPlayerCardList();
+
+        if (playerCards.size() < 3) {
+            trade.setDisable(true);
+        } else {
+            trade.setDisable(false);
+        }
+        closeButton.setVisible(false);
+        loadAllCards();
     }
 
     /**
-     * This method is used to update the total reinforcement based on the cards
-     * the player chooses And update the cards the player owned.
+     * show all the cards on the CardView
      */
-    @FXML
-    public void tradeCard()
-    {
-        if (tradeCard.getItems().size() == 3)
-        {
-            if (player.cardValidation(tradeCard.getItems()))
-            {
-//                reinforcement = player.calculateReinforcementFromCards();
-
-                player.exchangeCards(tradeCard.getItems());
-                tradeCard.getItems().clear();
-                actions.addAction("you exchanged cards");
-                setChanged();
-                notifyObservers(reinforcement);
-            }
-            else
-            {
-                for (Card card : tradeCard.getItems())
-                {
-                    yourCard.getItems().add(card);
-                }
-                tradeCard.getItems().clear();
-                actions.addAction("Invalid cards");
-            }
+    public void loadAllCards() {
+        int numberOfCards = playerCards.size();
+        cbs = new CheckBox[numberOfCards];
+        for (int i = 0; i < numberOfCards; i++) {
+            cbs[i] = new CheckBox(
+                    playerCards.get(i).getCardType().toString());
         }
-        else
-        {
-            actions.addAction("you only can exchange 3 cards once");
-        }
+        cardVbox.getChildren().addAll(cbs);
     }
 
     /**
-     * This method handles skipping of card exchange
+     * card button open read only card ex window
      */
-    @FXML
-    public void skipExchangeHandler()
-    {
-        if (yourCard.getItems().size() + tradeCard.getItems().size() >= 5)
-        {
-            actions.addAction("5+ cards == you must exchange");
-        }
-        else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().checkIfCardsMaximum())
-        {
-            actions.addAction("5+ cards == you must exchange");
-        }
-        else
-        {
-            setChanged();
-            notifyObservers();
-        }
+    public void openReadOnlyCardWindow(){
+        autoInitializeController();
+        cancelCardView.setVisible(false);
+        trade.setVisible(false);
+        closeButton.setVisible(true);
+
     }
 
+    /**
+     *close card ex window without check current card numbers
+     */
+    public void closeReadOnlyCardWindow(){
+        cancelCardView.setVisible(true);
+        trade.setVisible(true);
+        Stage stage = (Stage) cancelCardView.getScene().getWindow();
+        stage.close();
+    }
 }

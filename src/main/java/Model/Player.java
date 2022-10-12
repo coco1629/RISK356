@@ -8,9 +8,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 public class Player implements Serializable {
     private Color color;
@@ -32,7 +30,12 @@ public class Player implements Serializable {
     private int leftTroops;
 
     private currentProcess phase = currentProcess.Preparation;
-    private ObservableList<Card> cards = FXCollections.observableArrayList();
+
+    private HashMap<String,Integer> cards;
+
+    private int cardsArmy;
+
+    private int numberOccupy;
 
 //    private ArrayList<Territory> ownedTerritories = new ArrayList<>();
 
@@ -43,6 +46,11 @@ public class Player implements Serializable {
         this.name = name;
         this.territoryCount = 0;
         this.clientHandler = new ClientHandler(name);
+        cards = new HashMap<>();
+
+        cards.put("infantry",0);
+        cards.put("cavalry",0);
+        cards.put("artillery",0);
 //        clientHandler.start();
 //        color =
     }
@@ -196,91 +204,110 @@ public class Player implements Serializable {
 //    public void setOwnedTerritories(ArrayList<Territory> ownedTerritories) {
 //        this.ownedTerritories = ownedTerritories;
 //    }
-    public ObservableList<Card> getCards()
-    {
-        return cards;
-    }
-
-    public ArrayList<Card> getCardList()
-    {
-        ArrayList<Card> card = new ArrayList<Card>();
-        for(Card c: cards)
-        {
-            card.add(c);
+    public int getTotalCards(){
+        int n = 0;
+        for (String key : cards.keySet()){
+            n += cards.get(key);
         }
-        return card;
+        return n;
     }
 
-    /**
-     * This method adds a card to player
-     *
-     * @param card the card being added to player
-     */
-    public void addCard(Card card)
-    {
-        cards.add(card);
-    }
 
     /**
-     * This method removes the card from player
-     *
-     * @param card the card to be removed from player
+     * Get Player Card List
+     * @return playerCardList
      */
-    public void removeCard(Card card) {
-        for (Card c : cards) {
-            if (c.getCatagory().equals(card.getCatagory())) {
-                c.setOwner(null);
-                cards.remove(c);
-                break;
+    public List<Card> getPlayerCardList(){
+        List<Card> playerCardList = new ArrayList<>();
+        for(Map.Entry<String,Integer> entry:cards.entrySet()){
+            if(entry.getKey().equals(CardType.ARTILLERY.toString().toLowerCase())){
+                for(int i=0; i < entry.getValue(); i++){
+                    playerCardList.add(new Card(CardType.ARTILLERY));
+                }
+            }
+            if(entry.getKey().equals(CardType.CAVALRY.toString().toLowerCase())){
+                for(int i=0; i < entry.getValue(); i++){
+                    playerCardList.add(new Card(CardType.CAVALRY));
+                }
+            }
+            if(entry.getKey().equals(CardType.INFANTRY.toString().toLowerCase())){
+                for(int i=0; i < entry.getValue(); i++){
+                    playerCardList.add(new Card(CardType.INFANTRY));
+                }
             }
         }
+        return playerCardList;
     }
-    public void setCards(ObservableList<Card> cards)
-    {
-        this.cards = cards;
+    public HashMap<String,Integer> getCards(){
+        return cards;
     }
-    public boolean checkIfCardsMaximum()
-    {
-        System.out.println("check if maximum: " + (getCards().size()));
-        return (getCards().size() >= 5);
+    public void handleCards(String card1, String card2, String card3){
+        cards.put(card1,cards.get(card1) - 1);
+        cards.put(card2,cards.get(card2) - 1);
+        cards.put(card3,cards.get(card3) - 1);
+        CardModel.getInstance().update();
+
     }
 
     /**
-     * This method is used to validate the cards the player chooses to exchange
-     *
-     * @param selectedCards A list of cards the player chooses to exchange for
-     * armies
-     * @return The result corresponding to the category of cards the player
-     * chooses
+     * player change cards for armies
      */
-    public boolean cardValidation(ObservableList<Card> selectedCards)
-    {
-        return (((selectedCards.get(0).getCatagory().equals(selectedCards.get(1).getCatagory()))
-                && (selectedCards.get(0).getCatagory().equals(selectedCards.get(2).getCatagory())))
-                || ((!(selectedCards.get(0).getCatagory().equals(selectedCards.get(1).getCatagory())))
-                && (!(selectedCards.get(0).getCatagory().equals(selectedCards.get(2).getCatagory())))
-                && (!(selectedCards.get(1).getCatagory().equals(selectedCards.get(2).getCatagory())))));
+    public void exchangeForArmy(){
+        cardsArmy += Model.cardsValue;
+        Model.cardsValue += 5;
     }
+    public void autoTradeCard() {
 
-    /**
-     * This method is used to remove the cards which the player chooses to
-     * exchange
-     *
-     * @param observableList A list of cards the player chooses to exchange for
-     * armies
-     *
-     */
-    public void exchangeCards(ObservableList<Card> observableList)
-    {
-        for (Card c : observableList)
-        {
-            removeCard(c);
+        for (String card : cards.keySet()) {
+
+            if (cards.get(card) >= 3) {
+                handleCards(card, card, card);
+                exchangeForArmy();
+                return;
+            }
+        }
+
+        handleCards("infantry","cavalry","artillery");
+        exchangeForArmy();
+    }
+    public void getDefenderCards(Player attacker, Player defender){
+        for(String key : defender.cards.keySet()){
+            attacker.cards.put(key, attacker.cards.get(key) + defender.cards.get(key));
+            defender.cards.put(key,0);
         }
     }
-    private boolean playerLost = false;
-    public boolean isPlayerLost()
-    {
-        return playerLost;
+    public int getNumberOccupy() {
+        return numberOccupy;
+    }
+
+    /**
+     * Set number of occupy
+     * @param numberOccupy number of occupy
+     */
+    public void setNumberOccupy(int numberOccupy) {
+        this.numberOccupy = numberOccupy;
+    }
+
+    public void addRandomCard(String newCard) {
+        if (numberOccupy > 0) {
+            int value = cards.get(newCard) + 1;
+            cards.put(newCard, value);
+        }
+        //reset the number of occupy
+        numberOccupy = 0;
+    }
+
+    /**
+     * Add Random card without param
+     */
+    public void addRandomCard() {
+
+        if (getNumberOccupy() > 0) {
+            Random random = new Random();
+            int num = random.nextInt(3);
+            String newCard = Model.cards[num];
+            addRandomCard(newCard);
+        }
     }
 
 
