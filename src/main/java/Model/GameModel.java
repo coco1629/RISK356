@@ -12,7 +12,7 @@ public class GameModel {
     private ArrayList<String> playerList;
     private ArrayList<Territory> territoryArrayList = new ArrayList<>();
     private int initTroops = 10;
-
+    private int updatedPlayers;
 
     public GameModel(){
 

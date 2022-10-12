@@ -196,24 +196,16 @@ public class DiceController implements Initializable {
             thread5.start();
         }
 
-//        for(Thread t : vectors){
-//            t.join(); //使用join来保证childrenThread的5个线程都执行完后，才执行主线程
-//        }
-
-//        Arrays.sort(attackResults);
-//        Arrays.sort(defendResults);
         Thread thread6 = new Thread(()->{
             for(Thread t : vectors){
                 try {
-                    t.join(); //使用join来保证childrenThread的5个线程都执行完后，才执行主线程
+                    t.join();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
             Arrays.sort(attackResults);
             Arrays.sort(defendResults);
-            System.out.println(Arrays.toString(attackResults));
-            System.out.println(Arrays.toString(defendResults));
             int attackDiceNum = 0;
             int defendDiceNum = 0;
             for(int i = 0 ; i < 3; i++){

@@ -72,8 +72,9 @@ public class ServerThread extends Thread{
                         for(int i = 0; i < territories.size(); i++){
                             sendObjectToAll(this.territories.get(i));
                         }
-                        if(territories.size() == 4){
+                        if(territories.size() >= 6){
                             Server.getGameModel().nextPhase();
+                            server.setUpdateplayers(0);
                         }
                         sendObjectToAll(false);
                         break;
@@ -81,14 +82,41 @@ public class ServerThread extends Thread{
                         ArrayList<Territory> territoryArrayList = (ArrayList<Territory>) readObject();
 //                        String defender = (String) readObject();
 //                        String messageToDefender = (String) readObject();
-                        server.setTerritories(territoryArrayList);
+
                         this.territories = territoryArrayList;
+                        server.setTerritories(territoryArrayList);
                         sendObjectToAll(true);
                         sendObjectToAll(territories.size());
                         for(int i = 0; i < territories.size(); i++){
                             sendObjectToAll(this.territories.get(i));
                         }
                         break;
+                    case FORTIFY:
+                        this.territories = (ArrayList<Territory>) readObject();
+                        server.setTerritories(this.territories);
+                        sendObjectToAll(true);
+                        sendObjectToAll(territories.size());
+                        for(int i = 0; i < territories.size(); i++){
+                            sendObjectToAll(this.territories.get(i));
+                        }
+                        break;
+                    case NEXT_PHASE:
+                        this.territories = server.getTerritories();
+                        server.setUpdateplayers(server.getUpdateplayers()+1);
+//                        System.out.println("update players" + server.getUpdateplayers());
+                        if(server.getUpdateplayers()==this.serverThreads.size()+1){
+                            sendObjectToAll(true);
+                            sendObjectToAll(territories.size());
+                            for(int i = 0; i < territories.size(); i++){
+                                sendObjectToAll(this.territories.get(i));
+                            }
+                            sendObjectToAll(true);
+//                            System.out.println("finish update");
+                            server.setUpdateplayers(0);
+                            Server.getGameModel().nextPhase();
+                        }
+                        break;
+
                     case CREATE_SESSION:
                         String string = (String) objectInputStream.readObject();
                         SessionData sessionData = new SessionData();
