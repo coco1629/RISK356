@@ -25,6 +25,8 @@ public enum Operation implements Serializable {
 
     REINFORCE,
 
+    EXCHANGE,
+
     END,
 
     RESET_WAIT_NEXT,

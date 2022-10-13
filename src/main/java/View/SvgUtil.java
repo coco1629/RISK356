@@ -317,6 +317,8 @@ public class SvgUtil extends Region {
                             this.twoSelectedPaths.get(1).setSelect(false);
                             this.twoSelectedPaths.clear();
                         }
+                        else
+                            this.twoSelectedPaths.remove(paths);
                     }
                     else
                         this.twoSelectedPaths.remove(paths);

@@ -255,6 +255,8 @@ public class Player implements Serializable {
     public void exchangeForArmy(){
         cardsArmy += Model.cardsValue;
         Model.cardsValue += 5;
+        this.allowedTroops += 5;
+//        this.getClientHandler().sendObject(Operation.EXCHANGE);
     }
     public void autoTradeCard() {
 
@@ -289,12 +291,12 @@ public class Player implements Serializable {
     }
 
     public void addRandomCard(String newCard) {
-        if (numberOccupy > 0) {
+//        if (numberOccupy > 0) {
             int value = cards.get(newCard) + 1;
             cards.put(newCard, value);
-        }
+//        }
         //reset the number of occupy
-        numberOccupy = 0;
+//        numberOccupy = 0;
     }
 
     /**
@@ -302,12 +304,12 @@ public class Player implements Serializable {
      */
     public void addRandomCard() {
 
-        if (getNumberOccupy() > 0) {
+//        if (getNumberOccupy() > 0) {
             Random random = new Random();
             int num = random.nextInt(3);
             String newCard = Model.cards[num];
             addRandomCard(newCard);
-        }
+//        }
     }
 
 

@@ -22,7 +22,6 @@ public class Model {
 
     public void trade(ArrayList<Card> cards){
 
-
         String card1 = cards.get(0).cardType.toString().toLowerCase();
         String card2 = cards.get(1).cardType.toString().toLowerCase();
         String card3 = cards.get(2).cardType.toString().toLowerCase();

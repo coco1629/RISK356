@@ -28,7 +28,7 @@ public class CardController {
     @FXML private Label textToShow;
     @FXML private VBox cardVbox;
 
-    private List<Card> playerCards;
+    private List<Card> playerCards = new ArrayList<Card>();
     private CheckBox[] cbs;
     private Model model;
     private CardView card;
@@ -50,7 +50,7 @@ public class CardController {
      * @param event the Action event
      */
     @FXML
-    private void cancelCardView(ActionEvent event) {
+    public void cancelCardView(ActionEvent event) {
         model.quitCards();
         if(CardModel.getInstance().readyToQuit()) {
             Stage stage = (Stage) cancelCardView.getScene().getWindow();
@@ -95,6 +95,7 @@ public class CardController {
     public void autoInitializeController() {
         cardVbox.getChildren().clear();
         currentPlayer = CardModel.getInstance().getCurrentPlayer();
+//        System.out.println(currentPlayer.getPlayerCardList());
         currentPlayerName.setText("All Cards Of Player : " + currentPlayer.getName());
         textToShow.setStyle("-fx-text-fill: red");
         if(CardModel.getInstance().finishExchange()){
@@ -102,6 +103,7 @@ public class CardController {
         }
         textToShow.setText(CardModel.getInstance().getInvalidInfo());
         playerCards = currentPlayer.getPlayerCardList();
+//        System.out.println(playerCards.size());
 
         if (playerCards.size() < 3) {
             trade.setDisable(true);
@@ -144,5 +146,37 @@ public class CardController {
         trade.setVisible(true);
         Stage stage = (Stage) cancelCardView.getScene().getWindow();
         stage.close();
+    }
+
+    public List<Card> getPlayerCards() {
+        return playerCards;
+    }
+
+    public void setPlayerCards(List<Card> playerCards) {
+        this.playerCards = playerCards;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public Button getCloseButton() {
+        return closeButton;
+    }
+
+    public void setCloseButton(Button closeButton) {
+        this.closeButton = closeButton;
+    }
+
+    public Button getCancelCardView() {
+        return cancelCardView;
+    }
+
+    public void setCancelCardView(Button cancelCardView) {
+        this.cancelCardView = cancelCardView;
     }
 }

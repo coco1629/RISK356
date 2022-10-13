@@ -207,10 +207,6 @@ public class ServerThread extends Thread{
         int num = 0;
         int totalCountry = 0;
         int extra = 0;
-        int cards = 0;
-
-//        System.out.println(countryMap);
-//        System.out.println(this.getName());
         HashMap<Continent,ArrayList<String>> playerMap = new HashMap<>();
 
         for(Territory territory: this.territories){
@@ -262,7 +258,7 @@ public class ServerThread extends Thread{
         }
 //        System.out.println("countries" + totalCountry);
 //        System.out.println("extra" + extra);
-        num = totalCountry / 3 + extra + cards;
+        num = totalCountry / 3 + extra;
         return num;
     }
 

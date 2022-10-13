@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -120,7 +121,9 @@ public class MainView implements Initializable {
 
     private boolean waitForNext = false;
 
-    private Model model;
+    private int gainedCard = 0;
+
+    private Model model = new Model();
     private CardView card;
     private CheckBox[] cbs;
     @FXML private Button trade;
@@ -185,6 +188,11 @@ public class MainView implements Initializable {
                 this.player.getClientHandler().sendObject(country.getPopulation());
                 //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
             }
+            if(gainedCard == 0){
+                gainedCard += 1;
+                player.addRandomCard();
+            }
+
         }
         if(this.player.getPhase() == currentProcess.Reinforcement){
             svgUtil.getSelectedCountry().setPopulation(numBox.getValue() + svgUtil.getSelectedCountry().getPopulation());
@@ -207,6 +215,9 @@ public class MainView implements Initializable {
     void nextPhase(ActionEvent event) {
 
         if(this.player.getPhase() == currentProcess.Attack || this.player.getPhase() == currentProcess.Fortify || this.player.getPhase() == currentProcess.Reinforcement){
+            svgUtil.deleteArrow();
+            svgUtil.unselectAllPaths();
+            svgUtil.setTwoSelectedPaths(new ArrayList<>());
             this.player.getClientHandler().sendObject(Operation.NEXT_PHASE);
             waitForNext = true;
             if(this.player.getPhase() == currentProcess.Fortify){
@@ -271,6 +282,11 @@ public class MainView implements Initializable {
                                 if(territories.get(i).getName().equals(attackCountryPath.getName())){
 //                            territories.get(i).setOwner(this.player.getName());
                                     territories.get(i).setNum(attackerNum[0]-1);
+                                    if(gainedCard == 0){
+                                        gainedCard += 1;
+                                        player.addRandomCard();
+                                    }
+
                                 }
                             }
                         }
@@ -381,20 +397,42 @@ public class MainView implements Initializable {
 //    }
     @FXML
     void cardview(ActionEvent event) throws IOException {
+
         Stage previous = new Stage();
+//        System.out.println(gainedCard);
+        model.setCurrentPlayer(this.player);
+//        System.out.println(this.player.getPlayerCardList());
+        CardModel.getInstance().setCurrentPlayer(this.player);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Card.fxml"));
         Parent main = loader.load();
+        CardController cardController = loader.getController();
+        cardController.setModel(model);
+        cardController.autoInitializeController();
         Scene scene = new Scene(main);
-
         previous.setResizable(false);
         previous.setScene(scene);
         previous.show();
+        previous.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                troopsNum.setText(String.valueOf(player.getAllowedTroops()));
+            }
+        });
+        cardController.getCancelCardView().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+//                System.out.println("click cancel");
+                cardController.cancelCardView(event);
+                troopsNum.setText(String.valueOf(player.getAllowedTroops()));
+            }
+        });
 
     }
 
     public void setPlayersNumOnPane(){
 //        System.out.println(this.player.getName());
 //        System.out.println(this.player.getAllPlayers().size());
+        model.setCurrentPlayer(this.player);
         switch (this.player.getAllPlayers().size()){
             case 2:
                 PlayerName3.setVisible(false);
@@ -518,8 +556,13 @@ public class MainView implements Initializable {
                             Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
                             svgUtil.setPhase(this.player.getPhase());
                             svgUtil.setTwoSelectedPaths(new ArrayList<>());
+//                            svgUtil.deleteArrow();
                             waitForNext = false;
+                            if(this.player.getPhase() == currentProcess.Reinforcement){
+                                gainedCard = 0;
+                            }
                         }
+
                     }
 
                 }
