@@ -312,9 +312,11 @@ public class SvgUtil extends Region {
                     if (paths.getName().equals(twoSelectedPaths.get(0).getName())) {
                         startX = endX;
                         startY = endY;
-                        this.twoSelectedPaths.get(1).setStrokeWidth(1);
-                        this.twoSelectedPaths.get(1).setSelect(false);
-                        this.twoSelectedPaths.clear();
+                        if(twoSelectedPaths.size() == 2){
+                            this.twoSelectedPaths.get(1).setStrokeWidth(1);
+                            this.twoSelectedPaths.get(1).setSelect(false);
+                            this.twoSelectedPaths.clear();
+                        }
                     }
                     else
                         this.twoSelectedPaths.remove(paths);

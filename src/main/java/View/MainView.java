@@ -402,7 +402,9 @@ public class MainView implements Initializable {
                     this.territories = obj;
                     this.player.setTerritories(obj);
                     svgUtil.setTerritories(territories);
-
+//                    if(isWin()){
+//                        this.player.getClientHandler().sendObject(Operation.WIN);
+//                    }
                     for(Territory territory: obj){
                         Country country = Country.valueOf(territory.getName());
                         if(this.player.getPhase() == currentProcess.Preparation){
@@ -432,7 +434,30 @@ public class MainView implements Initializable {
 //                        }
 //                        System.out.println("updated");
                     }
-                    if(obj.size() >= 42 && this.player.getPhase() == currentProcess.Preparation){
+                    int owned = 0;
+                    if(territories.size() > 0){
+                        String name = territories.get(0).getOwner();
+
+                        for(Territory territory: territories){
+                            if(territory.getOwner().equals(name)){
+                                owned++;
+                            }
+                        }
+                        // the game is end
+                        if(owned>=6){
+                            this.player.getClientHandler().sendObject(Operation.END);
+                            this.player.setPhase(currentProcess.END);
+                            svgUtil.unselectAllPaths();
+                            svgUtil.setPhase(this.player.getPhase());
+                            Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
+                            if(territories.get(0).getOwner().equals(this.player.getName())){
+                                System.out.println("winner");
+                            }
+                            break;
+                        }
+                    }
+
+                    if(obj.size() >= 6 && this.player.getPhase() == currentProcess.Preparation){
                         this.player.nextPhase();
                         svgUtil.unselectAllPaths();
                         Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
@@ -444,6 +469,7 @@ public class MainView implements Initializable {
 //                        System.out.println("isNext" + isNext);
                         if(isNext){
                             this.player.nextPhase();
+                            this.player.getClientHandler().sendObject(Operation.RESET_WAIT_NEXT);
 //                            System.out.println("fortify");
                             svgUtil.unselectAllPaths();
                             Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
@@ -460,27 +486,7 @@ public class MainView implements Initializable {
 
     }
 
-    public void updateLeftTroops(){
-        leftTroops = Integer.parseInt(troopsNum.getText());
-        for(Territory t : this.territories){
-            if(this.player.getOccupiedCountries().contains(Country.valueOf(t.getName())) && !Objects.equals(t.getOwner(), this.player.getName())){
-                leftTroops = leftTroops + Country.valueOf(t.getName()).getPopulation();
-                System.out.println(leftTroops);
-                ArrayList<Country> updated = this.player.getOccupiedCountries();
-                updated.remove(Country.valueOf(t.getName()));
-                this.player.setOccupiedCountries(updated);
-                this.player.setAllowedTroops(leftTroops);
-//                System.out.println(Country.valueOf(t.getName()).getPopulation());
-            }
-        }
-        troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
 
-
-    }
-
-    public boolean isWin(){
-        return this.player.getOccupiedCountries().size() == 42;
-    }
 
 
     public SvgUtil getSvgUtil() {

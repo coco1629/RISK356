@@ -25,6 +25,7 @@ public class ServerThread extends Thread{
     private HashMap<String,ServerHandler> handlerHashMap = new HashMap<>();
     private String roomName = "";
     HashMap<String, Continent> countryMap = new HashMap<>();
+    private boolean isWaitOthers = false;
 
     public ServerThread(Socket socket) throws IOException {
         this.socket = socket;
@@ -76,7 +77,7 @@ public class ServerThread extends Thread{
                         for(int i = 0; i < territories.size(); i++){
                             sendObjectToAll(this.territories.get(i));
                         }
-                        if(territories.size() >= 42){
+                        if(territories.size() >= 6){
                             Server.getGameModel().nextPhase();
                             server.setUpdateplayers(0);
                         }
@@ -102,9 +103,12 @@ public class ServerThread extends Thread{
                         }
                         break;
                     case NEXT_PHASE:
-                        if(Server.getGameModel().getPhase() == currentProcess.Attack){
+                        if(Server.getGameModel().getPhase() == currentProcess.Attack || Server.getGameModel().getPhase() == currentProcess.Reinforcement){
                             this.territories = server.getTerritories();
-                            server.setUpdateplayers(server.getUpdateplayers()+1);
+                            if(!isWaitOthers){
+                                server.setUpdateplayers(server.getUpdateplayers()+1);
+                                isWaitOthers = true;
+                            }
     //                        System.out.println("update players" + server.getUpdateplayers());
                             if(server.getUpdateplayers()==this.serverThreads.size()+1){
                                 sendObjectToAll(true);
@@ -115,19 +119,24 @@ public class ServerThread extends Thread{
                                 sendObjectToAll(true);
     //                            System.out.println("finish update");
                                 server.setUpdateplayers(0);
+                                isWaitOthers = false;
                                 Server.getGameModel().nextPhase();
                             }
                         }
                         else {
                             if(Server.getGameModel().getPhase() == currentProcess.Fortify){
                                 this.territories = server.getTerritories();
-                                server.setUpdateplayers(server.getUpdateplayers()+1);
+                                if(!isWaitOthers){
+                                    server.setUpdateplayers(server.getUpdateplayers()+1);
+                                    isWaitOthers = true;
+                                }
                                 countryMap = (HashMap<String, Continent>) readObject();
                                 sendObject(false);
                                 int allocateTroops = allocateTroops(this.getName());
                                 sendObject(allocateTroops);
 //                                int allocateTroops = allocateTroops(this.getName());
 //                                sendObject(allocateTroops);
+
                                 if(server.getUpdateplayers()==this.serverThreads.size()+1){
                                     sendObjectToAll(true);
                                     sendObjectToAll(territories.size());
@@ -136,12 +145,18 @@ public class ServerThread extends Thread{
                                     }
                                     sendObjectToAll(true);
                                     server.setUpdateplayers(0);
+                                    isWaitOthers = false;
                                     Server.getGameModel().nextPhase();
                                 }
                             }
                         }
                         break;
-
+                    case END:
+                        Server.getGameModel().setPhase(currentProcess.END);
+                        break;
+                    case RESET_WAIT_NEXT:
+                        this.isWaitOthers = false;
+                        break;
                     case CREATE_SESSION:
                         String string = (String) objectInputStream.readObject();
                         SessionData sessionData = new SessionData();
@@ -212,7 +227,7 @@ public class ServerThread extends Thread{
                     playerMap.put(continent,countries);
                 }
                 totalCountry++;
-                System.out.println(continent.toString() + playerMap.get(continent).toString());
+//                System.out.println(continent.toString() + playerMap.get(continent).toString());
 
             }
         }
@@ -245,8 +260,8 @@ public class ServerThread extends Thread{
                 }
             }
         }
-        System.out.println("countries" + totalCountry);
-        System.out.println("extra" + extra);
+//        System.out.println("countries" + totalCountry);
+//        System.out.println("extra" + extra);
         num = totalCountry / 3 + extra + cards;
         return num;
     }

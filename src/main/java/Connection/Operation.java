@@ -25,6 +25,10 @@ public enum Operation implements Serializable {
 
     REINFORCE,
 
+    END,
+
+    RESET_WAIT_NEXT,
+
     RED,
 
     BLUE,
