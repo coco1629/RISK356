@@ -8,23 +8,32 @@ import Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
+import org.kordamp.bootstrapfx.scene.layout.Panel;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class LoginView{
+public class LoginView implements Initializable {
     @FXML
     private Button login;
+
+
     @FXML
-    private TextField password;
+    private PasswordField password;
+
     @FXML
     private TextField user;
 
@@ -36,6 +45,7 @@ public class LoginView{
 
     @FXML
     private AnchorPane loginRoot;
+
 
     private ArrayList<TextField> textFieldArrayList;
 
@@ -58,11 +68,9 @@ public class LoginView{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/JoinView.fxml"));
                 Parent main = loader.load();
                 Scene scene = new Scene(main);
-//                Player player = new Player(username);
+                scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
                 JoinController controller = loader.getController();
-//                controller.setCurrentPlayer(player);
                 controller.setUserName(username);
-//                controller.showLists();
                 Stage previous = (Stage)loginRoot.getScene().getWindow();
                 previous.setResizable(false);
                 previous.setScene(scene);
@@ -72,21 +80,7 @@ public class LoginView{
         }
         catch (Exception e){
             e.printStackTrace();
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.titleProperty().set("Error");
-//            alert.headerTextProperty().set("Password invalid.");
-//            alert.showAndWait();
         }
-
-
-
-//        ClientHandler clientHandler1 = new ClientHandler();
-//        ClientHandler clientHandler2 = new ClientHandler();
-//        ClientHandler clientHandler3 = new ClientHandler();
-//        clientHandler1.sendObject("client 1 send");
-//        clientHandler2.sendObject("client 2 send");
-//        clientHandler3.sendObject("client 3 send");
-
 
     }
 
@@ -111,4 +105,9 @@ public class LoginView{
         success.setVisible(true);
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        login.getStyleClass().addAll("btn","btn-success");
+        register.getStyleClass().addAll("btn","btn-warning");
+    }
 }

@@ -107,15 +107,24 @@ public class MainView implements Initializable {
     @FXML
     private Label troopsNum;
 
-    @FXML
-    private ListView<String> log;
+//    @FXML
+//    private ListView<String> log;
 
     private int leftTroops;
 
     @FXML
+    private Label troops1;
+
+    @FXML
+    private Label troops2;
+
+    @FXML
+    private Button cardtest;
+
+    @FXML
     private Label instructions;
 
-    private ArrayList<String> logs = new ArrayList<>();
+//    private ArrayList<String> logs = new ArrayList<>();
 
     private ArrayList<Territory> territories = new ArrayList<>();
 
@@ -146,6 +155,15 @@ public class MainView implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+//        phase.getStyleClass().addAll("lbl","lbl-danger","h1");
+//        troopsNum.getStyleClass().addAll("lbl","lbl-info");
+//        troops1.getStyleClass().addAll("lbl","lbl-info","h2");
+//        troops2.getStyleClass().addAll("lbl","lbl-info","h2");
+        TransferPhase.getStyleClass().addAll("btn","btn-warning");
+        AttackPhase.getStyleClass().addAll("btn","btn-warning");
+        cardtest.getStyleClass().addAll("btn","btn-warning");
+        nextPhase.getStyleClass().addAll("btn","btn-warning");
+        occupyButton.getStyleClass().addAll("btn","btn-warning");
         Group group = svgUtil.getGroup();
         group.setScaleX(1.2);
         group.setScaleY(1.2);
@@ -154,14 +172,14 @@ public class MainView implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,50,1);
         numBox.setValueFactory(valueFactory);
         rootPane.getChildren().addAll(group);
-        ObservableList<String> logItems = FXCollections.observableArrayList(logs);
-        log.setItems(logItems);
+//        ObservableList<String> logItems = FXCollections.observableArrayList(logs);
+//        log.setItems(logItems);
     }
 
     @FXML
     void occupy(ActionEvent event) {
 
-        if(svgUtil.getSelectedPath() != null){
+        if(svgUtil.getSelectedPath() != null & !svgUtil.getSelectedPath().isOccupied()){
             if(numBox.getValue() <= this.player.getAllowedTroops()){
                 if(this.player.getPhase() == currentProcess.Preparation){
                     svgUtil.getSelectedCountry().setPopulation(numBox.getValue());

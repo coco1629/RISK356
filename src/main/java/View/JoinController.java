@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,12 +18,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.Set;
 
-public class JoinController {
+public class JoinController implements Initializable {
 
     @FXML
     private AnchorPane root;
@@ -108,6 +112,7 @@ public class JoinController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
             Parent main = loader.load();
             Scene scene = new Scene(main);
+            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
             MainView controller = loader.getController();
             currentPlayer.setAllPlayers(playersList);
             currentPlayer.setAllowedTroops(num);
@@ -138,4 +143,10 @@ public class JoinController {
         this.userName = userName;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        createButton.getStyleClass().addAll("btn","btn-success");
+        joinButton.getStyleClass().addAll("btn","btn-warning");
+        showButton.getStyleClass().addAll("btn","btn-default");
+    }
 }

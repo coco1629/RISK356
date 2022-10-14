@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 public class RiskGame extends Application {
 
@@ -17,7 +18,9 @@ public class RiskGame extends Application {
                     .getResource("/view/LoginView.fxml"));
             primaryStage.setResizable(false);
             primaryStage.setTitle("Risk Game");
-            primaryStage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+            primaryStage.setScene(scene);
             primaryStage.show();
 
         } catch(Exception e) {
