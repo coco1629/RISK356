@@ -15,13 +15,21 @@ public enum Operation implements Serializable {
 
     UPDATE,
 
-    INVITE,
+    NEXT_PHASE,
 
     OCCUPY,
 
     ATTACK,
 
     FORTIFY,
+
+    REINFORCE,
+
+    EXCHANGE,
+
+    END,
+
+    RESET_WAIT_NEXT,
 
     RED,
 

@@ -9,9 +9,9 @@ public class Territory implements Serializable {
 //    private int owner;//Owner of land
 //    private int units;//Number of territorial troops
     private Color color;
-    private String onwner;
+    private String owner;
     private String name;
-    private int num=0;
+    private int num;
 
 
     @Override
@@ -19,9 +19,10 @@ public class Territory implements Serializable {
 
     }
 
-    public Territory(String name){
+    public Territory(String name,String owner, int num){
         this.name = name;
-        this.onwner = null;
+        this.owner = owner;
+        this.num = num;
 //        owner = -1;
 //        units = -1;
     }
@@ -34,12 +35,12 @@ public class Territory implements Serializable {
         this.color = color;
     }
 
-    public String getOnwner() {
-        return onwner;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setOnwner(String onwner) {
-        this.onwner = onwner;
+    public void setOwner(String onwner) {
+        this.owner = onwner;
     }
 
     public String getName() {
@@ -57,4 +58,5 @@ public class Territory implements Serializable {
     public void setNum(int num) {
         this.num = num;
     }
+
 }

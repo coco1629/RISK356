@@ -93,7 +93,7 @@ public class JoinController {
     void showRoom(ActionEvent event) throws IOException {
         this.currentPlayer = new Player(userName);
         this.currentPlayer.getClientHandler().sendObject(Operation.SHOW_ROOMS);
-        System.out.println("send show rooms");
+//        System.out.println("send show rooms");
         ArrayList<String> rooms = (ArrayList<String>) this.currentPlayer.getClientHandler().readObject();
         ObservableList<String> roomItems = FXCollections.observableArrayList(rooms);
         roomList.setItems(roomItems);
@@ -101,6 +101,8 @@ public class JoinController {
 
     public void changeScene(Stage secondStage) throws IOException {
         ArrayList<Object> playersList = this.currentPlayer.getClientHandler().startListeningOrders();
+        int num = (int) this.currentPlayer.getClientHandler().readObject();
+//        System.out.println(num);
         if(playersList != null) {
             secondStage.close();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
@@ -108,6 +110,7 @@ public class JoinController {
             Scene scene = new Scene(main);
             MainView controller = loader.getController();
             currentPlayer.setAllPlayers(playersList);
+            currentPlayer.setAllowedTroops(num);
             controller.setPlayer(currentPlayer);
             controller.setPlayersNumOnPane();
             controller.setColor(currentPlayer.getColor());

@@ -5,14 +5,15 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ClientHandler{
 
     public static ArrayList<ClientHandler> clientArrayList = new ArrayList<>();
     private Socket socket;
     private String username;
-//    private String
-    private String serverIP;
+    private String serverIP = "127.0.0.1";
+//    private String serverIP = "104.208.109.169";
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
@@ -50,7 +51,7 @@ public class ClientHandler{
             ex.printStackTrace();
             System.out.println("Exception Occurred in ClientThread Constructor: " + ex.toString());
         }
-//        System.out.println("connecting");
+        System.out.println("connecting");
 
     }
 
@@ -147,4 +148,10 @@ public class ClientHandler{
     public void setCurrentPlayers(ArrayList<String> currentPlayers) {
         this.currentPlayers = currentPlayers;
     }
+
+    public boolean receiveUpdated(){
+        return (boolean) Objects.requireNonNull(this.readObject());
+    }
+
+
 }
