@@ -1,10 +1,9 @@
-
 .MainCss {
     -fx-opacity		 : 0.8;
     -background-color: #000066;
     -fill-color      : #e6e6ff;
     -stroke-color    : #000000;
-    -hover-color     : #8080ff;
+    -hover-color     : #B22222;
     -pressed-color   : #789dff;
     -selected-color  : #009900;
     -location-color  : #FF0000;
@@ -40,7 +39,7 @@
 
 .button {
     -fx-background-color: #ffc638;
-    -fx-text-fill: #000000;
+    -fx-text-fill:  #000000;
     -fx-border-color: #9e7000;
     -fx-border-radius: 20;
     -fx-background-radius: 20;

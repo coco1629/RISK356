@@ -8,15 +8,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DiceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D2B48C #D2B48C #D2B48C #D2B48C #D2B48C #D2B48C #D2B48C #D2B48C;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DiceController">
     <children>
         <ImageView fx:id="diceImage" fitHeight="87.0" fitWidth="83.0" layoutX="133.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@img/dice1.png" />
             </image></ImageView>
-        <Button fx:id="rollButton" layoutX="268.0" layoutY="315.0" mnemonicParsing="false" onAction="#roll" prefHeight="47.0" prefWidth="83.0" text="Roll">
+        <Button fx:id="rollButton" layoutX="253.0" layoutY="315.0" mnemonicParsing="false" onAction="#roll" prefHeight="44.0" prefWidth="98.0" style="-fx-background-color: #a88462 #a88462;" text="Roll" textFill="#fffefe">
             <font>
-                <Font size="23.0" />
+                <Font name="Chalkduster" size="23.0" />
             </font></Button>
       <ImageView fx:id="diceImage2" fitHeight="83.0" fitWidth="83.0" layoutX="133.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -40,49 +40,49 @@
       </ImageView>
       <RadioButton fx:id="threeDices" layoutX="133.0" layoutY="339.0" mnemonicParsing="false" selected="true" text="3 dices">
          <font>
-            <Font size="14.0" />
+            <Font name="Gill Sans" size="14.0" />
          </font>
       </RadioButton>
       <RadioButton fx:id="twoDices" layoutX="31.0" layoutY="339.0" mnemonicParsing="false" text="2 dices">
          <font>
-            <Font size="14.0" />
+            <Font name="Gill Sans" size="14.0" />
          </font>
       </RadioButton>
       <Label layoutX="258.0" layoutY="166.0" text="Attack-&gt;&gt;&gt;">
          <font>
-            <Font size="18.0" />
+            <Font name="Chalkduster" size="18.0" />
          </font>
       </Label>
       <RadioButton fx:id="oneDice" layoutX="87.0" layoutY="305.0" mnemonicParsing="false" text="1 dice">
          <font>
-            <Font size="14.0" />
+            <Font name="Gill Sans" size="14.0" />
          </font>
       </RadioButton>
       <Label fx:id="attackCountry" layoutX="104.0" layoutY="24.0" text="AttackCountry">
          <font>
-            <Font size="14.0" />
+            <Font name="Gill Sans" size="14.0" />
          </font>
       </Label>
       <Label fx:id="defendCountry" layoutX="402.0" layoutY="24.0" text="DefendCountry">
          <font>
-            <Font size="14.0" />
+            <Font name="Gill Sans" size="14.0" />
          </font>
       </Label>
       <Label layoutX="402.0" layoutY="305.0" text="Attacker:">
          <font>
-            <Font size="14.0" />
+            <Font name="Gill Sans" size="14.0" />
          </font>
       </Label>
       <Label fx:id="attackTroopsNum" layoutX="478.0" layoutY="307.0" prefHeight="15.0" prefWidth="72.0" />
       <Label fx:id="defendTroopsNum" layoutX="478.0" layoutY="341.0" prefHeight="15.0" prefWidth="72.0" />
       <Label layoutX="402.0" layoutY="339.0" text="Defender:">
          <font>
-            <Font size="14.0" />
+            <Font name="Gill Sans" size="14.0" />
          </font>
       </Label>
       <Label fx:id="success" layoutX="253.0" layoutY="107.0" prefHeight="34.0" prefWidth="113.0" text="Success!" textFill="#e60000" visible="false">
          <font>
-            <Font size="24.0" />
+            <Font name="Gill Sans" size="24.0" />
          </font>
       </Label>
     </children>
