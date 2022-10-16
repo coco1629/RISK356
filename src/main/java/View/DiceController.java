@@ -47,7 +47,7 @@ public class DiceController implements Initializable {
     private ImageView diceImage5;
 
     @FXML
-    private Button rollButton;
+    public Button rollButton;
 
     @FXML
     private RadioButton threeDices;
@@ -67,6 +67,8 @@ public class DiceController implements Initializable {
     private int attackNum = 0;
 
     private int defendNum = 0;
+
+    public boolean isEnd = false;
 
     private int[] attackResults = {0,0,0};
 
@@ -258,6 +260,7 @@ public class DiceController implements Initializable {
 //            System.out.println("defend Num" + defendNum);
             if(attackNum == 2){
                 threeDices.setDisable(true);
+                twoDices.setSelected(true);
                 diceImage3.setVisible(false);
             }
             if(attackNum <= 1){
@@ -266,12 +269,15 @@ public class DiceController implements Initializable {
 //                twoDices.setDisable(true);
 //                diceImage2.setVisible(false);
                 winner = defender;
+                isEnd = true;
                 rollButton.setDisable(true);
+
             }
             if(defendNum == 1){
                 diceImage5.setVisible(false);
             }
             if(defendNum <= 0){
+                isEnd = true;
                 winner = attacker;
                 success.setVisible(true);
                 rollButton.setDisable(true);

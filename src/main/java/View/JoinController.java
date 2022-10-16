@@ -112,7 +112,6 @@ public class JoinController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
             Parent main = loader.load();
             Scene scene = new Scene(main);
-            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
             MainView controller = loader.getController();
             currentPlayer.setAllPlayers(playersList);
             currentPlayer.setAllowedTroops(num);

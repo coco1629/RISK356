@@ -59,29 +59,35 @@
       </ImageView>
       <Pane layoutY="616.0" prefHeight="125.0" prefWidth="851.0" style="-fx-background-color: #D2B48C #D2B48C;">
          <children>
-            <Button fx:id="TransferPhase" layoutX="125.0" layoutY="80.0" mnemonicParsing="false" onAction="#transfer" prefHeight="23.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Transfer" />
-            <Spinner fx:id="numBox" focusTraversable="false" layoutX="678.0" layoutY="10.0" prefHeight="23.0" prefWidth="92.0" />
+            <Button fx:id="TransferPhase" layoutX="125.0" layoutY="80.0" mnemonicParsing="false" onAction="#transfer" prefHeight="23.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Transfer">
+               <font>
+                  <Font size="13.0" />
+               </font></Button>
+            <Spinner fx:id="numBox" focusTraversable="false" layoutX="737.0" layoutY="11.0" prefHeight="23.0" prefWidth="92.0" />
             <Button fx:id="nextPhase" layoutX="756.0" layoutY="80.0" mnemonicParsing="false" onAction="#nextPhase" prefHeight="24.0" prefWidth="87.0" text="Next" />
             <Button fx:id="occupyButton" layoutX="390.0" layoutY="80.0" mnemonicParsing="false" onAction="#occupy" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Occupy">
                <font>
                   <Font name="Gill Sans" size="13.0" />
                </font>
             </Button>
-            <Label fx:id="troops2" layoutX="599.0" layoutY="42.0" prefHeight="26.0" prefWidth="114.0" text="Left Troops:">
+            <Label fx:id="troops2" layoutX="658.0" layoutY="43.0" prefHeight="26.0" prefWidth="114.0" text="Left Troops:">
                <font>
                   <Font name="Chalkduster" size="14.0" />
                </font></Label>
-            <Label fx:id="troopsNum" layoutX="610.0" layoutY="33.0" />
+            <Label fx:id="troopsNum" layoutX="755.0" layoutY="49.0" />
             <Label fx:id="phase" layoutX="230.0" layoutY="75.0" prefHeight="39.0" prefWidth="145.0" style="-fx-background-radius: 20; -fx-alignment: center;" text="preparation" textAlignment="CENTER">
                <font>
                   <Font name="Gill Sans" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="troops1" layoutX="599.0" layoutY="12.0" prefHeight="23.0" prefWidth="79.0" text="Troops:">
+            <Label fx:id="troops1" layoutX="658.0" layoutY="13.0" prefHeight="23.0" prefWidth="79.0" text="Troops:">
                <font>
                   <Font name="Chalkduster" size="14.0" />
                </font></Label>
-            <Button fx:id="cardtest" layoutX="499.0" layoutY="80.0" mnemonicParsing="false" onAction="#cardview" prefHeight="24.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Card" />
+            <Button fx:id="cardtest" layoutX="499.0" layoutY="80.0" mnemonicParsing="false" onAction="#cardview" prefHeight="24.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Card">
+               <font>
+                  <Font size="13.0" />
+               </font></Button>
 
 
                                           <Button fx:id="AttackPhase" layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#attack" prefHeight="24.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Attack">
@@ -94,6 +100,7 @@
                   <Font name="Chalkduster" size="22.0" />
                </font>
             </Label>
+            <Button fx:id="autoButton" layoutX="648.0" layoutY="81.0" mnemonicParsing="false" onAction="#auto" prefHeight="24.0" prefWidth="87.0" text="Auto" />
          </children>
       </Pane>
       <Label fx:id="instructions" layoutX="14.0" layoutY="419.0" prefHeight="184.0" prefWidth="122.0" wrapText="true" />

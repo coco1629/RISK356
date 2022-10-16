@@ -27,10 +27,7 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MainView implements Initializable {
     @FXML
@@ -120,6 +117,18 @@ public class MainView implements Initializable {
 
     @FXML
     private Button cardtest;
+
+    private boolean isAuto = false;
+
+    private Stage DiceStage = new Stage();
+
+    private DiceController diceController;
+
+    private EventHandler<WindowEvent> eventHandler;
+
+
+    @FXML
+    private Button autoButton;
 
     @FXML
     private Label instructions;
@@ -260,6 +269,9 @@ public class MainView implements Initializable {
                 Parent main = loader.load();
                 Scene scene = new Scene(main);
                 DiceController controller = loader.getController();
+                if(isAuto){
+                    this.diceController = controller;
+                }
                 controller.setAttacker(this.player.getName());
                 String defender = "";
                 for(int i = 0; i < territories.size();i++){
@@ -280,6 +292,9 @@ public class MainView implements Initializable {
                 stage.setResizable(false);
                 stage.setScene(scene);
                 stage.show();
+                if(isAuto){
+                    this.DiceStage = stage;
+                }
                 final boolean[] isWin = {false};
                 final boolean[] isDraw = {true};
                 final int[] attackerNum = {0};
@@ -343,9 +358,6 @@ public class MainView implements Initializable {
                     }
                 });
 
-//                this.player.getClientHandler().sendObject(defender);
-//                this.player.getClientHandler().sendObject(this.player.getName() + " " + attackCountryName + " attacked your " + defendCountryName);
-
 
             }
         } catch (IOException e) {
@@ -359,6 +371,7 @@ public class MainView implements Initializable {
     void transfer(ActionEvent event) {
         if(this.player.getPhase() == currentProcess.Fortify){
             if(svgUtil.getTwoSelectedPaths().size() == 2){
+                System.out.println("transfer");
                 CountryPath fromPath = svgUtil.getTwoSelectedPaths().get(0);
                 CountryPath toPath = svgUtil.getTwoSelectedPaths().get(1);
                 boolean success = true;
@@ -394,6 +407,200 @@ public class MainView implements Initializable {
             }
         }
     }
+
+    @FXML
+    void auto(ActionEvent event) throws InterruptedException {
+        HashMap<String,CountryPath> map = svgUtil.getCountryPathHashMap();
+        //这两个国家到时候写一个函数，返回选择的，也可以写到底下如果需要，我这里写这两个是为了方便测试
+        String country1 = "alaska";
+        String country2 = "alberta";
+        int troops = 5;
+        switch (this.player.getPhase()){
+            case Preparation -> {
+                // country should not be occupied.
+                //这里选的国家应该是没被选过的国家，用country1写了，如果不对麻烦替换一下
+                Country temp = Country.valueOf(country1);
+                temp.setPopulation(troops);
+                svgUtil.setPathColor(this.color,temp);
+//                map.get(country1).setSelect(true);
+//                map.get(country1).setStrokeWidth(3);
+//                svgUtil.setSelectedCountry(temp);
+//                svgUtil.setSelectedPath(map.get(country1));
+                this.player.addToOccupiedCountries(temp);
+                this.player.setAllowedTroops(this.player.getAllowedTroops() - troops);
+                troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+                this.player.getClientHandler().sendObject(Operation.OCCUPY);
+                this.player.getClientHandler().sendObject(this.player.getName());
+                this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
+                for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
+                    Country country =this.player.getOccupiedCountries().get(i);
+                    //            System.out.println(country.getName() + "troops num " + country.getPopulation());
+                    this.player.getClientHandler().sendObject(country);
+                    this.player.getClientHandler().sendObject(country.getPopulation());
+                    //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
+                }
+                if(gainedCard == 0){
+                    gainedCard += 1;
+                    player.addRandomCard();
+                }
+            }
+            case Attack -> {
+                // country 1 should be owned country, the other one is others'
+                ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
+                autoSelectedTwo.add(map.get(country1));
+                autoSelectedTwo.add(map.get(country2));
+                CountryPath attacker = map.get(country1);
+                CountryPath defender = map.get(country2);
+                svgUtil.setTwoSelectedPaths(autoSelectedTwo);
+                svgUtil.setStartX(attacker.getText().getX() + 17);
+                svgUtil.setEndX(defender.getText().getX() + 17);
+                svgUtil.setStartY(attacker.getText().getY() - 5);
+                svgUtil.setEndY(defender.getText().getY() - 5);
+                svgUtil.showArrow();
+                isAuto = true;
+                AttackPhase.fire();
+                DiceStage.setOnCloseRequest(eventHandler);
+                Thread thread = new Thread(()->{
+                    while (!diceController.isEnd){
+                        if(!diceController.rollButton.isDisable()){
+                            diceController.rollButton.fire();
+                            try {
+                                //停留时间后点击，可以改
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                });
+                thread.start();
+                Thread endThread= new Thread(()->{
+                    try {
+                        thread.join();
+                        //停留时间后关闭，可以改
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Platform.runLater(()-> {
+
+                        if(diceController.getWinner().equals(this.player.getName())){
+                            System.out.println("win");
+                            int attackerNum = diceController.getAttackNum();
+                            int defenderNum = diceController.getDefendNum();
+                            for(int i = 0; i < territories.size();i++){
+                                if(territories.get(i).getName().equals(defender.getName())){
+                                    territories.get(i).setOwner(player.getName());
+                                    territories.get(i).setNum(1);
+                                }
+                                if(territories.get(i).getName().equals(attacker.getName())){
+//                            territories.get(i).setOwner(this.player.getName());
+                                    territories.get(i).setNum(attackerNum-1);
+                                    if(gainedCard == 0){
+                                        gainedCard += 1;
+                                        player.addRandomCard();
+                                    }
+
+                                }
+                            }
+                        }
+                        else {
+                            System.out.println("lose");
+//                            System.out.println(diceController.getWinner());
+                            int attackerNum = diceController.getAttackNum();
+                            int defenderNum = diceController.getDefendNum();
+                            for(int i = 0; i < territories.size();i++){
+                                if(territories.get(i).getName().equals(defender.getName())){
+                                    territories.get(i).setNum(defenderNum);
+                                }
+                                if(territories.get(i).getName().equals(attacker.getName())){
+//                                    territories.get(i).setOwner(controller.getDefender());
+//                                    System.out.println(controller.getDefender());
+                                    territories.get(i).setNum(1);
+                                }
+                            }
+                        }
+//                        diceController.
+                        DiceStage.close();
+                        isAuto = false;
+                        svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
+                        svgUtil.deleteArrow();
+                        player.getClientHandler().sendObject(Operation.ATTACK);
+                        player.getClientHandler().sendObject(territories);
+                    });
+                });
+                endThread.start();
+            }
+            case Reinforcement -> {
+                // 这个数字根据战略需要改，这里固定是为了方便测试
+                // 国家要是自己占有的国家，territory.getOwner等于玩家
+                int addNum = 5;
+                Country country = Country.valueOf(country1);
+                CountryPath countryPath = map.get(country1);
+                country.setPopulation(troops);
+                this.player.setAllowedTroops(this.player.getAllowedTroops() - addNum);
+                troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+                for(Territory territory: territories){
+                    if(territory.getName().equals(country.getName())){
+                        territory.setNum(territory.getNum() + addNum);
+                        countryPath.getText().setText(String.valueOf(territory.getNum()));
+                    }
+                }
+                this.player.getClientHandler().sendObject(Operation.REINFORCE);
+                this.player.getClientHandler().sendObject(territories);
+            }
+            case Fortify -> {
+                // 两个国家都需要是自己占领的
+                System.out.println("auto-fortify");
+                ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
+                autoSelectedTwo.add(map.get(country1));
+                autoSelectedTwo.add(map.get(country2));
+                CountryPath from = map.get(country1);
+                CountryPath to = map.get(country2);
+                // 这个数字根据战略需要改，这里固定是为了方便测试(
+                int num = 1;
+                svgUtil.setTwoSelectedPaths(autoSelectedTwo);
+                svgUtil.setStartX(from.getText().getX() + 17);
+                svgUtil.setEndX(to.getText().getX() + 17);
+                svgUtil.setStartY(from.getText().getY() - 5);
+                svgUtil.setEndY(to.getText().getY() - 5);
+                svgUtil.showArrow();
+                numBox.getValueFactory().setValue(num);
+                new Thread(()->{
+                    try {
+                        Thread.sleep(500);
+                        TransferPhase.fire();
+                        svgUtil.deleteArrow();
+                    } catch (Exception e) {
+                        Platform.runLater(()->{
+                            svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
+                            svgUtil.deleteArrow();
+                            System.out.println(svgUtil.getEndX());
+                            System.out.println(svgUtil.getTwoSelectedPaths());
+                        });
+
+//                        throw new RuntimeException(e);
+                    }
+                }).start();
+
+
+            }
+        }
+
+    }
+
+    private boolean isOccupied(String countryName){
+        // Attention: this.territories only store occupied countries.
+        for(Territory territory: territories){
+            if(countryName.equals(territory.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
     @FXML
     private void cancelCardView(ActionEvent event) {
         model.quitCards();
