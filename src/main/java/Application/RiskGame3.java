@@ -13,7 +13,7 @@ public class RiskGame3 extends Application {
         try {
             // Read file fxml and draw interface.
             Parent root = FXMLLoader.load(getClass()
-                    .getResource("/view/MainView.fxml"));
+                    .getResource("/view/LoginView.fxml"));
             primaryStage.setResizable(false);
             primaryStage.setTitle("Risk Game");
             primaryStage.setScene(new Scene(root));

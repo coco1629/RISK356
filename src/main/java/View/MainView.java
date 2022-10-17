@@ -22,15 +22,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.robot.Robot;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MainView implements Initializable {
     @FXML
@@ -132,6 +130,8 @@ public class MainView implements Initializable {
     @FXML private Label currentPlayerName;
     @FXML private Label textToShow;
     @FXML private VBox cardVbox;
+    @FXML
+    private Button aiButton;
 
 //    private int playerNum;
 //
@@ -376,6 +376,47 @@ public class MainView implements Initializable {
             }
         }
     }
+//    @FXML
+//    void aiMove(ActionEvent event) throws InterruptedException {
+//        HashMap<String, CountryPath> countryList = svgUtil.getCountryPathHashMap();
+//        if (this.player.getPhase() == currentProcess.Preparation){
+//            while (this.player.getAllowedTroops() != 0){
+//                String[] keys = countryList.keySet().toArray(new String[0]);
+//                Random random = new Random();
+//                String randomKey = keys[random.nextInt(keys.length)];
+//                CountryPath randomCountry = countryList.get(randomKey);
+//                if (!randomCountry.isOccupied()){
+//                    Country country = Country.valueOf(randomCountry.getName());
+//                    int randomTroop = random.nextInt(4,this.player.getAllowedTroops())/4;
+//                    country.setPopulation(randomTroop);
+//                    randomCountry.getText().setText(String.valueOf(randomTroop));
+//                    randomCountry.setOccupied(true);
+//                    country.setPopulation(randomTroop);
+//                    randomCountry.setFill(Color.web(svgUtil.getPressedColorCode()));
+//                    this.player.setAllowedTroops(this.player.getAllowedTroops() - randomTroop);
+//                    troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+//                    this.player.addToOccupiedCountries(country);
+//
+//                }
+//                this.player.getClientHandler().sendObject(Operation.OCCUPY);
+//                this.player.getClientHandler().sendObject(this.player.getName());
+//                this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
+//                for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
+//                    Country country =this.player.getOccupiedCountries().get(i);
+//                    //            System.out.println(country.getName() + "troops num " + country.getPopulation());
+//                    this.player.getClientHandler().sendObject(country);
+//                    this.player.getClientHandler().sendObject(country.getPopulation());
+//                    //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
+//                }
+//
+//            }
+//            if(gainedCard == 0){
+//                gainedCard += 1;
+//                player.addRandomCard();
+//            }
+//            occupyButton.getOnMouseClicked();
+//        }
+//    }
     @FXML
     private void cancelCardView(ActionEvent event) {
         model.quitCards();
