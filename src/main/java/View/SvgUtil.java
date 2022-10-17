@@ -1,10 +1,8 @@
 package View;
 
 import Model.*;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
-import javafx.css.*;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.event.WeakEventHandler;
@@ -15,13 +13,15 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.StringReader;
+import java.io.*;
 import java.util.*;
 
 import static javafx.scene.input.MouseEvent.*;
@@ -36,6 +36,7 @@ public class SvgUtil extends Region {
     private static HashMap<String, Continent>  countryContinentHashMap = new HashMap<>();
     private Player currentPlayer;
     private static String pressedColorCode = "#ff9900";
+    Map<String,List<String>> neighbourList = new HashMap<>();
 
     /**
      * SVG and Country specific fields
@@ -64,9 +65,11 @@ public class SvgUtil extends Region {
     private double endY;
 
     private Arrow arrow = new Arrow();
+    private ArrayList<CountryPath> list;
 
 
     public SvgUtil(){
+        initNeighbout();
         pane = new Pane();
         unitPane = new Pane();
         group = new Group();
@@ -264,7 +267,7 @@ public class SvgUtil extends Region {
                     }
                     else {
                         if(this.twoSelectedPaths.size() == 1){
-                            if(isNeighbor() && isOwnedTerrtory(paths.getName())){
+                            if(isNeighbor(paths) && isOwnedTerrtory(paths.getName())){
                                 endX = evt.getX();
                                 endY = evt.getY();
                                 this.twoSelectedPaths.add(paths);
@@ -272,7 +275,7 @@ public class SvgUtil extends Region {
                         }
                         else{
                             if(this.twoSelectedPaths.size()==2){
-                                if(isNeighbor() && isOwnedTerrtory(paths.getName())){
+                                if(isNeighbor(paths) && isOwnedTerrtory(paths.getName())){
                                     twoSelectedPaths.get(1).setStrokeWidth(1);
                                     endX = evt.getX();
                                     endY = evt.getY();
@@ -342,7 +345,7 @@ public class SvgUtil extends Region {
                     }
                     else{
                         if(this.twoSelectedPaths.size() == 1){
-                            if(isNeighbor() && !isOwnedTerrtory(paths.getName())){
+                            if(isNeighbor(paths) && !isOwnedTerrtory(paths.getName())){
                                 endX = evt.getX();
                                 endY = evt.getY();
                                 this.twoSelectedPaths.add(paths);
@@ -364,7 +367,7 @@ public class SvgUtil extends Region {
                         }
                         else {
                             if(this.twoSelectedPaths.size() == 2) {
-                                if (isNeighbor() && !isOwnedTerrtory(paths.getName())){
+                                if (isNeighbor(paths) && !isOwnedTerrtory(paths.getName())){
                                     this.twoSelectedPaths.get(1).setStrokeWidth(1);
                                     endX = evt.getX();
                                     endY = evt.getY();
@@ -419,10 +422,16 @@ public class SvgUtil extends Region {
                     paths.setStrokeWidth(1);
 
                 } else {
-
-                        setSelectedCountry(country);
-                        paths.setSelect(true);
-                        paths.setFill(Color.web(pressedColorCode));
+//                    if (isNeighbor(paths)){
+//                        setSelectedCountry(country);
+//                        paths.setSelect(true);
+//                        paths.setFill(Color.web(pressedColorCode));
+//                    }else {
+//                        System.out.println("no neighbour");
+//                    }
+                    setSelectedCountry(country);
+                    paths.setSelect(true);
+                    paths.setFill(Color.web(pressedColorCode));
 
                 }
             }
@@ -530,8 +539,16 @@ public class SvgUtil extends Region {
         return phase;
     }
 
-    public boolean isNeighbor(){
-        return true;
+    public boolean isNeighbor(CountryPath countryPath){
+        boolean in = false;
+        String countryName = countryPath.getName();
+        List<String> n = neighbourList.get(countryName);
+        for (String i:n){
+            if (countryPathHashMap.get(i).isOccupied()){
+                in = true;
+            }
+        }
+        return in;
     }
 
     public void setPhase(currentProcess phase) {
@@ -633,5 +650,48 @@ public class SvgUtil extends Region {
             path.setSelect(false);
         }
     }
+    private static final Logger logger = LoggerFactory.getLogger(SvgUtil.class);
 
+    public Map<String, String> readProperties(String filepath) {
+//        String filepath = "/map/territorycards.properties";
+        Properties properties = new Properties();
+        Map<String ,String> countriesMap = new HashMap<>();
+        logger.info(SvgUtil.class.getResource(filepath).getFile());
+        InputStream inputStream = SvgUtil.class.getResourceAsStream(filepath);
+        try {
+            properties.load(inputStream);
+            Iterator iterator = properties.keySet().iterator();
+            while (iterator.hasNext()){
+                Object key = iterator.next();
+                countriesMap.put((String) key,(String) properties.get(key));
+            }
+        } catch (IOException e) {
+            logger.error("Loading configuration file: {} exception",filepath,e);
+        }finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return countriesMap;
+    }
+
+    public void initNeighbout(){
+        int i = 0;
+        Map<String, String> countriesMap = readProperties("/map/territorycards.properties");
+        Map<String, String> neigh = readProperties("/map/neighbourhood.properties");
+        Set<String> keyList = countriesMap.keySet();
+        for (String key:keyList){
+            String countryKey = countriesMap.get(key);
+            String neighbours = neigh.get(key);
+            String[] a = neighbours.split("\\s+");
+            List<String> stringList = new ArrayList<>();
+            for (String j:a){
+                stringList.add(countriesMap.get(j));
+            }
+            neighbourList.put(countriesMap.get(key),stringList);
+        }
+        System.out.println(neighbourList);
+    }
 }

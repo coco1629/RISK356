@@ -81,4 +81,5 @@ public class CountryPath extends SVGPath {
         isOccupied = occupied;
     }
 
+
 }
