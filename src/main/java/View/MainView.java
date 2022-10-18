@@ -2,7 +2,11 @@ package View;
 
 import Connection.Operation;
 import Model.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -24,6 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -126,14 +131,18 @@ public class MainView implements Initializable {
 
     private EventHandler<WindowEvent> eventHandler;
 
-
     @FXML
     private Button autoButton;
 
     @FXML
     private Label instructions;
 
-//    private ArrayList<String> logs = new ArrayList<>();
+    @FXML
+    private Label timerLabel;
+
+    private static final int STARTTIME = 15;
+    private Timeline timeline;
+    private final IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
 
     private ArrayList<Territory> territories = new ArrayList<>();
 
@@ -164,15 +173,6 @@ public class MainView implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-//        phase.getStyleClass().addAll("lbl","lbl-danger","h1");
-//        troopsNum.getStyleClass().addAll("lbl","lbl-info");
-//        troops1.getStyleClass().addAll("lbl","lbl-info","h2");
-//        troops2.getStyleClass().addAll("lbl","lbl-info","h2");
-        TransferPhase.getStyleClass().addAll("btn","btn-warning");
-        AttackPhase.getStyleClass().addAll("btn","btn-warning");
-        cardtest.getStyleClass().addAll("btn","btn-warning");
-        nextPhase.getStyleClass().addAll("btn","btn-warning");
-        occupyButton.getStyleClass().addAll("btn","btn-warning");
         Group group = svgUtil.getGroup();
         group.setScaleX(1.2);
         group.setScaleY(1.2);
@@ -181,9 +181,35 @@ public class MainView implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,50,1);
         numBox.setValueFactory(valueFactory);
         rootPane.getChildren().addAll(group);
-//        ObservableList<String> logItems = FXCollections.observableArrayList(logs);
-//        log.setItems(logItems);
+        timerLabel.textProperty().bind(timeSeconds.asString());
+        handleTimer();
+
     }
+
+    private void updateTime(){
+        // increment seconds
+        int seconds = timeSeconds.get();
+        timeSeconds.set(seconds - 1);
+    }
+
+    private void handleTimer(){
+        try{
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTime()));
+            timeline.setCycleCount(STARTTIME);
+            timeSeconds.set(STARTTIME);
+            timeline.setOnFinished(e -> {
+                System.out.println("count finish");
+                autoButton.fire();
+            });
+            timeline.play();
+        }
+        catch (Exception e){
+
+        }
+
+
+    }
+
 
     @FXML
     void occupy(ActionEvent event) {
@@ -219,7 +245,8 @@ public class MainView implements Initializable {
                 gainedCard += 1;
                 player.addRandomCard();
             }
-
+            timeline.stop();
+            handleTimer();
         }
         if(this.player.getPhase() == currentProcess.Reinforcement){
             svgUtil.getSelectedCountry().setPopulation(numBox.getValue() + svgUtil.getSelectedCountry().getPopulation());
@@ -234,6 +261,8 @@ public class MainView implements Initializable {
             }
             this.player.getClientHandler().sendObject(Operation.REINFORCE);
             this.player.getClientHandler().sendObject(territories);
+            timeline.stop();
+            handleTimer();
         }
 
     }
@@ -357,8 +386,8 @@ public class MainView implements Initializable {
 
                     }
                 });
-
-
+                timeline.stop();
+                handleTimer();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -371,7 +400,7 @@ public class MainView implements Initializable {
     void transfer(ActionEvent event) {
         if(this.player.getPhase() == currentProcess.Fortify){
             if(svgUtil.getTwoSelectedPaths().size() == 2){
-                System.out.println("transfer");
+//                System.out.println("transfer");
                 CountryPath fromPath = svgUtil.getTwoSelectedPaths().get(0);
                 CountryPath toPath = svgUtil.getTwoSelectedPaths().get(1);
                 boolean success = true;
@@ -403,7 +432,8 @@ public class MainView implements Initializable {
                 }
                 svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
                 svgUtil.deleteArrow();
-
+                timeline.stop();
+                handleTimer();
             }
         }
     }
@@ -441,6 +471,8 @@ public class MainView implements Initializable {
                     gainedCard += 1;
                     player.addRandomCard();
                 }
+                timeline.stop();
+                handleTimer();
             }
             case Attack -> {
                 // country 1 should be owned country, the other one is others'
@@ -520,6 +552,8 @@ public class MainView implements Initializable {
                         }
 //                        diceController.
                         DiceStage.close();
+                        timeline.stop();
+                        handleTimer();
                         isAuto = false;
                         svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
                         svgUtil.deleteArrow();
@@ -546,6 +580,8 @@ public class MainView implements Initializable {
                 }
                 this.player.getClientHandler().sendObject(Operation.REINFORCE);
                 this.player.getClientHandler().sendObject(territories);
+                timeline.stop();
+                handleTimer();
             }
             case Fortify -> {
                 // 两个国家都需要是自己占领的
@@ -579,6 +615,8 @@ public class MainView implements Initializable {
 
 //                        throw new RuntimeException(e);
                     }
+                    timeline.stop();
+                    handleTimer();
                 }).start();
 
 
@@ -596,7 +634,6 @@ public class MainView implements Initializable {
         }
         return false;
     }
-
 
 
     @FXML
@@ -764,7 +801,10 @@ public class MainView implements Initializable {
                     if(obj.size() >= 6 && this.player.getPhase() == currentProcess.Preparation){
                         this.player.nextPhase();
                         svgUtil.unselectAllPaths();
-                        Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
+                        Platform.runLater(()-> {
+                            phase.setText(this.player.getPhase().toString());
+                            handleTimer();
+                        });
                         svgUtil.setPhase(this.player.getPhase());
 //                        System.out.println(this.player.getPhase());
                     }
@@ -776,7 +816,11 @@ public class MainView implements Initializable {
                             this.player.getClientHandler().sendObject(Operation.RESET_WAIT_NEXT);
 //                            System.out.println("fortify");
                             svgUtil.unselectAllPaths();
-                            Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
+                            Platform.runLater(()-> {
+                                phase.setText(this.player.getPhase().toString());
+                                timeline.stop();
+                                handleTimer();
+                            });
                             svgUtil.setPhase(this.player.getPhase());
                             svgUtil.setTwoSelectedPaths(new ArrayList<>());
 //                            svgUtil.deleteArrow();
