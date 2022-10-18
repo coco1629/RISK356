@@ -1,6 +1,7 @@
 package View;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -93,4 +94,7 @@ public class CardView implements Observer{
         cardController.autoInitializeController();
         show();
     }
+
+
+
 }

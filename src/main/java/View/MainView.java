@@ -151,6 +151,7 @@ public class MainView implements Initializable {
     @FXML private Label textToShow;
     @FXML private VBox cardVbox;
 
+
 //    private int playerNum;
 //
 //    private int currentNum = 0;
@@ -168,11 +169,11 @@ public class MainView implements Initializable {
 //        troopsNum.getStyleClass().addAll("lbl","lbl-info");
 //        troops1.getStyleClass().addAll("lbl","lbl-info","h2");
 //        troops2.getStyleClass().addAll("lbl","lbl-info","h2");
-        TransferPhase.getStyleClass().addAll("btn","btn-warning");
-        AttackPhase.getStyleClass().addAll("btn","btn-warning");
-        cardtest.getStyleClass().addAll("btn","btn-warning");
-        nextPhase.getStyleClass().addAll("btn","btn-warning");
-        occupyButton.getStyleClass().addAll("btn","btn-warning");
+//        TransferPhase.getStyleClass().addAll("btn","btn-warning");
+//        AttackPhase.getStyleClass().addAll("btn","btn-warning");
+//        cardtest.getStyleClass().addAll("btn","btn-warning");
+//        nextPhase.getStyleClass().addAll("btn","btn-warning");
+//        occupyButton.getStyleClass().addAll("btn","btn-warning");
         Group group = svgUtil.getGroup();
         group.setScaleX(1.2);
         group.setScaleY(1.2);

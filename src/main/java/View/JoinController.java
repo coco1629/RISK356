@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class JoinController implements Initializable {
+public class JoinController {
 
     @FXML
     private AnchorPane root;
@@ -142,10 +142,10 @@ public class JoinController implements Initializable {
         this.userName = userName;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        createButton.getStyleClass().addAll("btn","btn-success");
-        joinButton.getStyleClass().addAll("btn","btn-warning");
-        showButton.getStyleClass().addAll("btn","btn-default");
-    }
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        createButton.getStyleClass().addAll("btn","btn-success");
+//        joinButton.getStyleClass().addAll("btn","btn-warning");
+//        showButton.getStyleClass().addAll("btn","btn-default");
+//    }
 }

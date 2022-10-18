@@ -1,20 +1,22 @@
 package View;
 
 
+import Application.RiskGame;
 import Connection.ClientHandler;
 import JDBC.User;
 import JDBC.UserDao;
 import Model.Player;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -24,9 +26,13 @@ import org.kordamp.bootstrapfx.scene.layout.Panel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class LoginView implements Initializable {
+public class LoginView{
+
+    public String dark;
+    public String light;
     @FXML
     private Button login;
 
@@ -47,9 +53,14 @@ public class LoginView implements Initializable {
     private AnchorPane loginRoot;
 
 
+
     private ArrayList<TextField> textFieldArrayList;
 
     UserDao dao = new UserDao();
+
+    public LoginView() throws IOException {
+    }
+
 
     @FXML
     void LoginGame(ActionEvent event) throws IOException {
@@ -68,7 +79,7 @@ public class LoginView implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/JoinView.fxml"));
                 Parent main = loader.load();
                 Scene scene = new Scene(main);
-                scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                scene.getStylesheets().add("view/css/JoinLightCss.css");
                 JoinController controller = loader.getController();
                 controller.setUserName(username);
                 Stage previous = (Stage)loginRoot.getScene().getWindow();
@@ -105,9 +116,7 @@ public class LoginView implements Initializable {
         success.setVisible(true);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        login.getStyleClass().addAll("btn","btn-success");
-        register.getStyleClass().addAll("btn","btn-warning");
-    }
+
+
+
 }

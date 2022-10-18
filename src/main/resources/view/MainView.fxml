@@ -11,24 +11,24 @@
 
 <AnchorPane fx:id="rootPane" prefHeight="700.0" prefWidth="851.0" stylesheets="@css/MainCss.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainView">
    <children>
-      <Pane fx:id="Pane" prefHeight="51.0" prefWidth="851.0" style="-fx-background-color: #D2B48C #D2B48C;">
+      <Pane fx:id="Pane" prefHeight="51.0" prefWidth="851.0" styleClass="root" stylesheets="@css/MainCss.css">
          <children>
-            <Label fx:id="PlayerName1" layoutX="82.0" layoutY="12.0" prefHeight="27.0" prefWidth="98.0" text="Player1" textAlignment="CENTER">
+            <Label fx:id="PlayerName1" layoutX="82.0" layoutY="12.0" prefHeight="27.0" prefWidth="98.0" styleClass="textarea2" text="Player1" textAlignment="CENTER">
                <font>
                   <Font name="Gill Sans" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="PlayerName2" layoutX="196.0" layoutY="12.0" prefHeight="27.0" prefWidth="98.0" text="Player2" textAlignment="CENTER">
+            <Label fx:id="PlayerName2" layoutX="196.0" layoutY="12.0" prefHeight="27.0" prefWidth="98.0" styleClass="textarea2" text="Player2" textAlignment="CENTER">
                <font>
                   <Font name="Gill Sans" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="PlayerName3" layoutX="302.0" layoutY="12.0" prefHeight="27.0" prefWidth="98.0" text="Player3" textAlignment="CENTER">
+            <Label fx:id="PlayerName3" layoutX="302.0" layoutY="12.0" prefHeight="27.0" prefWidth="98.0" styleClass="textarea2" text="Player3" textAlignment="CENTER">
                <font>
                   <Font name="Gill Sans" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="PlayerName4" layoutX="423.0" layoutY="12.0" prefHeight="27.0" prefWidth="114.0" text="Player4" textAlignment="CENTER">
+            <Label fx:id="PlayerName4" layoutX="423.0" layoutY="12.0" prefHeight="27.0" prefWidth="114.0" styleClass="textarea2" text="Player4" textAlignment="CENTER">
                <font>
                   <Font name="Gill Sans" size="18.0" />
                </font>
@@ -38,13 +38,13 @@
             <Pane fx:id="panePlayerColor2" layoutX="264.0" layoutY="16.0" prefHeight="19.0" prefWidth="13.0" styleClass="cardPanel2" />
             <Pane fx:id="panePlayerColor3" layoutX="370.0" layoutY="16.0" prefHeight="19.0" prefWidth="13.0" styleClass="cardPanel3" />
             <Pane fx:id="panePlayerColor4" layoutX="492.0" layoutY="16.0" prefHeight="19.0" prefWidth="13.0" styleClass="cardPanel4" />
-            <Label fx:id="PlayerName5" layoutX="541.0" layoutY="12.0" prefHeight="27.0" prefWidth="114.0" text="Player5" textAlignment="CENTER">
+            <Label fx:id="PlayerName5" layoutX="541.0" layoutY="12.0" prefHeight="27.0" prefWidth="114.0" styleClass="textarea2" text="Player5" textAlignment="CENTER">
                <font>
                   <Font name="Gill Sans" size="18.0" />
                </font>
             </Label>
             <Pane fx:id="panePlayerColor5" layoutX="609.0" layoutY="16.0" prefHeight="19.0" prefWidth="13.0" styleClass="cardPanel5" />
-            <Label fx:id="PlayerName6" layoutX="655.0" layoutY="12.0" prefHeight="27.0" prefWidth="114.0" text="Player6" textAlignment="CENTER">
+            <Label fx:id="PlayerName6" layoutX="655.0" layoutY="12.0" prefHeight="27.0" prefWidth="114.0" styleClass="textarea2" text="Player6" textAlignment="CENTER">
                <font>
                   <Font name="Gill Sans" size="18.0" />
                </font>
@@ -57,50 +57,56 @@
             <Image url="@img/map2.jpg" />
          </image>
       </ImageView>
-      <Pane layoutY="616.0" prefHeight="125.0" prefWidth="851.0" style="-fx-background-color: #D2B48C #D2B48C;">
+      <Pane layoutY="616.0" prefHeight="125.0" prefWidth="851.0" styleClass="root" stylesheets="@css/MainCss.css">
          <children>
-            <Button fx:id="TransferPhase" layoutX="125.0" layoutY="80.0" mnemonicParsing="false" onAction="#transfer" prefHeight="23.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Transfer">
+            <Button fx:id="TransferPhase" layoutX="125.0" layoutY="84.0" mnemonicParsing="false" onAction="#transfer" prefHeight="23.0" prefWidth="87.0" styleClass="button1" stylesheets="@css/MainCss.css" text="Transfer">
                <font>
-                  <Font size="13.0" />
+                  <Font name="Gill Sans" size="13.0" />
                </font></Button>
-            <Spinner fx:id="numBox" focusTraversable="false" layoutX="737.0" layoutY="11.0" prefHeight="23.0" prefWidth="92.0" />
-            <Button fx:id="nextPhase" layoutX="756.0" layoutY="80.0" mnemonicParsing="false" onAction="#nextPhase" prefHeight="24.0" prefWidth="87.0" text="Next" />
-            <Button fx:id="occupyButton" layoutX="390.0" layoutY="80.0" mnemonicParsing="false" onAction="#occupy" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Occupy">
+            <Spinner fx:id="numBox" focusTraversable="false" layoutX="731.0" layoutY="14.0" prefHeight="23.0" prefWidth="92.0" />
+            <Button fx:id="nextPhase" layoutX="750.0" layoutY="83.0" mnemonicParsing="false" onAction="#nextPhase" prefHeight="24.0" prefWidth="87.0" styleClass="button2" stylesheets="@css/MainCss.css" text="Next">
+               <font>
+                  <Font name="Gill Sans" size="13.0" />
+               </font></Button>
+            <Button fx:id="occupyButton" layoutX="391.0" layoutY="84.0" mnemonicParsing="false" onAction="#occupy" prefHeight="26.0" prefWidth="87.0" styleClass="button1" stylesheets="@css/MainCss.css" text="Occupy">
                <font>
                   <Font name="Gill Sans" size="13.0" />
                </font>
             </Button>
-            <Label fx:id="troops2" layoutX="658.0" layoutY="43.0" prefHeight="26.0" prefWidth="114.0" text="Left Troops:">
+            <Label fx:id="troops2" layoutX="652.0" layoutY="46.0" prefHeight="26.0" prefWidth="153.0" styleClass="textarea1" stylesheets="@css/MainCss.css" text="Left Troops:    ">
                <font>
                   <Font name="Chalkduster" size="14.0" />
                </font></Label>
-            <Label fx:id="troopsNum" layoutX="755.0" layoutY="49.0" />
-            <Label fx:id="phase" layoutX="230.0" layoutY="75.0" prefHeight="39.0" prefWidth="145.0" style="-fx-background-radius: 20; -fx-alignment: center;" text="preparation" textAlignment="CENTER">
+            <Label fx:id="troopsNum" layoutX="779.0" layoutY="51.0" prefHeight="17.0" prefWidth="27.0" />
+            <Label fx:id="phase" layoutX="230.0" layoutY="77.0" prefHeight="39.0" prefWidth="145.0" styleClass="textarea1" text="preparation" textAlignment="CENTER" textFill="BEIGE">
                <font>
-                  <Font name="Gill Sans" size="20.0" />
+                  <Font name="Chalkduster" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="troops1" layoutX="658.0" layoutY="13.0" prefHeight="23.0" prefWidth="79.0" text="Troops:">
+            <Label fx:id="troops1" layoutX="652.0" layoutY="16.0" prefHeight="23.0" prefWidth="79.0" styleClass="textarea1" stylesheets="@css/MainCss.css" text="Troops:">
                <font>
                   <Font name="Chalkduster" size="14.0" />
                </font></Label>
-            <Button fx:id="cardtest" layoutX="499.0" layoutY="80.0" mnemonicParsing="false" onAction="#cardview" prefHeight="24.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Card">
+            <Button fx:id="cardtest" layoutX="500.0" layoutY="84.0" mnemonicParsing="false" onAction="#cardview" prefHeight="24.0" prefWidth="87.0" styleClass="button1" stylesheets="@css/MainCss.css" text="Card">
                <font>
-                  <Font size="13.0" />
+                  <Font name="Gill Sans" size="13.0" />
                </font></Button>
 
 
-                                          <Button fx:id="AttackPhase" layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#attack" prefHeight="24.0" prefWidth="87.0" style="-fx-background-color: #F5F5DC#F5F5DC;" text="Attack">
+                                          <Button fx:id="AttackPhase" layoutX="21.0" layoutY="83.0" mnemonicParsing="false" onAction="#attack" prefHeight="24.0" prefWidth="87.0" styleClass="button1" stylesheets="@css/MainCss.css" text="Attack">
                                              <font>
                                                 <Font name="Gill Sans" size="13.0" />
                                              </font>
                                           </Button>
-            <Label layoutX="78.0" layoutY="20.0" text="Follow The Prompts For The Game" textFill="BEIGE">
+            <Label layoutX="78.0" layoutY="31.0" styleClass="textarea1" stylesheets="@css/MainCss.css" text="Follow The Prompts For The Game" textFill="BEIGE">
                <font>
                   <Font name="Chalkduster" size="22.0" />
                </font>
             </Label>
-            <Button fx:id="autoButton" layoutX="648.0" layoutY="81.0" mnemonicParsing="false" onAction="#auto" prefHeight="24.0" prefWidth="87.0" text="Auto" />
+            <Button fx:id="autoButton" layoutX="642.0" layoutY="84.0" mnemonicParsing="false" onAction="#auto" prefHeight="24.0" prefWidth="87.0" styleClass="button2" stylesheets="@css/MainCss.css" text="Auto">
+               <font>
+                  <Font name="Gill Sans" size="13.0" />
+               </font></Button>
          </children>
       </Pane>
       <Label fx:id="instructions" layoutX="14.0" layoutY="419.0" prefHeight="184.0" prefWidth="122.0" wrapText="true" />

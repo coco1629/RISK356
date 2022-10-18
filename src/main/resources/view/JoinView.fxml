@@ -10,9 +10,9 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D2B48C #D2B48C #D2B48C #D2B48C;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.JoinController">
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" styleClass="joinroot" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.JoinController">
    <children>
-      <Button fx:id="createButton" layoutX="40.0" layoutY="310.0" mnemonicParsing="false" onAction="#createSession" prefHeight="58.0" prefWidth="210.0" style="-fx-background-color: #a88462; -fx-background-radius: 20; -fx-border-color: #D2B48C #D2B48C #D2B48C #D2B48C;" text="Create A Game">
+      <Button fx:id="createButton" layoutX="40.0" layoutY="310.0" mnemonicParsing="false" onAction="#createSession" prefHeight="58.0" prefWidth="210.0" styleClass="button1" text="Create A Game">
          <font>
             <Font name="Gill Sans" size="18.0" />
          </font>
@@ -33,30 +33,30 @@
             </RadialGradient>
          </textFill>
       </Button>
-      <Button fx:id="joinButton" layoutX="339.0" layoutY="310.0" mnemonicParsing="false" onAction="#joinSession" prefHeight="58.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-background-color: #a88462 #a88462; -fx-border-color: #D2B48C #D2B48C #D2B48C #D2B48C;" text="Join The Game" textFill="#fffefe">
+      <Button fx:id="joinButton" layoutX="339.0" layoutY="310.0" mnemonicParsing="false" onAction="#joinSession" prefHeight="58.0" prefWidth="200.0" styleClass="button1" text="Join The Game" textFill="#fffefe">
          <font>
             <Font name="Gill Sans" size="18.0" />
          </font>
       </Button>
-      <ListView fx:id="roomList" layoutX="339.0" layoutY="74.0" prefHeight="219.0" prefWidth="200.0" style="-fx-background-color: #FAF0E6 #FAF0E6;" />
-      <Label layoutX="339.0" layoutY="39.0" text="Available Rooms:" textFill="#660000">
+      <ListView fx:id="roomList" layoutX="339.0" layoutY="74.0" prefHeight="219.0" prefWidth="200.0" styleClass="roomlist" />
+      <Label layoutX="339.0" layoutY="39.0" styleClass="textarea" text="Available Rooms:" textFill="#660000">
          <font>
             <Font name="Gill Sans" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="40.0" layoutY="101.0" prefHeight="24.0" prefWidth="115.0" text="Room Size:" textFill="#660000">
+      <Label layoutX="40.0" layoutY="101.0" prefHeight="24.0" prefWidth="115.0" styleClass="textarea" text="Room Size:" textFill="#660000">
          <font>
             <Font name="Gill Sans" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="roomSize" layoutX="65.0" layoutY="139.0" style="-fx-background-color: #FAF0E6 #FAF0E6;" />
-      <Label layoutX="40.0" layoutY="200.0" prefHeight="24.0" prefWidth="115.0" text="Room Name:" textFill="#660000">
+      <TextField fx:id="roomSize" layoutX="65.0" layoutY="139.0" styleClass="roomsize" />
+      <Label layoutX="40.0" layoutY="200.0" prefHeight="24.0" prefWidth="115.0" styleClass="textarea" text="Room Name:" textFill="#660000">
          <font>
             <Font name="Gill Sans" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="roomName" layoutX="65.0" layoutY="236.0" style="-fx-background-color: #FAF0E6 #FAF0E6;" />
-      <Button fx:id="showButton" layoutX="484.0" layoutY="38.0" mnemonicParsing="false" onAction="#showRoom" style="-fx-background-color: #a88462 #a88462 #a88462 #a88462; -fx-background-radius: 20; -fx-border-color: #D2B48C #D2B48C #D2B48C #D2B48C;" text="show">
+      <TextField fx:id="roomName" layoutX="65.0" layoutY="236.0" styleClass="roomname" />
+      <Button fx:id="showButton" layoutX="484.0" layoutY="38.0" mnemonicParsing="false" onAction="#showRoom" styleClass="button1" text="show">
          <textFill>
             <RadialGradient centerX="0.49445983379501385" centerY="0.5332541567695962" radius="0.523121387283237">
                <stops>

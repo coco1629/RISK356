@@ -25,27 +25,19 @@
 
 
 .button1 {
-    -fx-background-color: #F5F5DC;
+    -fx-background-color:  #669900;
     -fx-text-fill:  #000000;
     -fx-border-color: #9e7000;
     -fx-border-radius: 20;
     -fx-background-radius: 20;
-    -fx-font-family: "Gill Sans";
-}
-.button:hover{
-    -fx-text-fill: #b51616;
-}
-.button1:selected{
-    -fx-text-fill: #b51616;
 }
 
 .button2 {
-    -fx-background-color: #ffc638;
+    -fx-background-color:  #CC9933;
     -fx-text-fill:  #000000;
     -fx-border-color: #9e7000;
     -fx-border-radius: 20;
     -fx-background-radius: 20;
-    -fx-font-family: "Gill Sans";
 }
 
 .root{
@@ -55,9 +47,7 @@
 .textarea1{
     -fx-text-fill: #f5f5dc;
     -fx-alignment: center;
-
 }
 .textarea2{
-    -fx-text-fill: #000000;
-    -fx-font-family: "Gill Sans";
+    -fx-text-fill: #000000
 }
