@@ -20,17 +20,31 @@ public class RiskGame extends Application {
     public void start(Stage primaryStage) {
         try {
             // Read file fxml and draw interface.
-            Parent root = FXMLLoader.load(getClass()
-                    .getResource("/view/LoginView.fxml"));
-            ComboBox theme = (ComboBox)root.lookup("#theme");
-            theme.getItems().addAll("Dark Theme", "Light Theme");
-            theme.setOnAction((event -> {
-//                topic = (String) theme.getValue();
-            System.out.println(theme.getValue());}));
-
+//            Parent root = FXMLLoader.load(getClass()
+//                    .getResource("/view/LoginView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
+            Parent root = loader.load();
             primaryStage.setResizable(false);
             primaryStage.setTitle("Risk Game");
+            LoginView loginController = loader.getController();
+            final String[] style = {"light"};
             Scene scene = new Scene(root);
+            ComboBox<String> theme =loginController.theme;
+            theme.setOnAction((event -> {
+//                style = "light";
+                String topic = (String) theme.getValue();
+                System.out.println(theme.getValue());
+                if(topic.equals("Dark Theme")){
+                    style[0] = "dark";
+                    scene.getStylesheets().setAll("view/css/LoginViewCss.css");
+                    loginController.setStyle("dark");
+                }
+                if(topic.equals("Light Theme")){
+                    style[0] = "light";
+                    scene.getStylesheets().setAll("view/css/LoginViewLightCss.css");
+                    loginController.setStyle("light");
+                }
+            }));
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
             primaryStage.setScene(scene);
             primaryStage.show();

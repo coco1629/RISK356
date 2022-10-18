@@ -54,6 +54,8 @@ public class JoinController {
 
     private String userName;
 
+    private String style;
+
     private String roomNameStr;
 
     @FXML
@@ -106,12 +108,17 @@ public class JoinController {
     public void changeScene(Stage secondStage) throws IOException {
         ArrayList<Object> playersList = this.currentPlayer.getClientHandler().startListeningOrders();
         int num = (int) this.currentPlayer.getClientHandler().readObject();
-//        System.out.println(num);
         if(playersList != null) {
             secondStage.close();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
             Parent main = loader.load();
             Scene scene = new Scene(main);
+            if(style.equals("light")){
+                scene.getStylesheets().add("view/css/MainCss.css");
+            }
+            if(style.equals("dark")){
+                scene.getStylesheets().add("view/css/MainDarkCss.css");
+            }
             MainView controller = loader.getController();
             currentPlayer.setAllPlayers(playersList);
             currentPlayer.setAllowedTroops(num);
@@ -142,10 +149,12 @@ public class JoinController {
         this.userName = userName;
     }
 
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        createButton.getStyleClass().addAll("btn","btn-success");
-//        joinButton.getStyleClass().addAll("btn","btn-warning");
-//        showButton.getStyleClass().addAll("btn","btn-default");
-//    }
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
 }

@@ -143,7 +143,7 @@ public class MainView implements Initializable {
     private static final int STARTTIME = 15;
     private Timeline timeline;
     private final IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
-
+    private String style;
     private ArrayList<Territory> territories = new ArrayList<>();
 
     private boolean waitForNext = false;
@@ -197,10 +197,7 @@ public class MainView implements Initializable {
             timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTime()));
             timeline.setCycleCount(STARTTIME);
             timeSeconds.set(STARTTIME);
-            timeline.setOnFinished(e -> {
-                System.out.println("count finish");
-                autoButton.fire();
-            });
+            timeline.setOnFinished(e -> autoButton.fire());
             timeline.play();
         }
         catch (Exception e){
@@ -873,7 +870,11 @@ public class MainView implements Initializable {
         this.player = player;
     }
 
+    public String getStyle() {
+        return style;
+    }
 
-
-
+    public void setStyle(String style) {
+        this.style = style;
+    }
 }
