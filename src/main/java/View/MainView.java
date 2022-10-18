@@ -411,14 +411,12 @@ public class MainView implements Initializable {
     @FXML
     void auto(ActionEvent event) throws InterruptedException {
         HashMap<String,CountryPath> map = svgUtil.getCountryPathHashMap();
-        //这两个国家到时候写一个函数，返回选择的，也可以写到底下如果需要，我这里写这两个是为了方便测试
         String country1 = "alaska";
         String country2 = "alberta";
         int troops = 5;
         switch (this.player.getPhase()){
             case Preparation -> {
                 // country should not be occupied.
-                //这里选的国家应该是没被选过的国家，用country1写了，如果不对麻烦替换一下
                 Country temp = Country.valueOf(country1);
                 temp.setPopulation(troops);
                 svgUtil.setPathColor(this.color,temp);

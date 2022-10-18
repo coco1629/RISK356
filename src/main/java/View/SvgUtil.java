@@ -69,7 +69,7 @@ public class SvgUtil extends Region {
 
 
     public SvgUtil(){
-        initNeighbout();
+        initNeighbour();
         pane = new Pane();
         unitPane = new Pane();
         group = new Group();
@@ -267,7 +267,7 @@ public class SvgUtil extends Region {
                     }
                     else {
                         if(this.twoSelectedPaths.size() == 1){
-                            if(isNeighbor(paths) && isOwnedTerrtory(paths.getName())){
+                            if(isNeighbor(this.twoSelectedPaths.get(0),paths) && isOwnedTerrtory(paths.getName())){
                                 endX = evt.getX();
                                 endY = evt.getY();
                                 this.twoSelectedPaths.add(paths);
@@ -275,7 +275,7 @@ public class SvgUtil extends Region {
                         }
                         else{
                             if(this.twoSelectedPaths.size()==2){
-                                if(isNeighbor(paths) && isOwnedTerrtory(paths.getName())){
+                                if(isNeighbor(this.twoSelectedPaths.get(0),paths) && isOwnedTerrtory(paths.getName())){
                                     twoSelectedPaths.get(1).setStrokeWidth(1);
                                     endX = evt.getX();
                                     endY = evt.getY();
@@ -345,7 +345,7 @@ public class SvgUtil extends Region {
                     }
                     else{
                         if(this.twoSelectedPaths.size() == 1){
-                            if(isNeighbor(paths) && !isOwnedTerrtory(paths.getName())){
+                            if(isNeighbor(this.twoSelectedPaths.get(0),paths) && !isOwnedTerrtory(paths.getName())){
                                 endX = evt.getX();
                                 endY = evt.getY();
                                 this.twoSelectedPaths.add(paths);
@@ -367,7 +367,7 @@ public class SvgUtil extends Region {
                         }
                         else {
                             if(this.twoSelectedPaths.size() == 2) {
-                                if (isNeighbor(paths) && !isOwnedTerrtory(paths.getName())){
+                                if (isNeighbor(this.twoSelectedPaths.get(0),paths) && !isOwnedTerrtory(paths.getName())){
                                     this.twoSelectedPaths.get(1).setStrokeWidth(1);
                                     endX = evt.getX();
                                     endY = evt.getY();
@@ -539,13 +539,15 @@ public class SvgUtil extends Region {
         return phase;
     }
 
-    public boolean isNeighbor(CountryPath countryPath){
+    public boolean isNeighbor(CountryPath from, CountryPath to){
         boolean in = false;
-        String countryName = countryPath.getName();
-        List<String> n = neighbourList.get(countryName);
+        String fromName = from.getName();
+        String toName = to.getName();
+        List<String> n = neighbourList.get(fromName);
         for (String i:n){
-            if (countryPathHashMap.get(i).isOccupied()){
+            if (i.equals(toName)) {
                 in = true;
+                break;
             }
         }
         return in;
@@ -656,7 +658,7 @@ public class SvgUtil extends Region {
 //        String filepath = "/map/territorycards.properties";
         Properties properties = new Properties();
         Map<String ,String> countriesMap = new HashMap<>();
-        logger.info(SvgUtil.class.getResource(filepath).getFile());
+//        logger.info(SvgUtil.class.getResource(filepath).getFile());
         InputStream inputStream = SvgUtil.class.getResourceAsStream(filepath);
         try {
             properties.load(inputStream);
@@ -666,7 +668,7 @@ public class SvgUtil extends Region {
                 countriesMap.put((String) key,(String) properties.get(key));
             }
         } catch (IOException e) {
-            logger.error("Loading configuration file: {} exception",filepath,e);
+//            logger.error("Loading configuration file: {} exception",filepath,e);
         }finally {
             try {
                 inputStream.close();
@@ -677,7 +679,7 @@ public class SvgUtil extends Region {
         return countriesMap;
     }
 
-    public void initNeighbout(){
+    public void initNeighbour(){
         int i = 0;
         Map<String, String> countriesMap = readProperties("/map/territorycards.properties");
         Map<String, String> neigh = readProperties("/map/neighbourhood.properties");
