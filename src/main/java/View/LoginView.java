@@ -29,13 +29,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class LoginView{
+public class LoginView implements Initializable{
 
-    public String dark;
-    public String light;
+
     @FXML
     private Button login;
 
+    @FXML
+    public ComboBox<String> theme;
 
     @FXML
     private PasswordField password;
@@ -52,7 +53,7 @@ public class LoginView{
     @FXML
     private AnchorPane loginRoot;
 
-
+    private String style = "light";
 
     private ArrayList<TextField> textFieldArrayList;
 
@@ -79,8 +80,14 @@ public class LoginView{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/JoinView.fxml"));
                 Parent main = loader.load();
                 Scene scene = new Scene(main);
-                scene.getStylesheets().add("view/css/JoinLightCss.css");
+                if(style.equals("light")){
+                    scene.getStylesheets().add("view/css/JoinLightCss.css");
+                }
+                if(style.equals("dark")){
+                    scene.getStylesheets().add("view/css/JoinDarkCss.css");
+                }
                 JoinController controller = loader.getController();
+                controller.setStyle(style);
                 controller.setUserName(username);
                 Stage previous = (Stage)loginRoot.getScene().getWindow();
                 previous.setResizable(false);
@@ -117,6 +124,18 @@ public class LoginView{
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        ComboBox theme = (ComboBox)root.lookup("#theme");
+        theme.getItems().addAll("Dark Theme", "Light Theme");
 
+    }
 
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
 }
