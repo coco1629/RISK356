@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@css/DiceLightCss.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DiceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DiceController">
     <children>
         <ImageView fx:id="diceImage" fitHeight="87.0" fitWidth="83.0" layoutX="133.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@img/dice1.png" />
             </image></ImageView>
-        <Button fx:id="rollButton" layoutX="253.0" layoutY="315.0" mnemonicParsing="false" onAction="#roll" prefHeight="44.0" prefWidth="98.0" styleClass="button1" stylesheets="@css/DiceLightCss.css" text="Roll" textFill="#fffefe">
+        <Button fx:id="rollButton" layoutX="253.0" layoutY="315.0" mnemonicParsing="false" onAction="#roll" prefHeight="44.0" prefWidth="98.0" styleClass="button1" text="Roll" textFill="#fffefe">
             <font>
                 <Font name="Chalkduster" size="23.0" />
             </font></Button>

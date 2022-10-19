@@ -33,6 +33,11 @@ public class CardController {
     private Model model;
     private CardView card;
     private Player currentPlayer;
+    private String style;
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
 
 
     /**

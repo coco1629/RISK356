@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="rootPane" prefHeight="700.0" prefWidth="851.0" stylesheets="@css/MainCss.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainView">
    <children>
-      <Pane fx:id="Pane" prefHeight="51.0" prefWidth="851.0" styleClass="root" stylesheets="@css/MainCss.css">
+      <Pane fx:id="Pane" prefHeight="51.0" prefWidth="851.0" styleClass="root">
          <children>
             <Label fx:id="PlayerName1" layoutX="82.0" layoutY="12.0" prefHeight="27.0" prefWidth="98.0" styleClass="textarea2" text="Player1" textAlignment="CENTER">
                <font>
@@ -57,23 +57,23 @@
             <Image url="@img/map2.jpg" />
          </image>
       </ImageView>
-      <Pane layoutY="616.0" prefHeight="125.0" prefWidth="851.0" styleClass="root" stylesheets="@css/MainCss.css">
+      <Pane layoutY="616.0" prefHeight="125.0" prefWidth="851.0" styleClass="root">
          <children>
-            <Button fx:id="TransferPhase" layoutX="125.0" layoutY="84.0" mnemonicParsing="false" onAction="#transfer" prefHeight="23.0" prefWidth="87.0" styleClass="button1" stylesheets="@css/MainCss.css" text="Transfer">
+            <Button fx:id="TransferPhase" layoutX="125.0" layoutY="84.0" mnemonicParsing="false" onAction="#transfer" prefHeight="23.0" prefWidth="87.0" styleClass="button1" text="Transfer">
                <font>
                   <Font name="Gill Sans" size="13.0" />
                </font></Button>
             <Spinner fx:id="numBox" focusTraversable="false" layoutX="731.0" layoutY="14.0" prefHeight="23.0" prefWidth="92.0" />
-            <Button fx:id="nextPhase" layoutX="750.0" layoutY="83.0" mnemonicParsing="false" onAction="#nextPhase" prefHeight="24.0" prefWidth="87.0" styleClass="button2" stylesheets="@css/MainCss.css" text="Next">
+            <Button fx:id="nextPhase" layoutX="750.0" layoutY="83.0" mnemonicParsing="false" onAction="#nextPhase" prefHeight="24.0" prefWidth="87.0" styleClass="button2" text="Next">
                <font>
                   <Font name="Gill Sans" size="13.0" />
                </font></Button>
-            <Button fx:id="occupyButton" layoutX="391.0" layoutY="84.0" mnemonicParsing="false" onAction="#occupy" prefHeight="26.0" prefWidth="87.0" styleClass="button1" stylesheets="@css/MainCss.css" text="Occupy">
+            <Button fx:id="occupyButton" layoutX="391.0" layoutY="84.0" mnemonicParsing="false" onAction="#occupy" prefHeight="26.0" prefWidth="87.0" styleClass="button1" text="Occupy">
                <font>
                   <Font name="Gill Sans" size="13.0" />
                </font>
             </Button>
-            <Label fx:id="troops2" layoutX="652.0" layoutY="46.0" prefHeight="26.0" prefWidth="153.0" styleClass="textarea1" stylesheets="@css/MainCss.css" text="Left Troops:    ">
+            <Label fx:id="troops2" layoutX="652.0" layoutY="46.0" prefHeight="26.0" prefWidth="153.0" styleClass="textarea1" text="Left Troops:    ">
                <font>
                   <Font name="Chalkduster" size="14.0" />
                </font></Label>
@@ -83,32 +83,38 @@
                   <Font name="Chalkduster" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="troops1" layoutX="652.0" layoutY="16.0" prefHeight="23.0" prefWidth="79.0" styleClass="textarea1" stylesheets="@css/MainCss.css" text="Troops:">
+            <Label fx:id="troops1" layoutX="652.0" layoutY="16.0" prefHeight="23.0" prefWidth="79.0" styleClass="textarea1" text="Troops:">
                <font>
                   <Font name="Chalkduster" size="14.0" />
                </font></Label>
-            <Button fx:id="cardtest" layoutX="500.0" layoutY="84.0" mnemonicParsing="false" onAction="#cardview" prefHeight="24.0" prefWidth="87.0" styleClass="button1" stylesheets="@css/MainCss.css" text="Card">
+            <Button fx:id="cardtest" layoutX="500.0" layoutY="84.0" mnemonicParsing="false" onAction="#cardview" prefHeight="24.0" prefWidth="87.0" styleClass="button1" text="Card">
                <font>
                   <Font name="Gill Sans" size="13.0" />
                </font></Button>
 
 
-                                          <Button fx:id="AttackPhase" layoutX="21.0" layoutY="83.0" mnemonicParsing="false" onAction="#attack" prefHeight="24.0" prefWidth="87.0" styleClass="button1" stylesheets="@css/MainCss.css" text="Attack">
+                                          <Button fx:id="AttackPhase" layoutX="21.0" layoutY="83.0" mnemonicParsing="false" onAction="#attack" prefHeight="24.0" prefWidth="87.0" styleClass="button1" text="Attack">
                                              <font>
                                                 <Font name="Gill Sans" size="13.0" />
                                              </font>
                                           </Button>
-            <Label layoutX="78.0" layoutY="31.0" styleClass="textarea1" stylesheets="@css/MainCss.css" text="Follow The Prompts For The Game" textFill="BEIGE">
+            <Label layoutX="78.0" layoutY="31.0" styleClass="textarea1" text="Follow The Prompts For The Game" textFill="BEIGE">
                <font>
                   <Font name="Chalkduster" size="22.0" />
                </font>
             </Label>
-            <Button fx:id="autoButton" layoutX="642.0" layoutY="84.0" mnemonicParsing="false" onAction="#auto" prefHeight="24.0" prefWidth="87.0" styleClass="button2" stylesheets="@css/MainCss.css" text="Auto">
+            <Button fx:id="autoButton" layoutX="642.0" layoutY="84.0" mnemonicParsing="false" onAction="#auto" prefHeight="24.0" prefWidth="87.0" styleClass="button2" text="Auto">
                <font>
                   <Font name="Gill Sans" size="13.0" />
                </font></Button>
          </children>
       </Pane>
-      <Label fx:id="instructions" layoutX="14.0" layoutY="419.0" prefHeight="184.0" prefWidth="122.0" wrapText="true" />
+      <Label fx:id="instructions" layoutX="715.0" layoutY="251.0" prefHeight="184.0" prefWidth="122.0" wrapText="true" />
+      <Label fx:id="timerLabel" layoutX="117.0" layoutY="576.0" prefHeight="23.0" prefWidth="57.0" />
+      <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="22.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/timer2.gif" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

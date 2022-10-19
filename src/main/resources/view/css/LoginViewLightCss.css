@@ -1,7 +1,25 @@
-.text1, .button1, .button2, .comobox1{
+.text1{
+    -fx-text-fill: #ffffcc;
     -fx-font-family: "Gill Sans";
 }
 
-.pane{
-    -fx-background-color: #ffffff;
+.pane1{
+    -fx-background-color:  #3366CC;
+}
+.button1{
+    -fx-background-color: #FF6666;
+    -fx-border-color: #FF6666;
+    -fx-text-fill: #4d4c4a;
+}
+.button2{
+    -fx-background-color:   #99FFCC;
+    -fx-border-color:   #99FFCC;
+    -fx-text-fill: #4d4c4a;
+}
+.textarea1, .comobox1{
+    -fx-background-color:   #FFFFCC;
+}
+.comobox1{
+    -fx-background-radius: 20;
+    -fx-background-color:  #FFFFCC;
 }

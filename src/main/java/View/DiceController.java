@@ -419,4 +419,9 @@ public class DiceController implements Initializable {
     public void setDefendNum(int defendNum) {
         this.defendNum = defendNum;
     }
+
+    private String style;
+    public void setStyle(String style) {
+        this.style = style;
+    }
 }

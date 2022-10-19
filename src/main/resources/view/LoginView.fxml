@@ -10,28 +10,28 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="799.0" styleClass="pane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.LoginView">
+<AnchorPane fx:id="loginRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="799.0" styleClass="pane1" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.LoginView">
    <children>
       <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/cover.jpg" />
          </image>
       </ImageView>
-      <Label alignment="CENTER_RIGHT" layoutX="268.0" layoutY="490.0" prefHeight="17.0" prefWidth="57.0" styleClass="text1" stylesheets="@css/LoginViewCss.css" text="User" textFill="#c7c4bf">
+      <Label alignment="CENTER_RIGHT" layoutX="268.0" layoutY="490.0" prefHeight="17.0" prefWidth="57.0" styleClass="text1" text="User" textFill="#ffffcc">
          <font>
             <Font name="Gill Sans" size="13.0" />
          </font></Label>
-      <Label layoutX="268.0" layoutY="522.0" styleClass="text1" stylesheets="@css/MainCss.css" text="Password" textFill="#c7c4bf" />
-      <TextField fx:id="user" layoutX="346.0" layoutY="485.0" style="-fx-background-color: #c7c4bf#c7c4bf;" />
-      <Button fx:id="login" layoutX="230.0" layoutY="555.0" mnemonicParsing="false" onAction="#LoginGame" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #811300; -fx-border-color: #811300 #811300;" styleClass="button1" stylesheets="@css/LoginViewCss.css" text="Login" textFill="#c7c4bf" />
-      <Button fx:id="register" layoutX="491.0" layoutY="555.0" mnemonicParsing="false" onAction="#register" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #6f7253; -fx-border-color: #6f7253 #6f7253;" styleClass="button2" stylesheets="@css/LoginViewCss.css" text="Register" textFill="#c7c4bf" />
+      <Label layoutX="268.0" layoutY="522.0" styleClass="text1" text="Password" textFill="#ffffcc" />
+      <TextField fx:id="user" layoutX="346.0" layoutY="485.0" styleClass="textarea1" />
+      <Button fx:id="login" layoutX="230.0" layoutY="555.0" mnemonicParsing="false" onAction="#LoginGame" prefHeight="26.0" prefWidth="99.0" styleClass="button1" text="Login" textFill="#4d4c4a" />
+      <Button fx:id="register" layoutX="491.0" layoutY="555.0" mnemonicParsing="false" onAction="#register" prefHeight="26.0" prefWidth="99.0" styleClass="button2" text="Register" textFill="#4d4c4a" />
       <ImageView fx:id="success" fitHeight="32.0" fitWidth="31.0" layoutX="613.0" layoutY="551.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@img/check-mark.png" />
          </image>
       </ImageView>
-      <PasswordField fx:id="password" layoutX="346.0" layoutY="518.0" style="-fx-background-color: #c7c4bf;" />
-      <ComboBox fx:id="theme" accessibleText="Dark Theme" layoutX="697.0" layoutY="556.0" prefHeight="26.0" prefWidth="88.0" promptText="Theme" style="-fx-background-color: #c7c4bf; -fx-background-radius: 20;" styleClass="comobox1" stylesheets="@css/LoginViewCss.css" visibleRowCount="3">
+      <PasswordField fx:id="password" layoutX="346.0" layoutY="518.0" styleClass="textarea1" />
+      <ComboBox fx:id="theme" accessibleText="Dark Theme" layoutX="697.0" layoutY="556.0" prefHeight="26.0" prefWidth="88.0" promptText="Theme" styleClass="comobox1" visibleRowCount="3">
 <!--              <items>-->
 <!--                 <FXCollections fx:factory="observableArrayList">-->
 <!--                    <String fx:id="dark" fx:value="Dark Theme" />-->

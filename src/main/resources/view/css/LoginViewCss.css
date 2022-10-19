@@ -1,7 +1,22 @@
 .text1, .button1, .button2, .comobox1{
+    -fx-text-fill: #c7c4bf;
     -fx-font-family: "Gill Sans";
 }
 
-.pane{
+.pane1{
     -fx-background-color: #011b3e;
+}
+.button1{
+    -fx-background-color:   #811300;
+    -fx-border-color:   #811300;
+}
+.button2{
+    -fx-background-color:  #6f7253;
+    -fx-border-color:  #6f7253;
+}
+.textarea1, .comobox1{
+    -fx-background-color:  #c7c4bf;
+}
+.comobox1{
+    -fx-background-radius: 20;
 }

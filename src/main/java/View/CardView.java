@@ -3,6 +3,7 @@ package View;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ import java.util.Observer;
  * Singleton pattern
  */
 public class CardView implements Observer{
+    private String style;
 
     private static CardView instance;
 
@@ -31,8 +33,9 @@ public class CardView implements Observer{
     /**
      * Ctor for CardView
      */
-    private CardView() {
+    private CardView() throws IOException {
         FXMLLoader menuFxmlLoader = new FXMLLoader(getClass().getResource("/Card.fxml"));
+        Parent main = menuFxmlLoader.load();
         try {
             mainCardPane = menuFxmlLoader.load();
         } catch (IOException exception) {
@@ -53,7 +56,7 @@ public class CardView implements Observer{
      * Get or create the only instance
      * @return card view
      */
-    public static CardView getInstance() {
+    public static CardView getInstance() throws IOException {
         if (null == instance) instance = new CardView();
         return instance;
     }
@@ -94,6 +97,7 @@ public class CardView implements Observer{
         cardController.autoInitializeController();
         show();
     }
+
 
 
 

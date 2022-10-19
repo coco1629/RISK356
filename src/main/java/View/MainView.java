@@ -294,7 +294,15 @@ public class MainView implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Dice.fxml"));
                 Parent main = loader.load();
                 Scene scene = new Scene(main);
+                if(style.equals("light")){
+                    scene.getStylesheets().add("view/css/DiceLightCss.css");
+                }
+                if(style.equals("dark")){
+                    scene.getStylesheets().add("view/css/DiceDarkCss.css");
+                }
                 DiceController controller = loader.getController();
+                controller.setStyle(style);
+
                 if(isAuto){
                     this.diceController = controller;
                 }
@@ -662,10 +670,18 @@ public class MainView implements Initializable {
         CardModel.getInstance().setCurrentPlayer(this.player);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Card.fxml"));
         Parent main = loader.load();
+        Scene scene = new Scene(main);
+        if(style.equals("light")){
+            scene.getStylesheets().add("view/css/CardLightCss.css");
+        }
+        if(style.equals("dark")){
+            scene.getStylesheets().add("view/css/CardDarkCss.css");
+        }
         CardController cardController = loader.getController();
+        cardController.setStyle(style);
         cardController.setModel(model);
         cardController.autoInitializeController();
-        Scene scene = new Scene(main);
+//        Scene scene = new Scene(main);
         previous.setResizable(false);
         previous.setScene(scene);
         previous.show();

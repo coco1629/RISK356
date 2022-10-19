@@ -120,6 +120,7 @@ public class JoinController {
                 scene.getStylesheets().add("view/css/MainDarkCss.css");
             }
             MainView controller = loader.getController();
+            controller.setStyle(style);
             currentPlayer.setAllPlayers(playersList);
             currentPlayer.setAllowedTroops(num);
             controller.setPlayer(currentPlayer);
