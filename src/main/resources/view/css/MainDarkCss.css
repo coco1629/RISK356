@@ -23,6 +23,9 @@
     -fx-background-color: gray;
 }
 
+.button:hover{
+    -fx-text-fill: #b51616;
+}
 
 .button1 {
     -fx-background-color:  #669900;
@@ -41,7 +44,7 @@
 }
 
 .root{
-    -fx-background-color:  #D2B48C;
+    -fx-background-color:   #A0522D;
 }
 
 .textarea1{

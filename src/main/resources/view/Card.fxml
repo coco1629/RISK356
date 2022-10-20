@@ -18,7 +18,10 @@
          <font>
             <Font name="Gill Sans" size="13.0" />
          </font></Button>
-      <Button fx:id="cancelCardView" layoutX="352.0" layoutY="232.0" mnemonicParsing="false" onAction="#cancelCardView" prefHeight="25.0" prefWidth="76.0" text="Cancel" />
+      <Button fx:id="cancelCardView" layoutX="352.0" layoutY="232.0" mnemonicParsing="false" onAction="#cancelCardView" prefHeight="25.0" prefWidth="76.0" styleClass="button1" text="Cancel" textFill="#fffefe">
+         <font>
+            <Font name="Gill Sans" size="13.0" />
+         </font></Button>
       <Label fx:id="currentPlayerName" layoutX="67.0" layoutY="26.0" styleClass="textarea" text="Label" textFill="#660000">
          <font>
             <Font name="Gill Sans" size="13.0" />
