@@ -2,12 +2,15 @@ package Application;
 
 import View.LoginView;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
+import java.io.IOException;
 
 
 public class RiskGame3 extends Application {
@@ -27,6 +30,7 @@ public class RiskGame3 extends Application {
             final String[] style = {"light"};
             Scene scene = new Scene(root);
             ComboBox<String> theme =loginController.theme;
+            scene.getStylesheets().setAll("view/css/LoginViewLightCss.css");
             theme.setOnAction((event -> {
 //                style = "light";
                 String topic = (String) theme.getValue();

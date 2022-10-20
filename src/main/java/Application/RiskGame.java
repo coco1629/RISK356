@@ -30,6 +30,7 @@ public class RiskGame extends Application {
             final String[] style = {"light"};
             Scene scene = new Scene(root);
             ComboBox<String> theme =loginController.theme;
+            scene.getStylesheets().setAll("view/css/LoginViewLightCss.css");
             theme.setOnAction((event -> {
 //                style = "light";
                 String topic = (String) theme.getValue();
