@@ -115,12 +115,6 @@ public class MainView implements Initializable {
     private int leftTroops;
 
     @FXML
-    private Label troops1;
-
-    @FXML
-    private Label troops2;
-
-    @FXML
     private Button cardtest;
 
     private boolean isAuto = false;
