@@ -73,20 +73,12 @@
                   <Font name="Gill Sans" size="13.0" />
                </font>
             </Button>
-            <Label fx:id="troops2" layoutX="652.0" layoutY="46.0" prefHeight="26.0" prefWidth="153.0" styleClass="textarea1" text="Left Troops:    ">
-               <font>
-                  <Font name="Chalkduster" size="14.0" />
-               </font></Label>
             <Label fx:id="troopsNum" layoutX="779.0" layoutY="51.0" prefHeight="17.0" prefWidth="27.0" />
             <Label fx:id="phase" layoutX="230.0" layoutY="77.0" prefHeight="39.0" prefWidth="145.0" styleClass="textarea1" text="preparation" textAlignment="CENTER" textFill="BEIGE">
                <font>
                   <Font name="Chalkduster" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="troops1" layoutX="652.0" layoutY="16.0" prefHeight="23.0" prefWidth="79.0" styleClass="textarea1" text="Troops:">
-               <font>
-                  <Font name="Chalkduster" size="14.0" />
-               </font></Label>
             <Button fx:id="cardtest" layoutX="500.0" layoutY="84.0" mnemonicParsing="false" onAction="#cardview" prefHeight="24.0" prefWidth="87.0" styleClass="button1" text="Card">
                <font>
                   <Font name="Gill Sans" size="13.0" />
@@ -98,15 +90,25 @@
                                                 <Font name="Gill Sans" size="13.0" />
                                              </font>
                                           </Button>
-            <Label layoutX="78.0" layoutY="31.0" styleClass="textarea1" text="Follow The Prompts For The Game" textFill="BEIGE">
-               <font>
-                  <Font name="Chalkduster" size="22.0" />
-               </font>
-            </Label>
             <Button fx:id="autoButton" layoutX="642.0" layoutY="84.0" mnemonicParsing="false" onAction="#auto" prefHeight="24.0" prefWidth="87.0" styleClass="button2" text="Auto">
                <font>
                   <Font name="Gill Sans" size="13.0" />
                </font></Button>
+            <ImageView fitHeight="51.0" fitWidth="449.0" layoutX="84.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/words.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="27.0" fitWidth="80.0" layoutX="646.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/troops.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="24.0" fitWidth="86.0" layoutX="643.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/lefttroops.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <Label fx:id="instructions" layoutX="715.0" layoutY="251.0" prefHeight="184.0" prefWidth="122.0" wrapText="true" />

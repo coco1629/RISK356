@@ -11,6 +11,5 @@
     -fx-text-fill: #660000
 }
 .button1{
-    -fx-text-fill: #660000
-    -fx-text-fill: #fffefe
+    -fx-text-fill: #fffefe;
 }
