@@ -29,7 +29,6 @@ public class UserDao {
         } else {
             System.out.println("Fail to add");
         }
-        //释放对数据库的连接
         db.closeConn(null, pstm, conn);
     }
 
@@ -115,15 +114,6 @@ public class UserDao {
         boolean isExist = res.next();
         db.closeConn(res, pstm, conn);
         return isExist;
-//        if (res.next()) {
-//            System.out.println("Succeed to find.");
-//            System.out.println("id\tname\tpassword");
-//            System.out.println(res.getInt(1) + "\t" +
-//                    res.getString(2) + "\t" + res.getString(3));
-//        } else {
-//            System.out.println("Fail to find.");
-//        }
-
     }
 
     /**
@@ -166,10 +156,6 @@ public class UserDao {
             String passwords = res.getString(3);
             if(password.equals(passwords))
                 isLogin = true;
-//            System.out.println("Succeed to find.");
-//            System.out.println("id\tname\tpassword");
-//            System.out.println(res.getInt(1) + "\t" +
-//                    res.getString(2) + "\t" + res.getString(3));
         } else {
             System.out.println("Fail to find.");
         }
@@ -195,8 +181,6 @@ public class UserDao {
         System.out.println("id\tname\tpassword");
         while (res.next()) {
             users.add(res.getString(2));
-//            System.out.println(res.getInt(1) + "\t" +
-//            res.getString(2) + "\t" + res.getString(3));
         }
         db.closeConn(res, pstm, conn);
         return users;

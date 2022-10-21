@@ -58,21 +58,7 @@ public class InviteController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        try {
-////            ArrayList<String> players = new UserDao().getUsers();
-//            ArrayList<String> players = new ArrayList<>();
-//            for(ServerHandler serverHandler: Server.currentServerThreads){
-//                players.add(serverHandler.getClientName());
-//            }
-////            System.out.println(players);
-//            ObservableList<String> items = FXCollections.observableArrayList(players);
-//            System.out.println(currentplayer);
-//            ObservableList<String> invites = FXCollections.observableArrayList(currentplayer.getClientHandler().getInvitePlayers());
-//            userList.setItems(items);
-//            inviteList.setItems(invites);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+
     }
 
 
@@ -101,26 +87,10 @@ public class InviteController implements Initializable {
         userList.setItems(items);
         inviteList.setItems(invites);
 
-//        try {
-////            ArrayList<String> players = new UserDao().getUsers();
-//            ArrayList<String> players = new ArrayList<>();
-//            System.out.println(Server.currentServerThreads.size());
-//            for(ServerHandler serverHandler: Server.currentServerThreads){
-//                players.add(serverHandler.getClientName());
-//            }
-//            ObservableList<String> items = FXCollections.observableArrayList(players);
-//            System.out.println(currentplayer);
-//            ObservableList<String> invites = FXCollections.observableArrayList(currentplayer.getClientHandler().getInvitePlayers());
-//            userList.setItems(items);
-//            inviteList.setItems(invites);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     @FXML
     void updateList(ActionEvent event) throws IOException {
-//        currentplayer.getClientHandler().connectToServer();
         currentplayer.getClientHandler().sendObject("request_current_players,"+currentplayer.getClientHandler().getUsername());
         currentplayer.getClientHandler().readObject();
         showLists();

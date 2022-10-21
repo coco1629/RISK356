@@ -498,8 +498,6 @@ public class SvgUtil extends Region {
 
     public void setPathColor(Color color,Country country){
         CountryPath paths = countryPathHashMap.get(country.getName());
-//        System.out.println(color);
-//        System.out.println(paths);
         paths.setOccupied(true);
         paths.setFill(color);
         paths.getText().setText(String.valueOf(country.getPopulation()));
@@ -581,7 +579,6 @@ public class SvgUtil extends Region {
 
     public void showArrow(){
         try {
-//                    pane.getChildren().remove(arrow);
             if(twoSelectedPaths.size() == 2){
                 arrow.setStartX(startX);
                 arrow.setStartY(startY);
@@ -655,10 +652,8 @@ public class SvgUtil extends Region {
     private static final Logger logger = LoggerFactory.getLogger(SvgUtil.class);
 
     public Map<String, String> readProperties(String filepath) {
-//        String filepath = "/map/territorycards.properties";
         Properties properties = new Properties();
         Map<String ,String> countriesMap = new HashMap<>();
-//        logger.info(SvgUtil.class.getResource(filepath).getFile());
         InputStream inputStream = SvgUtil.class.getResourceAsStream(filepath);
         try {
             properties.load(inputStream);
@@ -668,7 +663,6 @@ public class SvgUtil extends Region {
                 countriesMap.put((String) key,(String) properties.get(key));
             }
         } catch (IOException e) {
-//            logger.error("Loading configuration file: {} exception",filepath,e);
         }finally {
             try {
                 inputStream.close();
@@ -694,6 +688,5 @@ public class SvgUtil extends Region {
             }
             neighbourList.put(countriesMap.get(key),stringList);
         }
-        System.out.println(neighbourList);
     }
 }

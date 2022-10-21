@@ -47,7 +47,7 @@ public class ServerHandler extends Thread {
     private String function;
 
     public ServerHandler(Socket socket,ServerThread thread,SessionData sessionData) throws IOException {
-//        this.clientName = name;
+
         this.clientSocket = socket;
         this.people.add(sessionData.getPlayer());
         serverThreads.add(thread);
@@ -55,8 +55,6 @@ public class ServerHandler extends Thread {
         ObjectOutputStream objectOutputStream = thread.getObjectOutputStream();
         this.objectOutputStreams.add(objectOutputStream);
         this.objectInputStreams.add(objectInputStream);
-//        this.objectOutputStreams.add(new ObjectOutputStream(socket.getOutputStream()));
-//        this.objectInputStreams.add(new ObjectInputStream(socket.getInputStream()));
         currentServerThreads.add(this);
         this.sessionData =sessionData;
         this.currentCount += 1;
@@ -71,17 +69,12 @@ public class ServerHandler extends Thread {
             this.objectOutputStreams.add(objectOutputStream);
             this.objectInputStreams.add(objectInputStream);
             serverThreads.add(thread);
-//            this.sendObject(new Object[]{Operation.JOIN_SESSION_SUCCESS}, this.objectOutputStreams.get(this.currentCount));
             this.people.add(person);
             if (this.currentCount == (this.sessionData.getNumberOfAllowedPlayers() - 1)) {
-//                System.out.println(this.currentCount);
-//                this.gameModel = new GameModel(people);
                 Server.getGameModel().setPlayerList(people);
-                System.out.println(Server.getGameModel().getPlayerList());
                 this.setAllPlayersThreads();
                 this.sendAllPlayersNamesSymbols();
                 switch (people.size()) {
-                    case 2 -> this.sendObjectToAll(50); // test
                     case 3 -> this.sendObjectToAll(35);
                     case 4 -> this.sendObjectToAll(30);
                     case 5 -> this.sendObjectToAll(25);
@@ -97,19 +90,7 @@ public class ServerHandler extends Thread {
 
     @Override
     public void run() {
-//        while (true){
-//            for(int i = 0; i < this.objectInputStreams.size();i++){
-//                try {
-//                    Object obj = this.objectInputStreams.get(i).readObject();
-//                    System.out.println(obj);
-//                    break;
-//
-//                } catch (IOException | ClassNotFoundException e) {
-////                    throw new RuntimeException(e);
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
+
     }
 
     void setAllPlayersThreads(){
@@ -125,8 +106,7 @@ public class ServerHandler extends Thread {
         try {
             objectOutputStream.writeObject(object);
         } catch (IOException ex) {
-            ex.printStackTrace();
-            System.out.println("Error Occurred in sendObject in ClientHandler: " + ex.toString());
+
         }
     }
 
@@ -134,7 +114,7 @@ public class ServerHandler extends Thread {
         try {
             return this.objectInputStreams.get(currentActivePlayer).readObject();
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Error Occurred in readObject in ClientHandler: " + ex.toString());
+
         }
         return null;
     }
@@ -143,31 +123,23 @@ public class ServerHandler extends Thread {
     private void sendAllPlayersNamesSymbols() {
         ArrayList<Object> finalArray = new ArrayList<>();
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
-//            System.out.println("allowed players: "+i);
             Object[] data = new Object[]{this.colors[i], people.get(i)};
-//            System.out.println(this.colors[i].name());
-//            System.out.println(people.get(i));
             finalArray.add(data);
         }
         this.sendArrayListToAll(finalArray);
-//        this.sendObjectToAll(finalArray);
-//        this.listenUpdate(this.currentActivePlayer);
+
     }
 
     public void sendObjectToAll(Object object) {
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
             this.sendObject(object, this.objectOutputStreams.get(i));
         }
-//        for(int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++){
-//            this.sendObject("End", this.objectOutputStreams.get(i));
-//        }
 
     }
 
 
     public void sendArrayListToAll(ArrayList<Object> objs){
         for (int i = 0; i < this.sessionData.getNumberOfAllowedPlayers(); i++) {
-//            System.out.println(i);
             this.sendObject(objs, this.objectOutputStreams.get(i));
         }
     }

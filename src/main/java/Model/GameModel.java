@@ -22,35 +22,6 @@ public class GameModel {
         return phase;
     }
 
-//    public boolean occupy(String username, Country country, int num) throws Exception{
-//        switch (phase){
-//            case Preparation:{
-////                phase = currentProcess.Attack;
-//
-//
-////                for(Territory territory: countryArrayList){
-////                    if(countryList.contains(territory.getName())){
-////                        if(territory.getNum() == 0 && territory.getOnwner() == null){
-////                            territory.setOnwner(username);
-////                            territory.setNum(num);
-////                        }
-////                        else{
-////                            if(territory.getNum() > num){
-////                                territory.
-////                            }
-////
-////                        }
-////                    }
-////                }
-//
-////                Territory territory = map.getTerritory(territoryId);
-////                territory.setUnits(territory.getUnits() + initTroops);
-////                return true;
-//            }
-//            default:
-//                throw new Exception("You are not in a reinforcement phase!");
-//        }
-//    }
 
     public void setAllPlayersNumber(int num){
         for(String s: playerList){
@@ -59,8 +30,6 @@ public class GameModel {
     }
 
     public void init(){
-//        this.countryArrayList = new ArrayList<>();
-//        this.playerList = playerList;
         phase = currentProcess.Preparation;
         switch (playerList.size()) {
             case 3 -> setAllPlayersNumber(35);

@@ -86,7 +86,6 @@ public class CardController {
     private void checkTrade(ActionEvent event) {
         trade.setDisable(false);
         textToShow.setText(null);
-//        currentPlayer = CardModel.getInstance().getCurrentPlayer();
         List<Card> selectedCards = CardModel.getInstance().retrieveSelectedCardsFromCheckbox
                 (this.currentPlayer.getPlayerCardList(),cbs);
         if (selectedCards.size() == 3) {
@@ -100,7 +99,6 @@ public class CardController {
     public void autoInitializeController() {
         cardVbox.getChildren().clear();
         currentPlayer = CardModel.getInstance().getCurrentPlayer();
-//        System.out.println(currentPlayer.getPlayerCardList());
         currentPlayerName.setText("All Cards Of Player : " + currentPlayer.getName());
         textToShow.setStyle("-fx-text-fill: red");
         if(CardModel.getInstance().finishExchange()){
@@ -108,7 +106,6 @@ public class CardController {
         }
         textToShow.setText(CardModel.getInstance().getInvalidInfo());
         playerCards = currentPlayer.getPlayerCardList();
-//        System.out.println(playerCards.size());
 
         if (playerCards.size() < 3) {
             trade.setDisable(true);

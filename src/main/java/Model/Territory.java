@@ -23,8 +23,7 @@ public class Territory implements Serializable {
         this.name = name;
         this.owner = owner;
         this.num = num;
-//        owner = -1;
-//        units = -1;
+
     }
 
     public Color getColor() {

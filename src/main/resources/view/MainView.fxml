@@ -121,5 +121,7 @@
             <Image url="@img/timer2.gif" />
          </image>
       </ImageView>
+      <Label fx:id="targetText" layoutX="14.0" layoutY="502.0" text="Target Occupy:" />
+      <Label fx:id="leftCountries" layoutX="14.0" layoutY="526.0" />
    </children>
 </AnchorPane>

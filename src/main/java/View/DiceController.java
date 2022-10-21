@@ -99,9 +99,7 @@ public class DiceController implements Initializable {
                     diceImage.setImage(new Image(file.toURI().toString()));
                     Thread.sleep(50);
                 }
-//                System.out.println("dice 1 " + num);
                 attackResults[0] = num;
-//                Arrays.sort(attackResults);
                 rollButton.setDisable(false);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -120,9 +118,7 @@ public class DiceController implements Initializable {
                         diceImage2.setImage(new Image(file.toURI().toString()));
                         Thread.sleep(50);
                     }
-    //                System.out.println("dice 2 " + num);
                     attackResults[1] = num;
-    //                Arrays.sort(attackResults);
                     rollButton.setDisable(false);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -143,9 +139,7 @@ public class DiceController implements Initializable {
                             diceImage3.setImage(new Image(file.toURI().toString()));
                             Thread.sleep(50);
                         }
-//                        System.out.println("dice 3 " + num);
                         attackResults[2] = num;
-//                        Arrays.sort(attackResults);
                         rollButton.setDisable(false);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -165,9 +159,7 @@ public class DiceController implements Initializable {
                     diceImage4.setImage(new Image(file.toURI().toString()));
                     Thread.sleep(50);
                 }
-//                System.out.println("dice 4 " + num);
                 defendResults[0] = num;
-//                Arrays.sort(defendResults);
                 rollButton.setDisable(false);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -186,9 +178,7 @@ public class DiceController implements Initializable {
                         diceImage5.setImage(new Image(file.toURI().toString()));
                         Thread.sleep(50);
                     }
-//                    System.out.println("dice 5 " + num);
                     defendResults[1] = num;
-//                    Arrays.sort(defendResults);
                     rollButton.setDisable(false);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -220,12 +210,10 @@ public class DiceController implements Initializable {
             }
             if(attackDiceNum == 1 || defendDiceNum == 1){
                 if(attackResults[2] > defendResults[1]){
-//                    winner = attacker;
                     defendTroopsChange -= 1;
                     defendNum -= 1;
                 }
                 else {
-//                    winner = defender;
                     attackTroopsChange -= 1;
                     attackNum -= 1;
                 }
@@ -256,18 +244,13 @@ public class DiceController implements Initializable {
                     defendTroopsNum.setText(String.valueOf(defendNum));
                 }
             });
-//            System.out.println("attack Num" + attackNum);
-//            System.out.println("defend Num" + defendNum);
             if(attackNum == 2){
                 threeDices.setDisable(true);
                 twoDices.setSelected(true);
                 diceImage3.setVisible(false);
             }
             if(attackNum <= 1){
-//                threeDices.setDisable(true);
-//                diceImage3.setVisible(false);
-//                twoDices.setDisable(true);
-//                diceImage2.setVisible(false);
+
                 winner = defender;
                 isEnd = true;
                 rollButton.setDisable(true);
@@ -282,13 +265,7 @@ public class DiceController implements Initializable {
                 success.setVisible(true);
                 rollButton.setDisable(true);
             }
-//            if(attackNum <= 0){
-//                winner = defender;
-//                rollButton.setDisable(true);
-//            }
 
-//            System.out.println(Arrays.toString(attackResults));
-//            System.out.println(Arrays.toString(defendResults));
         });
         thread6.start();
 
@@ -301,42 +278,6 @@ public class DiceController implements Initializable {
         twoDices.setToggleGroup(toggleGroup);
         threeDices.setToggleGroup(toggleGroup);
         oneDice.setToggleGroup(toggleGroup);
-//        if(attackNum == 2){
-//            threeDices.setVisible(false);
-//            diceImage3.setVisible(false);
-//        }
-//        if(attackNum == 1){
-//            threeDices.setVisible(false);
-//            diceImage3.setVisible(false);
-//            twoDices.setVisible(false);
-//            diceImage2.setVisible(false);
-//        }
-//        if(defendNum == 1){
-//            diceImage5.setVisible(false);
-//        }
-//        attackTroopsNum.setText(String.valueOf(attackNum));
-//        defendTroopsNum.setText(String.valueOf(defendNum));
-//        toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-//            @Override
-//            public void changed(final ObservableValue<? extends Toggle> observable, final Toggle oldValue, final Toggle newValue) {
-//                RadioButton r = (RadioButton)newValue;
-//                if(r.getText().equals("2 dices")){
-//                    diceImage3.setVisible(false);
-//                    diceImage.setVisible(true);
-//                    diceImage2.setVisible(true);
-//                }
-//                if(r.getText().equals("1 dice")){
-//                    diceImage3.setVisible(false);
-//                    diceImage2.setVisible(false);
-//                    diceImage.setVisible(true);
-//                }
-//                if(r.getText().equals("3 dices")){
-//                    diceImage3.setVisible(true);
-//                    diceImage2.setVisible(true);
-//                    diceImage.setVisible(true);
-//                }
-//            }
-//        });
     }
 
     public void initDice(){

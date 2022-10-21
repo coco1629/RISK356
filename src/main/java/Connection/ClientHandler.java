@@ -23,44 +23,30 @@ public class ClientHandler{
 
 
     public ClientHandler(String name) throws IOException {
-//        this.socket = socket;
         this.username = name;
         connectToServer();
         clientArrayList.add(this);
     }
 
-//    @Override
-//    public void run() {
-//        readObject();
-//        System.out.println("wwww");
-//    }
 
     public void connectToServer() throws IOException {
-//        System.out.println("attempting connection");
         try {
             Socket connection = new Socket(InetAddress.getByName(serverIP),1234);
             this.socket =connection;
             if (socket != null) {
                 this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 this.objectInputStream = new ObjectInputStream(socket.getInputStream());
-//                sendObject("username,"+this.username);
-//                readObject();
-//                System.out.println(currentPlayers.size());
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
-            System.out.println("Exception Occurred in ClientThread Constructor: " + ex.toString());
+
         }
-        System.out.println("connecting");
 
     }
 
     public void sendObject(Object object) {
-//        System.out.println("send to server");
         try {
             this.objectOutputStream.writeObject(object);
         } catch (IOException ex) {
-            System.out.println("Error Occurred in sendObject in ClientHandler: " + ex.toString());
         }
     }
 
@@ -69,7 +55,6 @@ public class ClientHandler{
             ObjectOutputStream targetStream = new ObjectOutputStream(socket.getOutputStream());
             this.objectOutputStream.writeObject(object);
         } catch (IOException ex) {
-            System.out.println("Error Occurred in sendObject in ClientHandler: " + ex.toString());
         }
     }
 
@@ -77,48 +62,19 @@ public class ClientHandler{
     public Object readObject() {
         try {
             return this.objectInputStream.readObject();
-//            if(obj instanceof ArrayList){
-//                this.currentPlayers = (ArrayList<String>) obj;
-//                return;
-//            }
-//            else{
-//                String message = (String) obj;
-//                System.out.println(message);
-//                String[] str = message.split(",");
-//                if(str[0].equals("receive_invite")){
-//                    System.out.println("add to invite");
-//                    invitePlayers.add(str[2]);
-//                }
-//            }
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Error Occurred in readObject in ClientHandler: " + ex.toString());
         }
         return null;
     }
 
     public ArrayList<Object> startListeningOrders() {
         try {
-//            ArrayList<Object> data = new ArrayList<>();
-//            while (true){
-//                Object object = this.objectInputStream.readObject();
-//                try{
-//                    String obj = (String) object;
-//                    if(obj.equals("End"))
-//                        break;
-//                }
-//                catch (Exception e){
-//                    data.add(object);
-//                }
-//            }
             ArrayList<Object> data = (ArrayList<Object>) this.objectInputStream.readObject();
             if (data == null) {
-//                showError("");
-                System.out.println("null");
             }
             return data;
         } catch (IOException | ClassNotFoundException | ClassCastException ex) {
-            ex.printStackTrace();
-//            System.out.println("Error Occurred in startListeningOrders in ClientHandler: " + ex.toString());
+
             return null;
         }
     }

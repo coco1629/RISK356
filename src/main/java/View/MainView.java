@@ -109,9 +109,6 @@ public class MainView implements Initializable {
     @FXML
     private Label troopsNum;
 
-//    @FXML
-//    private ListView<String> log;
-
     private int leftTroops;
 
     @FXML
@@ -134,7 +131,13 @@ public class MainView implements Initializable {
     @FXML
     private Label timerLabel;
 
-    private static final int STARTTIME = 15;
+    @FXML
+    private Label targetText;
+
+    @FXML
+    private Label leftCountries;
+
+    private static final int STARTTIME = 100;
     private Timeline timeline;
     private final IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
     private String style;
@@ -154,9 +157,6 @@ public class MainView implements Initializable {
     @FXML private Label textToShow;
     @FXML private VBox cardVbox;
 
-//    private int playerNum;
-//
-//    private int currentNum = 0;
 
     private int troops = 10;
 
@@ -198,7 +198,6 @@ public class MainView implements Initializable {
 
         }
 
-
     }
 
 
@@ -210,6 +209,7 @@ public class MainView implements Initializable {
                 if(this.player.getPhase() == currentProcess.Preparation){
                     svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
                     svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
+                    leftCountries.setText(String.valueOf(Integer.parseInt(leftCountries.getText()) - 1));
                     svgUtil.getSelectedPath().setOccupied(true);
                     Country country = svgUtil.getSelectedCountry();
                     country.setPopulation(numBox.getValue());
@@ -227,10 +227,8 @@ public class MainView implements Initializable {
             this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
             for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
                 Country country =this.player.getOccupiedCountries().get(i);
-                //            System.out.println(country.getName() + "troops num " + country.getPopulation());
                 this.player.getClientHandler().sendObject(country);
                 this.player.getClientHandler().sendObject(country.getPopulation());
-                //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
             }
             if(gainedCard == 0){
                 gainedCard += 1;
@@ -280,7 +278,6 @@ public class MainView implements Initializable {
         try {
 
             if(svgUtil.getTwoSelectedPaths().size() == 2){
-//                CountryPath attackCountry =
                 CountryPath attackCountryPath = svgUtil.getTwoSelectedPaths().get(0);
                 String attackCountryName = attackCountryPath.getName();
                 CountryPath defendCountryPath = svgUtil.getTwoSelectedPaths().get(1);
@@ -306,14 +303,11 @@ public class MainView implements Initializable {
                     if(territories.get(i).getName().equals(defendCountryPath.getName())){
                         defender = territories.get(i).getOwner();
                         controller.setDefender(defender);
-//                        System.out.println("defender:" + territories.get(i).getOwner());
                         break;
                     }
                 }
                 controller.setAttackNum(Integer.parseInt(attackCountryPath.getText().getText()));
-//                System.out.println("attack num" + attackCountryPath.getText().getText());
                 controller.setDefendNum(Integer.parseInt(defendCountryPath.getText().getText()));
-//                System.out.println("defend num" + defendCountryPath.getText().getText());
                 controller.initDice();
                 Stage stage = new Stage();
                 stage.setScene(scene);
@@ -341,7 +335,6 @@ public class MainView implements Initializable {
                                     territories.get(i).setNum(1);
                                 }
                                 if(territories.get(i).getName().equals(attackCountryPath.getName())){
-//                            territories.get(i).setOwner(this.player.getName());
                                     territories.get(i).setNum(attackerNum[0]-1);
                                     if(gainedCard == 0){
                                         gainedCard += 1;
@@ -354,11 +347,9 @@ public class MainView implements Initializable {
                         if(isDraw[0]){
                             for(int i = 0; i < territories.size();i++){
                                 if(territories.get(i).getName().equals(defendCountryPath.getName())){
-//                            territories.get(i).setOwner(this.player.getName());
                                     territories.get(i).setNum(defenderNum[0]);
                                 }
                                 if(territories.get(i).getName().equals(attackCountryPath.getName())){
-//                            territories.get(i).setOwner(this.player.getName());
                                     territories.get(i).setNum(attackerNum[0]);
                                 }
                             }
@@ -369,8 +360,6 @@ public class MainView implements Initializable {
                                     territories.get(i).setNum(defenderNum[0]);
                                 }
                                 if(territories.get(i).getName().equals(attackCountryPath.getName())){
-//                                    territories.get(i).setOwner(controller.getDefender());
-//                                    System.out.println(controller.getDefender());
                                     territories.get(i).setNum(1);
                                 }
                             }
@@ -399,7 +388,6 @@ public class MainView implements Initializable {
     void transfer(ActionEvent event) {
         if(this.player.getPhase() == currentProcess.Fortify){
             if(svgUtil.getTwoSelectedPaths().size() == 2){
-//                System.out.println("transfer");
                 CountryPath fromPath = svgUtil.getTwoSelectedPaths().get(0);
                 CountryPath toPath = svgUtil.getTwoSelectedPaths().get(1);
                 boolean success = true;
@@ -409,14 +397,12 @@ public class MainView implements Initializable {
                             territory.setNum(territory.getNum() - numBox.getValue());
                         else{
                             success = false;
-//                            System.out.println("fail to transfer");
                         }
 
                     }
                 }
 
                 if(success){
-//                    System.out.println("transfer success");
                     for(Territory territory: territories){
                         if(territory.getName().equals(toPath.getName())){
                             territory.setNum(territory.getNum() + numBox.getValue());
@@ -426,6 +412,7 @@ public class MainView implements Initializable {
 
                 this.player.getClientHandler().sendObject(Operation.FORTIFY);
                 this.player.getClientHandler().sendObject(territories);
+                // clear the TwoSelectedPaths
                 for( CountryPath p : svgUtil.getTwoSelectedPaths()){
                     p.setStrokeWidth(1);
                 }
@@ -448,27 +435,24 @@ public class MainView implements Initializable {
                 // country should not be occupied.
                 Country temp = Country.valueOf(country1);
                 temp.setPopulation(troops);
-                svgUtil.setPathColor(this.color,temp);
-//                map.get(country1).setSelect(true);
-//                map.get(country1).setStrokeWidth(3);
-//                svgUtil.setSelectedCountry(temp);
-//                svgUtil.setSelectedPath(map.get(country1));
-                this.player.addToOccupiedCountries(temp);
-                this.player.setAllowedTroops(this.player.getAllowedTroops() - troops);
-                troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
-                this.player.getClientHandler().sendObject(Operation.OCCUPY);
-                this.player.getClientHandler().sendObject(this.player.getName());
-                this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
-                for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
-                    Country country =this.player.getOccupiedCountries().get(i);
-                    //            System.out.println(country.getName() + "troops num " + country.getPopulation());
-                    this.player.getClientHandler().sendObject(country);
-                    this.player.getClientHandler().sendObject(country.getPopulation());
-                    //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
-                }
-                if(gainedCard == 0){
-                    gainedCard += 1;
-                    player.addRandomCard();
+                if(!isOccupied(temp.getName())){
+                    svgUtil.setPathColor(this.color,temp);
+                    this.player.addToOccupiedCountries(temp);
+                    this.player.setAllowedTroops(this.player.getAllowedTroops() - troops);
+                    troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+                    Platform.runLater(()-> leftCountries.setText(String.valueOf(Integer.parseInt(leftCountries.getText()) - 1)));
+                    this.player.getClientHandler().sendObject(Operation.OCCUPY);
+                    this.player.getClientHandler().sendObject(this.player.getName());
+                    this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
+                    for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
+                        Country country =this.player.getOccupiedCountries().get(i);
+                        this.player.getClientHandler().sendObject(country);
+                        this.player.getClientHandler().sendObject(country.getPopulation());
+                    }
+                    if(gainedCard == 0){
+                        gainedCard += 1;
+                        player.addRandomCard();
+                    }
                 }
                 timeline.stop();
                 handleTimer();
@@ -480,6 +464,12 @@ public class MainView implements Initializable {
                 autoSelectedTwo.add(map.get(country2));
                 CountryPath attacker = map.get(country1);
                 CountryPath defender = map.get(country2);
+                for(CountryPath path :svgUtil.getTwoSelectedPaths()){
+                    path.setStrokeWidth(1);
+                }
+                if(svgUtil.getTwoSelectedPaths().size() == 2){
+                    svgUtil.deleteArrow();
+                }
                 svgUtil.setTwoSelectedPaths(autoSelectedTwo);
                 svgUtil.setStartX(attacker.getText().getX() + 17);
                 svgUtil.setEndX(defender.getText().getX() + 17);
@@ -487,6 +477,7 @@ public class MainView implements Initializable {
                 svgUtil.setEndY(defender.getText().getY() - 5);
                 svgUtil.showArrow();
                 isAuto = true;
+                Thread.sleep(1000);
                 AttackPhase.fire();
                 DiceStage.setOnCloseRequest(eventHandler);
                 Thread thread = new Thread(()->{
@@ -514,7 +505,6 @@ public class MainView implements Initializable {
                     Platform.runLater(()-> {
 
                         if(diceController.getWinner().equals(this.player.getName())){
-                            System.out.println("win");
                             int attackerNum = diceController.getAttackNum();
                             int defenderNum = diceController.getDefendNum();
                             for(int i = 0; i < territories.size();i++){
@@ -523,7 +513,6 @@ public class MainView implements Initializable {
                                     territories.get(i).setNum(1);
                                 }
                                 if(territories.get(i).getName().equals(attacker.getName())){
-//                            territories.get(i).setOwner(this.player.getName());
                                     territories.get(i).setNum(attackerNum-1);
                                     if(gainedCard == 0){
                                         gainedCard += 1;
@@ -534,8 +523,6 @@ public class MainView implements Initializable {
                             }
                         }
                         else {
-                            System.out.println("lose");
-//                            System.out.println(diceController.getWinner());
                             int attackerNum = diceController.getAttackNum();
                             int defenderNum = diceController.getDefendNum();
                             for(int i = 0; i < territories.size();i++){
@@ -543,13 +530,10 @@ public class MainView implements Initializable {
                                     territories.get(i).setNum(defenderNum);
                                 }
                                 if(territories.get(i).getName().equals(attacker.getName())){
-//                                    territories.get(i).setOwner(controller.getDefender());
-//                                    System.out.println(controller.getDefender());
                                     territories.get(i).setNum(1);
                                 }
                             }
                         }
-//                        diceController.
                         DiceStage.close();
                         timeline.stop();
                         handleTimer();
@@ -608,11 +592,8 @@ public class MainView implements Initializable {
                         Platform.runLater(()->{
                             svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
                             svgUtil.deleteArrow();
-                            System.out.println(svgUtil.getEndX());
-                            System.out.println(svgUtil.getTwoSelectedPaths());
                         });
 
-//                        throw new RuntimeException(e);
                     }
                     timeline.stop();
                     handleTimer();
@@ -625,7 +606,7 @@ public class MainView implements Initializable {
     }
 
     private boolean isOccupied(String countryName){
-        // Attention: this.territories only store occupied countries.
+        // this.territories only store occupied countries.
         for(Territory territory: territories){
             if(countryName.equals(territory.getName())){
                 return true;
@@ -643,28 +624,17 @@ public class MainView implements Initializable {
             stage.close();
         }
     }
-//    @FXML
-//    private void checkTrade(ActionEvent event) {
-//        trade.setDisable(false);
-//        textToShow.setText(null);
-////        currentPlayer = CardModel.getInstance().getCurrentPlayer();
-//        List<Card> selectedCards = CardModel.getInstance().retrieveSelectedCardsFromCheckbox
-//                (this.player.getPlayerCardList(),cbs);
-//        if (selectedCards.size() == 3) {
-//            model.trade((ArrayList<Card>) selectedCards);
-//        }
-//    }
+
     @FXML
     void cardview(ActionEvent event) throws IOException {
 
         Stage previous = new Stage();
-//        System.out.println(gainedCard);
         model.setCurrentPlayer(this.player);
-//        System.out.println(this.player.getPlayerCardList());
         CardModel.getInstance().setCurrentPlayer(this.player);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Card.fxml"));
         Parent main = loader.load();
         Scene scene = new Scene(main);
+        // decide style
         if(style.equals("light")){
             scene.getStylesheets().add("view/css/CardLightCss.css");
         }
@@ -675,7 +645,6 @@ public class MainView implements Initializable {
         cardController.setStyle(style);
         cardController.setModel(model);
         cardController.autoInitializeController();
-//        Scene scene = new Scene(main);
         previous.setResizable(false);
         previous.setScene(scene);
         previous.show();
@@ -688,7 +657,6 @@ public class MainView implements Initializable {
         cardController.getCancelCardView().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-//                System.out.println("click cancel");
                 cardController.cancelCardView(event);
                 troopsNum.setText(String.valueOf(player.getAllowedTroops()));
             }
@@ -697,8 +665,6 @@ public class MainView implements Initializable {
     }
 
     public void setPlayersNumOnPane(){
-//        System.out.println(this.player.getName());
-//        System.out.println(this.player.getAllPlayers().size());
         model.setCurrentPlayer(this.player);
         switch (this.player.getAllPlayers().size()){
             case 2:
@@ -730,6 +696,8 @@ public class MainView implements Initializable {
 
         }
         troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+        int recommendNum = (int) Math.ceil(42.0 / (double)this.player.getAllPlayers().size());
+        leftCountries.setText(String.valueOf(recommendNum));
         svgUtil.setCurrentPlayer(this.player);
         new Thread(() ->{
             while(true){
@@ -739,7 +707,6 @@ public class MainView implements Initializable {
                     this.player.setAllowedTroops(this.player.getAllowedTroops() + newNum);
                     Platform.runLater(()->troopsNum.setText(String.valueOf(this.player.getAllowedTroops())));
                 }
-//                System.out.println(isUpdated);
                 if(isUpdated){
                     int num = (int) this.player.getClientHandler().readObject();
                     ArrayList<Territory> obj = new ArrayList<>();
@@ -750,37 +717,24 @@ public class MainView implements Initializable {
                     this.territories = obj;
                     this.player.setTerritories(obj);
                     svgUtil.setTerritories(territories);
-//                    if(isWin()){
-//                        this.player.getClientHandler().sendObject(Operation.WIN);
-//                    }
                     for(Territory territory: obj){
                         Country country = Country.valueOf(territory.getName());
                         if(this.player.getPhase() == currentProcess.Preparation){
-//                            updateLeftTroops();
                             leftTroops = Integer.parseInt(troopsNum.getText());
                             for(Territory t : this.territories){
                                 if(this.player.getOccupiedCountries().contains(Country.valueOf(t.getName())) && !Objects.equals(t.getOwner(), this.player.getName())){
                                     leftTroops = leftTroops + Country.valueOf(t.getName()).getPopulation();
-//                                    System.out.println(leftTroops);
                                     ArrayList<Country> updated = this.player.getOccupiedCountries();
                                     updated.remove(Country.valueOf(t.getName()));
                                     this.player.setOccupiedCountries(updated);
                                     this.player.setAllowedTroops(leftTroops);
-//                System.out.println(Country.valueOf(t.getName()).getPopulation());
                                 }
                             }
-//                            troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
-//                            System.out.println(this.player.getAllowedTroops());
                             Platform.runLater(()-> troopsNum.setText(String.valueOf(this.player.getAllowedTroops())));
                         }
-//                        System.out.println(country.getName());
                         country.setPopulation(territory.getNum());
                         svgUtil.setPathColor(this.player.getPlayersColorMap().get(territory.getOwner()),country);
                         svgUtil.setCountryTroops(country,territory.getNum());
-//                        if(territory.getOwner().equals(this.player.getName())){
-//                            this.player.getAllPlayers(
-//                        }
-//                        System.out.println("updated");
                     }
                     int owned = 0;
                     if(territories.size() > 0){
@@ -791,37 +745,39 @@ public class MainView implements Initializable {
                                 owned++;
                             }
                         }
-                        // the game is end
-                        if(owned>=6){
+                        // the game end
+                        if(owned >= 6 ){
                             this.player.getClientHandler().sendObject(Operation.END);
                             this.player.setPhase(currentProcess.END);
                             svgUtil.unselectAllPaths();
                             svgUtil.setPhase(this.player.getPhase());
-                            Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
                             if(territories.get(0).getOwner().equals(this.player.getName())){
-                                System.out.println("winner");
+                                Platform.runLater(()-> phase.setText("Winner"));
                             }
+                            else
+                                Platform.runLater(()-> phase.setText(this.player.getPhase().toString()));
                             break;
                         }
                     }
 
                     if(obj.size() >= 6 && this.player.getPhase() == currentProcess.Preparation){
+                        // go to attack phase
                         this.player.nextPhase();
                         svgUtil.unselectAllPaths();
                         Platform.runLater(()-> {
                             phase.setText(this.player.getPhase().toString());
+                            leftCountries.setVisible(false);
+                            targetText.setVisible(false);
+                            timeline.stop();
                             handleTimer();
                         });
                         svgUtil.setPhase(this.player.getPhase());
-//                        System.out.println(this.player.getPhase());
                     }
                     if(waitForNext){
                         boolean isNext = this.player.getClientHandler().receiveUpdated();
-//                        System.out.println("isNext" + isNext);
                         if(isNext){
                             this.player.nextPhase();
                             this.player.getClientHandler().sendObject(Operation.RESET_WAIT_NEXT);
-//                            System.out.println("fortify");
                             svgUtil.unselectAllPaths();
                             Platform.runLater(()-> {
                                 phase.setText(this.player.getPhase().toString());
@@ -830,7 +786,6 @@ public class MainView implements Initializable {
                             });
                             svgUtil.setPhase(this.player.getPhase());
                             svgUtil.setTwoSelectedPaths(new ArrayList<>());
-//                            svgUtil.deleteArrow();
                             waitForNext = false;
                             if(this.player.getPhase() == currentProcess.Reinforcement){
                                 gainedCard = 0;
@@ -860,7 +815,6 @@ public class MainView implements Initializable {
 
     public void setColor(Color color) {
         this.color = color;
-//        System.out.println(String.valueOf(this.color));
         SvgUtil.setPressedColorCode(String.valueOf(this.color));
     }
 

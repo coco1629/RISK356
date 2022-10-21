@@ -31,9 +31,7 @@ public class ServerThread extends Thread{
         this.socket = socket;
         this.objectInputStream =new ObjectInputStream(socket.getInputStream());
         this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-//        for (Country country : Country.values()){
-//           territories.add(new Territory(country.getName(),null,country.getPopulation()));
-//        }
+
     }
 
     @Override
@@ -45,7 +43,6 @@ public class ServerThread extends Thread{
                     case OCCUPY :
                         String name = (String) objectInputStream.readObject();
                         this.setName(name);
-//                        System.out.println("serverthread name" + this.getName() + "player name" + name);
                         ArrayList<Country> countries = new ArrayList<>();
                         int num = (int) objectInputStream.readObject();
                         for(int i = 0; i < num; i++){
@@ -109,7 +106,6 @@ public class ServerThread extends Thread{
                                 server.setUpdateplayers(server.getUpdateplayers()+1);
                                 isWaitOthers = true;
                             }
-    //                        System.out.println("update players" + server.getUpdateplayers());
                             if(server.getUpdateplayers()==this.serverThreads.size()+1){
                                 sendObjectToAll(true);
                                 sendObjectToAll(territories.size());
@@ -117,13 +113,13 @@ public class ServerThread extends Thread{
                                     sendObjectToAll(this.territories.get(i));
                                 }
                                 sendObjectToAll(true);
-    //                            System.out.println("finish update");
                                 server.setUpdateplayers(0);
                                 isWaitOthers = false;
                                 Server.getGameModel().nextPhase();
                             }
                         }
                         else {
+                            // next turn
                             if(Server.getGameModel().getPhase() == currentProcess.Fortify){
                                 this.territories = server.getTerritories();
                                 if(!isWaitOthers){
@@ -134,8 +130,6 @@ public class ServerThread extends Thread{
                                 sendObject(false);
                                 int allocateTroops = allocateTroops(this.getName());
                                 sendObject(allocateTroops);
-//                                int allocateTroops = allocateTroops(this.getName());
-//                                sendObject(allocateTroops);
 
                                 if(server.getUpdateplayers()==this.serverThreads.size()+1){
                                     sendObjectToAll(true);
@@ -165,7 +159,6 @@ public class ServerThread extends Thread{
                         ServerHandler serverThread=new ServerHandler(socket,this,sessionData);
                         serverThread.setSessionData(sessionData);
                         serverThread.fixRoomOwnerName(sessionData.getPlayer());
-//                        currentServerThreads.add(serverThread);
                         this.roomName = string;
                         handlerHashMap.put(string,serverThread);
                         Server.setHandlerHashMap(handlerHashMap);
@@ -176,15 +169,11 @@ public class ServerThread extends Thread{
                         String person = (String) objectInputStream.readObject();
                         this.setName(person);
                         this.handlerHashMap = Server.getHandlerHashMap();
-//                        System.out.println(string+"m"+person);
-                        if (handlerHashMap.containsKey(str)) {  // either the key the server sent is right or wrong!!
+                        if (handlerHashMap.containsKey(str)) {
                             this.roomName = str;
                             handlerHashMap.get(str).addStreams(this, person);
-//                            output.writeObject(handlerHashMap.get(string));
-//                            System.out.println("add streams");
                             break;
                         } else {
-//                            System.out.println("add failed");
                             objectOutputStream.writeObject(Operation.JOIN_SESSION_FAILED);
                         }
                         break;
@@ -193,7 +182,6 @@ public class ServerThread extends Thread{
                         Set<String> set = handlerHashMap.keySet();
                         ArrayList<String> rooms = new ArrayList<>(set);
                         objectOutputStream.writeObject(rooms);
-                        System.out.println("server send rooms");
                         break;
 
                 }
@@ -223,7 +211,6 @@ public class ServerThread extends Thread{
                     playerMap.put(continent,countries);
                 }
                 totalCountry++;
-//                System.out.println(continent.toString() + playerMap.get(continent).toString());
 
             }
         }
@@ -256,8 +243,6 @@ public class ServerThread extends Thread{
                 }
             }
         }
-//        System.out.println("countries" + totalCountry);
-//        System.out.println("extra" + extra);
         num = totalCountry / 3 + extra;
         return num;
     }
@@ -283,7 +268,6 @@ public class ServerThread extends Thread{
         try {
             this.objectOutputStream.writeObject(object);
         } catch (IOException ex) {
-            System.out.println("Error Occurred in sendObject in ClientHandler: " + ex.toString());
         }
     }
 
@@ -291,7 +275,6 @@ public class ServerThread extends Thread{
         try {
             return this.objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Error Occurred in readObject in ClientHandler: " + ex.toString());
         }
         return null;
     }
@@ -302,14 +285,12 @@ public class ServerThread extends Thread{
 
     public void setServerThreads(ArrayList<ServerThread> serverThreads) {
         this.serverThreads = serverThreads;
-//        System.out.println(serverThreads);
-//        System.out.println("set other server threads");
+
     }
 
 
     private void sendArrayListToAll(ArrayList<Object> objs,Operation operation){
         for (int i = 0; i < this.serverThreads.size(); i++) {
-//            System.out.println(i);
             this.sendObject(Operation.UPDATE,this.serverThreads.get(i).getObjectOutputStream());
             this.sendObject(objs, this.serverThreads.get(i).getObjectOutputStream());
         }

@@ -37,12 +37,9 @@ public class Player implements Serializable {
 
     private int numberOccupy;
 
-//    private ArrayList<Territory> ownedTerritories = new ArrayList<>();
-
 
     public Player(String name) throws IOException {
         super();
-//        this.color = color;
         this.name = name;
         this.territoryCount = 0;
         this.clientHandler = new ClientHandler(name);
@@ -51,8 +48,7 @@ public class Player implements Serializable {
         cards.put("infantry",0);
         cards.put("cavalry",0);
         cards.put("artillery",0);
-//        clientHandler.start();
-//        color =
+
     }
 
     public void addTerritory() {
@@ -67,11 +63,6 @@ public class Player implements Serializable {
         return name;
     }
 
-//    public void occupyCountries(ArrayList<Country> countries, int num, String roomName){
-//        this.clientHandler.sendObject(Operation.OCCUPY);
-//        this.clientHandler.sendObject(roomName);
-//        this.clientHandler.sendObject(new Object[]{this.name,countries, num});
-//    }
 
     public ClientHandler getClientHandler() {
         return clientHandler;
@@ -91,13 +82,11 @@ public class Player implements Serializable {
             for(int i = 0; i < allPlayers.size(); i++){
                 Object[] array = (Object[]) allPlayers.get(i);
                 String name = (String) array[1];
-//                System.out.println(name);
                 Operation operation = (Operation) array[0];
 
                 switch (operation) {
                     case RED -> {
                         if(Objects.equals(name, this.name))
-//                            System.out.println("red");
                             this.color = Color.RED;
                         playersColorMap.put(name, Color.RED);
                     }
@@ -130,7 +119,6 @@ public class Player implements Serializable {
                 }
             }
         }
-//        System.out.println(playersColorMap.toString());
     }
 
     public HashMap<String, Color> getPlayersColorMap() {
@@ -197,13 +185,6 @@ public class Player implements Serializable {
         this.territories = territories;
     }
 
-    //    public ArrayList<Territory> getOwnedTerritories() {
-//        return ownedTerritories;
-//    }
-//
-//    public void setOwnedTerritories(ArrayList<Territory> ownedTerritories) {
-//        this.ownedTerritories = ownedTerritories;
-//    }
     public int getTotalCards(){
         int n = 0;
         for (String key : cards.keySet()){
@@ -256,7 +237,6 @@ public class Player implements Serializable {
         cardsArmy += Model.cardsValue;
         Model.cardsValue += 5;
         this.allowedTroops += 5;
-//        this.getClientHandler().sendObject(Operation.EXCHANGE);
     }
     public void autoTradeCard() {
 
@@ -291,12 +271,9 @@ public class Player implements Serializable {
     }
 
     public void addRandomCard(String newCard) {
-//        if (numberOccupy > 0) {
-            int value = cards.get(newCard) + 1;
-            cards.put(newCard, value);
-//        }
+        int value = cards.get(newCard) + 1;
+        cards.put(newCard, value);
         //reset the number of occupy
-//        numberOccupy = 0;
     }
 
     /**
@@ -304,12 +281,10 @@ public class Player implements Serializable {
      */
     public void addRandomCard() {
 
-//        if (getNumberOccupy() > 0) {
-            Random random = new Random();
-            int num = random.nextInt(3);
-            String newCard = Model.cards[num];
-            addRandomCard(newCard);
-//        }
+        Random random = new Random();
+        int num = random.nextInt(3);
+        String newCard = Model.cards[num];
+        addRandomCard(newCard);
     }
 
 

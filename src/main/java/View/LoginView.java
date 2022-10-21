@@ -126,7 +126,6 @@ public class LoginView implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        ComboBox theme = (ComboBox)root.lookup("#theme");
         theme.getItems().addAll("Dark Theme", "Light Theme");
 
     }

@@ -19,10 +19,7 @@ public class DBUtil {
         try {
             Class.forName(driverName);
             dbConn = DriverManager.getConnection(dbURL, userName, password);
-//            System.out.println("SQL server connected！");
         } catch (Exception e) {
-//            System.out.println("SQL server fail to connect？？？？？");
-            e.printStackTrace();
         }
 
         return  dbConn;

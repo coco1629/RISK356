@@ -20,7 +20,6 @@ public class SessionData implements Serializable {
         this.player = player;
         this.operation = operation;
         this.numberOfAllowedPlayers = numberOfAllowedPlayers;
-//        this.numberOfPlayers = numberOfPlayers;
     }
 
     public SessionData() {

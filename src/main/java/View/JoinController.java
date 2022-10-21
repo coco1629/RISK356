@@ -64,7 +64,6 @@ public class JoinController {
         currentPlayer.getClientHandler().sendObject(Operation.CREATE_SESSION);
         currentPlayer.getClientHandler().sendObject(roomName.getText());
         this.roomNameStr = roomName.getText();
-//        System.out.println("create game:"+userName);
         SessionData data = new SessionData(userName,Operation.CREATE_SESSION,Integer.parseInt(roomSize.getText()));
         currentPlayer.getClientHandler().sendObject(data);
         Stage secondStage = new Stage();
@@ -78,13 +77,10 @@ public class JoinController {
 
     @FXML
     void joinSession(ActionEvent event) throws IOException {
-//        System.out.println(currentPlayer.getName());
         currentPlayer.getClientHandler().sendObject(Operation.JOIN_SESSION);
-        System.out.println("join session");
         this.roomNameStr = roomList.getSelectionModel().getSelectedItem();
         currentPlayer.getClientHandler().sendObject(this.roomNameStr);
         currentPlayer.getClientHandler().sendObject(userName);
-//        System.out.println(userName);
         Stage secondStage = new Stage();
         Label label = new Label("Waiting for players...");
         StackPane pane = new StackPane(label);
@@ -99,7 +95,6 @@ public class JoinController {
     void showRoom(ActionEvent event) throws IOException {
         this.currentPlayer = new Player(userName);
         this.currentPlayer.getClientHandler().sendObject(Operation.SHOW_ROOMS);
-//        System.out.println("send show rooms");
         ArrayList<String> rooms = (ArrayList<String>) this.currentPlayer.getClientHandler().readObject();
         ObservableList<String> roomItems = FXCollections.observableArrayList(rooms);
         roomList.setItems(roomItems);

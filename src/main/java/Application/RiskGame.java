@@ -20,8 +20,6 @@ public class RiskGame extends Application {
     public void start(Stage primaryStage) {
         try {
             // Read file fxml and draw interface.
-//            Parent root = FXMLLoader.load(getClass()
-//                    .getResource("/view/LoginView.fxml"));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
             Parent root = loader.load();
             primaryStage.setResizable(false);
@@ -32,9 +30,7 @@ public class RiskGame extends Application {
             ComboBox<String> theme =loginController.theme;
             scene.getStylesheets().setAll("view/css/LoginViewLightCss.css");
             theme.setOnAction((event -> {
-//                style = "light";
                 String topic = (String) theme.getValue();
-                System.out.println(theme.getValue());
                 if(topic.equals("Dark Theme")){
                     style[0] = "dark";
                     scene.getStylesheets().setAll("view/css/LoginViewCss.css");
@@ -42,6 +38,7 @@ public class RiskGame extends Application {
                 }
                 if(topic.equals("Light Theme")){
                     style[0] = "light";
+                    scene.getStylesheets().removeAll();
                     scene.getStylesheets().setAll("view/css/LoginViewLightCss.css");
                     loginController.setStyle("light");
                 }

@@ -46,10 +46,8 @@ public class Server {
                 thread.setServer(this);
                 thread.start();
 
-
             }
         }catch (Exception e){
-            e.printStackTrace();
 
         }
     }
@@ -108,14 +106,8 @@ public class Server {
     }
 
     public void updateTerritories(ArrayList<Territory> input,String playerName){
-//        System.out.println("update");
-//        System.out.println("input array: ");
-//        for (Territory country : input){
-//            System.out.println("country name: " + country.getName() + " num: " + country.getNum() + " owner: " + country.getOwner());
-//        }
         for(int i = 0; i < input.size(); i++){
             Territory territory = input.get(i);
-//            System.out.println(territory.getName() + "troops" + territory.getNum());
             boolean add = true;
             for(int j = 0; j < this.territories.size(); j++){
                 Territory t = this.territories.get(j);
@@ -128,10 +120,8 @@ public class Server {
                     }
                     else if(!t.getOwner().equals(territory.getOwner())){
                         if(t.getNum() >= territory.getNum()){
-//                            System.out.println(t.getOwner() + ">=" + territory.getOwner());
                         }
                         else{
-//                            System.out.println(t.getOwner() + "<" + territory.getOwner());
                             t.setOwner(territory.getOwner());
                             t.setNum(territory.getNum());
                         }
@@ -141,17 +131,10 @@ public class Server {
             }
             if(add){
                 this.territories.add(territory);
-//                System.out.println("add country: " + territory.getName() + " owner: " + territory.getOwner());
             }
             gameModel.setTerritoryArrayList(this.territories);
         }
-//        if(gameModel.getTerritoryArrayList().size() == 2 && gameModel.getPhase() == currentProcess.Preparation){
-//            gameModel.setPhase(currentProcess.Attack);
-//        }
-//        System.out.println("territories list in server: ");
-//        for (Territory country : this.territories){
-//            System.out.println("country name: " + country.getName() + " num: " + country.getNum());
-//        }
+
     }
 
     public static GameModel getGameModel() {
