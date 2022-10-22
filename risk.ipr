@@ -931,6 +931,28 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: org.openjfx:javafx-media:18">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.openjfx:javafx-media:win:18">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-win.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: org.opentest4j:opentest4j:1.2.0">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar!/" />

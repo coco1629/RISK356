@@ -1,7 +1,5 @@
 package group.riskgame.Application.View;
 
-import Connection.Operation;
-import Model.*;
 import group.riskgame.Application.Connection.Operation;
 import group.riskgame.Application.Model.*;
 import javafx.animation.KeyFrame;
@@ -443,9 +441,6 @@ public class MainView implements Initializable {
                 restCountryPath.add(countryPath);
             }
         }
-//        String country1 = "alaska";
-//        String country2 = "alberta";
-//        int troops = this.player.getAllowedTroops();
         int randomtroopNum = 0;
         switch (this.player.getPhase()){
             case Preparation -> {
@@ -463,30 +458,6 @@ public class MainView implements Initializable {
                     temp.setPopulation(randomtroopNum);
                     this.player.setAllowedTroops(this.player.getAllowedTroops() - randomtroopNum);
                 }
-//                for (String i : svgUtil.getNeighbourList().get(temp.getName())) {
-//                    if (Country.valueOf(i).getPopulation() > 0 && svgUtil.getCountryPathHashMap().get(i).isOccupied() && !this.player.getOccupiedCountries().contains(Country.valueOf(i))) {
-//                        if (Country.valueOf(i).getPopulation() > neighbourTroopNum) {
-//                            neighbourTroopNum = Country.valueOf(i).getPopulation();
-//                        }
-//                    }
-//                }
-//                if (troops > 0) {
-//                    if (neighbourTroopNum == 0) {
-//                        Random random1 = new Random();
-//                        int occupyNum = random1.nextInt(1, troops / 3);
-//                        temp.setPopulation(occupyNum);
-//                        this.player.setAllowedTroops(this.player.getAllowedTroops() - occupyNum);
-//                    } else {
-//                        if (troops <= neighbourTroopNum) {
-//                            temp.setPopulation(troops);
-//                            this.player.setAllowedTroops(this.player.getAllowedTroops() - troops);
-////                            System.out.println(temp.getPopulation());
-//                        } else {
-//                            temp.setPopulation(neighbourTroopNum + 1);
-//                            this.player.setAllowedTroops(this.player.getAllowedTroops() - troops);
-//                        }
-//                    }
-//                }
                 svgUtil.setPathColor(this.color, temp);
                 this.player.addToOccupiedCountries(temp);
                 troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
@@ -495,10 +466,8 @@ public class MainView implements Initializable {
                 this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
                 for (int i = 0; i < this.player.getOccupiedCountries().size(); i++) {
                     Country country = this.player.getOccupiedCountries().get(i);
-                        //            System.out.println(country.getName() + "troops num " + country.getPopulation());
                     this.player.getClientHandler().sendObject(country);
                     this.player.getClientHandler().sendObject(country.getPopulation());
-                        //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
                 }
                 if (gainedCard == 0) {
                     gainedCard += 1;
@@ -508,16 +477,11 @@ public class MainView implements Initializable {
                 handleTimer();
             }
             case Attack -> {
-                // country 1 should be owned country, the other one is others'
-                int attackCountryNum = 0;
-                int defenderCountryNum = 100;
                 String attackCountry = "";
                 String defendCountry = "";
                 ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
                 ArrayList<String> attackList = new ArrayList<>();
                 ArrayList<String> defendList = new ArrayList<>();
-//                Random randomAttacker = new Random();
-//                String attackCountry = this.player.getOccupiedCountries().get(randomAttacker.nextInt(this.player.getOccupiedCountries().size())).getName();
                 for (Territory i:this.territories){
                     if (i.getOwner().equals(this.player.getName())){
                         if (i.getNum() > 1){
@@ -672,7 +636,6 @@ public class MainView implements Initializable {
                 for (Map.Entry<String,Integer> j:ownCountry2.entrySet()){
                     stringArrayList.add(j.getKey());
                 }
-//                System.out.println(ownCountry2);
                 CountryPath from = svgUtil.getCountryPathHashMap().get(stringArrayList.get(0));
                 CountryPath to = svgUtil.getCountryPathHashMap().get(stringArrayList.get(stringArrayList.size()-1));
                 autoSelectedTwo.add(from);
