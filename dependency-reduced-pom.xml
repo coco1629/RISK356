@@ -42,7 +42,7 @@
               </filters>
               <transformers>
                 <transformer>
-                  <mainClass>Connection.Server</mainClass>
+                  <mainClass>group.riskgame.Application.Connection.Server</mainClass>
                 </transformer>
               </transformers>
             </configuration>
