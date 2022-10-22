@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI">
+    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI change">
+      <change afterPath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/RiskGame2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/RiskGame3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/risk.iml" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/risk.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/risk.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/risk.iws" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iws" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -177,6 +181,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -264,23 +269,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/RISK356&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;c6142b27f1385bc163ffe7f4ebfc52ac&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "create.test.in.the.same.root": "true",
+    "last_opened_file_path": "F:/RISK356",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15429688",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "spring.configuration.checksum": "c6142b27f1385bc163ffe7f4ebfc52ac"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="Websocket" />
     </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="group.riskgame.Application.Model" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="group.riskgame.Application" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.Application.RiskGame2">
+  <component name="RunManager" selected="Application.RiskGame3">
     <configuration selected="false" default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -290,20 +310,6 @@
       <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <option name="VM_PARAMETERS" />
-    </configuration>
-    <configuration name="Application.RiskGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Application.RiskGame" />
-      <module name="risk" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;F:\javafx-sdk-18.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Application.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration name="Application.RiskGame2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Application.RiskGame2" />
@@ -319,13 +325,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Websocket.ClientTest" />
+    <configuration name="RiskGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.RiskGame" />
       <module name="risk" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Websocket.*" />
+          <option name="PATTERN" value="group.riskgame.Application.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -333,13 +339,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Connection.Server" />
+    <configuration name="RiskGame2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.RiskGame2" />
       <module name="risk" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Connection.*" />
+          <option name="PATTERN" value="group.riskgame.Application.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -347,13 +353,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WebsocketClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Websocket.WebsocketClient" />
+    <configuration name="RiskGame3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.RiskGame3" />
       <module name="risk" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Websocket.*" />
+          <option name="PATTERN" value="group.riskgame.Application.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -363,6 +369,20 @@
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="group.riskgame.Application.Connection.Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.Connection.Server" />
+      <module name="risk" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group.riskgame.Application.Connection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -379,19 +399,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.ClientTest" />
-      <item itemvalue="Application.Application.RiskGame" />
+      <item itemvalue="Application.RiskGame" />
+      <item itemvalue="Application.RiskGame2" />
+      <item itemvalue="Application.RiskGame3" />
+      <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
       <item itemvalue="Application.Application.RiskGame2" />
-      <item itemvalue="Application.Server" />
-      <item itemvalue="Application.WebsocketClient" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.RiskGame3" />
+        <item itemvalue="Application.RiskGame2" />
+        <item itemvalue="Application.RiskGame" />
+        <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
         <item itemvalue="Application.Application.RiskGame2" />
-        <item itemvalue="Application.Application.RiskGame" />
-        <item itemvalue="Application.Server" />
-        <item itemvalue="Application.WebsocketClient" />
-        <item itemvalue="Application.ClientTest" />
       </list>
     </recent_temporary>
   </component>
@@ -434,7 +454,7 @@
       <updated>1662645254579</updated>
       <workItem from="1666336884835" duration="9076000" />
       <workItem from="1666391016549" duration="28846000" />
-      <workItem from="1666438010080" duration="1035000" />
+      <workItem from="1666438010080" duration="2636000" />
     </task>
     <task id="LOCAL-00001" summary="AI">
       <created>1666436144447</created>
@@ -457,7 +477,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666438400281</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="AI change">
+      <created>1666439256814</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1666439256814</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -511,7 +538,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="AI" />
-    <option name="LAST_COMMIT_MESSAGE" value="AI" />
+    <MESSAGE value="AI change" />
+    <option name="LAST_COMMIT_MESSAGE" value="AI change" />
   </component>
   <component name="VssConfiguration">
     <CheckoutOptions>

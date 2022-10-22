@@ -482,6 +482,7 @@
   </component>
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/test/group/riskgame/Application/Model/CardTest.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
   <component name="ExportToHTMLSettings">
