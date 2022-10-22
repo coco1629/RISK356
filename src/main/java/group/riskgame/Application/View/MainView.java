@@ -217,7 +217,9 @@ public class MainView implements Initializable {
                 if(this.player.getPhase() == currentProcess.Preparation){
                     svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
                     svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
-                    leftCountries.setText(String.valueOf(Integer.parseInt(leftCountries.getText()) - 1));
+                    int left = Integer.parseInt(leftCountries.getText()) - 1;
+                    if(left < 0) left = 0;
+                    leftCountries.setText(String.valueOf(left));
                     svgUtil.getSelectedPath().setOccupied(true);
                     Country country = svgUtil.getSelectedCountry();
                     country.setPopulation(numBox.getValue());
@@ -478,8 +480,14 @@ public class MainView implements Initializable {
                     gainedCard += 1;
                     player.addRandomCard();
                 }
-                timeline.stop();
-                handleTimer();
+                Platform.runLater(()->{
+                    timeline.stop();
+                    handleTimer();
+                    int left = Integer.parseInt(leftCountries.getText()) - 1;
+                    if(left < 0) left = 0;
+                    leftCountries.setText(String.valueOf(left));
+                });
+
             }
             case Attack -> {
                 String attackCountry = "";
@@ -530,7 +538,6 @@ public class MainView implements Initializable {
                         if(!diceController.rollButton.isDisable()){
                             diceController.rollButton.fire();
                             try {
-                                //停留时间后点击，可以改
                                 Thread.sleep(1000);
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
@@ -542,7 +549,6 @@ public class MainView implements Initializable {
                 Thread endThread= new Thread(()->{
                     try {
                         thread.join();
-                        //停留时间后关闭，可以改
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
@@ -592,8 +598,6 @@ public class MainView implements Initializable {
                 endThread.start();
             }
             case Reinforcement -> {
-                // 这个数字根据战略需要改，这里固定是为了方便测试
-                // 国家要是自己占有的国家，territory.getOwner等于玩家
                 int addNum = 0;
                 String reinforceCountry = "";
                 int reinfoceNum = 100;

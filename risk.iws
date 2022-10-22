@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI changes" />
+    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI change">
+      <change beforePath="$PROJECT_DIR$/risk.iws" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -263,23 +266,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "create.test.in.the.same.root": "true",
-    "last_opened_file_path": "F:/RISK356",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15429688",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings",
-    "spring.configuration.checksum": "c6142b27f1385bc163ffe7f4ebfc52ac"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/RISK356&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;c6142b27f1385bc163ffe7f4ebfc52ac&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -294,7 +297,7 @@
       <recent name="group.riskgame.Application" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.RiskGame3">
+  <component name="RunManager" selected="Application.group.riskgame.Application.Connection.Server">
     <configuration selected="false" default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -401,10 +404,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
         <item itemvalue="Application.RiskGame3" />
         <item itemvalue="Application.RiskGame2" />
         <item itemvalue="Application.RiskGame" />
-        <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
         <item itemvalue="Application.Application.RiskGame2" />
       </list>
     </recent_temporary>
