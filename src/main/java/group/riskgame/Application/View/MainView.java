@@ -597,7 +597,7 @@ public class MainView implements Initializable {
                 }
                 if (this.player.getAllowedTroops() > 1){
                     Random randomAdd = new Random();
-                    addNum = randomAdd.nextInt(1 ,this.player.getAllowedTroops());
+                    addNum = randomAdd.nextInt(1 ,this.player.getAllowedTroops()/this.player.getOccupiedCountries().size());
                 }else {
                     addNum = 1;
                 }
