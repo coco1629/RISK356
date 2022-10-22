@@ -449,14 +449,17 @@ public class MainView implements Initializable {
                 CountryPath randomCountry = restCountryPath.get(random.nextInt(restCountryPath.size()));
                 Country temp = Country.valueOf(randomCountry.getName());
                 if (!randomCountry.isOccupied()){
-                    Random randomNum = new Random();
-                    if (this.player.getAllowedTroops() > 1){
-                        randomtroopNum = randomNum.nextInt(1,this.player.getAllowedTroops()/2);
-                    } else if (this.player.getAllowedTroops() == 1) {
-                        randomtroopNum = 1;
+                    if (this.player.getAllowedTroops() >= 1){
+                        Random randomNum = new Random();
+                        randomtroopNum = randomNum.nextInt(2,3);
+                        if (randomtroopNum <= this.player.getAllowedTroops()){
+                            temp.setPopulation(randomtroopNum);
+                            this.player.setAllowedTroops(this.player.getAllowedTroops() - randomtroopNum);
+                        }else {
+                            temp.setPopulation(this.player.getAllowedTroops());
+                            this.player.setAllowedTroops(0);
+                        }
                     }
-                    temp.setPopulation(randomtroopNum);
-                    this.player.setAllowedTroops(this.player.getAllowedTroops() - randomtroopNum);
                 }
                 svgUtil.setPathColor(this.color, temp);
                 this.player.addToOccupiedCountries(temp);
