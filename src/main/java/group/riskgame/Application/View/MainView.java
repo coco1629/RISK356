@@ -511,8 +511,6 @@ public class MainView implements Initializable {
                         defendCountry = i;
                     }
                 }
-//                Random randomDefender = new Random();
-//                defendCountry = defendList.get(randomDefender.nextInt(defendList.size()));
                 CountryPath attacker = svgUtil.getCountryPathHashMap().get(attackCountry);
                 CountryPath defender = svgUtil.getCountryPathHashMap().get(defendCountry);
                 autoSelectedTwo.add(attacker);
@@ -678,8 +676,6 @@ public class MainView implements Initializable {
                         timeline.stop();
                         handleTimer();
                     });
-//                    timeline.stop();
-//                    handleTimer();
                 }).start();
 
 

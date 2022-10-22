@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI change">
-      <change beforePath="$PROJECT_DIR$/risk.iws" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/Connection/ServerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/Connection/ServerThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" afterDir="false" />
-    </list>
+    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -452,7 +448,7 @@
       <updated>1662645254579</updated>
       <workItem from="1666336884835" duration="9076000" />
       <workItem from="1666391016549" duration="28846000" />
-      <workItem from="1666438010080" duration="11046000" />
+      <workItem from="1666438010080" duration="11345000" />
     </task>
     <task id="LOCAL-00001" summary="AI">
       <created>1666436144447</created>
@@ -510,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666444980403</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="AI changes">
+      <created>1666449610994</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1666449610994</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -565,7 +568,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="AI" />
     <MESSAGE value="AI change" />
-    <option name="LAST_COMMIT_MESSAGE" value="AI change" />
+    <MESSAGE value="AI changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="AI changes" />
   </component>
   <component name="VssConfiguration">
     <CheckoutOptions>
