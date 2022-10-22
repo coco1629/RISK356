@@ -1,5 +1,5 @@
-import JDBC.User;
-import JDBC.UserDao;
+import group.riskgame.Application.JDBC.User;
+import group.riskgame.Application.JDBC.UserDao;
 
 public class DatabaseTest {
     public static void main(String[] args) throws Exception {

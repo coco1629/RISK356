@@ -1,0 +1,15 @@
+.cardroot{
+    -fx-background-color: #D2B48C
+}
+.scroll{
+    -fx-background-color:  #FAF0E6
+}
+.button1{
+    -fx-background-color:  #a88462
+}
+.textarea{
+    -fx-text-fill: #660000
+}
+.button1{
+    -fx-text-fill: #fffefe;
+}
