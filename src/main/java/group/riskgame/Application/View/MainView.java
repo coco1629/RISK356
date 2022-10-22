@@ -500,7 +500,6 @@ public class MainView implements Initializable {
                         }
                     }
                 }
-                System.out.println(defendList);
                 Random randomDefender = new Random();
                 defendCountry = defendList.get(randomDefender.nextInt(defendList.size()));
                 CountryPath attacker = svgUtil.getCountryPathHashMap().get(attackCountry);
@@ -584,8 +583,6 @@ public class MainView implements Initializable {
                 endThread.start();
             }
             case Reinforcement -> {
-                // 这个数字根据战略需要改，这里固定是为了方便测试
-                // 国家要是自己占有的国家，territory.getOwner等于玩家
                 int addNum;
                 String reinforceCountry = "";
                 int reinfoceNum = 100;
@@ -618,8 +615,6 @@ public class MainView implements Initializable {
                 handleTimer();
             }
             case Fortify -> {
-                // 两个国家都需要是自己占领的
-                System.out.println("auto-fortify");
                 ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
                 int country2Num = 100;
                 HashMap<String,Integer> ownCountry = new HashMap<String, Integer>();
@@ -640,7 +635,6 @@ public class MainView implements Initializable {
                 CountryPath to = svgUtil.getCountryPathHashMap().get(stringArrayList.get(stringArrayList.size()-1));
                 autoSelectedTwo.add(from);
                 autoSelectedTwo.add(to);
-                // 这个数字根据战略需要改，这里固定是为了方便测试(
                 int num = Country.valueOf(from.getName()).getPopulation() / 2;
                 svgUtil.setTwoSelectedPaths(autoSelectedTwo);
                 svgUtil.setStartX(from.getText().getX() + 17);
@@ -812,7 +806,7 @@ public class MainView implements Initializable {
                             }
                         }
                         // the game end
-                        if(owned >= 6 ){
+                        if(owned >= 42 ){
                             this.player.getClientHandler().sendObject(Operation.END);
                             this.player.setPhase(currentProcess.END);
                             svgUtil.unselectAllPaths();
@@ -826,7 +820,7 @@ public class MainView implements Initializable {
                         }
                     }
 
-                    if(obj.size() >= 6 && this.player.getPhase() == currentProcess.Preparation){
+                    if(obj.size() >= 42 && this.player.getPhase() == currentProcess.Preparation){
                         // go to attack phase
                         this.player.nextPhase();
                         svgUtil.unselectAllPaths();
