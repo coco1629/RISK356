@@ -687,7 +687,7 @@ public class MainView implements Initializable {
                 for (Map.Entry<String,Integer> j:ownCountry2.entrySet()){
                     stringArrayList.add(j.getKey());
                 }
-                System.out.println(ownCountry2);
+//                System.out.println(ownCountry2);
                 CountryPath from = svgUtil.getCountryPathHashMap().get(stringArrayList.get(0));
                 CountryPath to = svgUtil.getCountryPathHashMap().get(stringArrayList.get(stringArrayList.size()-1));
                 autoSelectedTwo.add(from);
