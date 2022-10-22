@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AzureSettings">
+    <option name="appInsights" value="rO0ABXVyAEtbTGNvbS5taWNyb3NvZnQuYXBwbGljYXRpb25pbnNpZ2h0cy5wcmVmZXJlbmNlLkFwcGxpY2F0aW9uSW5zaWdodHNSZXNvdXJjZTvCzxEP0C2HbAIAAHhwAAAAAA==" />
+  </component>
   <component name="CodeStyleManager">
     <option name="USE_DEFAULT_CODE_STYLE_SCHEME" value="true" />
     <option name="CODE_STYLE_SCHEME" value="" />
@@ -482,6 +485,7 @@
   </component>
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/test/group/riskgame/Application/Model/CardTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
   <component name="ExportToHTMLSettings">
@@ -665,8 +669,13 @@
       <module fileurl="file://$PROJECT_DIR$/risk.iml" filepath="$PROJECT_DIR$/risk.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="18" project-jdk-type="JavaSDK" />
   <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
@@ -728,17 +737,6 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.google.protobuf:protobuf-java:3.6.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: com.microsoft.sqlserver:mssql-jdbc:7.4.1.jre8">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/com/microsoft/sqlserver/mssql-jdbc/7.4.1.jre8/mssql-jdbc-7.4.1.jre8.jar!/" />
@@ -770,17 +768,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.14/log4j-1.2.14-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: mysql:mysql-connector-java:8.0.20">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/8.0.20/mysql-connector-java-8.0.20.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/8.0.20/mysql-connector-java-8.0.20-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/8.0.20/mysql-connector-java-8.0.20-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.apiguardian:apiguardian-api:1.1.2">
@@ -847,6 +834,17 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.openjfx:javafx-base:18">
@@ -935,6 +933,28 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.openjfx:javafx-media:18">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.openjfx:javafx-media:mac:18">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-mac.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.opentest4j:opentest4j:1.2.0">
