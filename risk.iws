@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/risk.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/risk.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/risk.ipr" afterDir="false" />
+    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI change">
       <change beforePath="$PROJECT_DIR$/risk.iws" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/JDBC/DBUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JDBC/DBUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/JDBC/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JDBC/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,10 +178,16 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="coco-dev" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HierarchyBrowserManager">
@@ -269,15 +271,33 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/RISK356&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;c6142b27f1385bc163ffe7f4ebfc52ac&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="Websocket" />
     </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="group.riskgame.Application.Model" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="group.riskgame.Application" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.WebsocketClient">
+  <component name="RunManager" selected="Application.group.riskgame.Application.Connection.Server">
     <configuration selected="false" default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -288,13 +308,13 @@
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <option name="VM_PARAMETERS" />
     </configuration>
-    <configuration name="ClientTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Websocket.ClientTest" />
+    <configuration name="Application.RiskGame2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Application.RiskGame2" />
       <module name="risk" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;F:\javafx-sdk-18.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Websocket.*" />
+          <option name="PATTERN" value="Application.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -302,13 +322,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RunSocketServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Websocket.RunSocketServer" />
+    <configuration name="RiskGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.RiskGame" />
       <module name="risk" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Websocket.*" />
+          <option name="PATTERN" value="group.riskgame.Application.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -316,13 +336,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WebsocketClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Websocket.WebsocketClient" />
+    <configuration name="RiskGame2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.RiskGame2" />
       <module name="risk" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Websocket.*" />
+          <option name="PATTERN" value="group.riskgame.Application.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -330,13 +350,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Websocket.Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Websocket.Client" />
+    <configuration name="RiskGame3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.RiskGame3" />
       <module name="risk" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Websocket.*" />
+          <option name="PATTERN" value="group.riskgame.Application.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -346,6 +366,20 @@
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="group.riskgame.Application.Connection.Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.Connection.Server" />
+      <module name="risk" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group.riskgame.Application.Connection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -361,11 +395,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.RiskGame" />
+      <item itemvalue="Application.RiskGame2" />
+      <item itemvalue="Application.RiskGame3" />
+      <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
+      <item itemvalue="Application.Application.RiskGame2" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WebsocketClient" />
-        <item itemvalue="Application.ClientTest" />
-        <item itemvalue="Application.Websocket.Client" />
+        <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
+        <item itemvalue="Application.RiskGame3" />
+        <item itemvalue="Application.RiskGame2" />
+        <item itemvalue="Application.RiskGame" />
+        <item itemvalue="Application.Application.RiskGame2" />
       </list>
     </recent_temporary>
   </component>
@@ -406,7 +449,74 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1662645254579</updated>
+      <workItem from="1666336884835" duration="9076000" />
+      <workItem from="1666391016549" duration="28846000" />
+      <workItem from="1666438010080" duration="11345000" />
     </task>
+    <task id="LOCAL-00001" summary="AI">
+      <created>1666436144447</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666436144447</updated>
+    </task>
+    <task id="LOCAL-00002" summary="AI">
+      <created>1666436164259</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666436164259</updated>
+    </task>
+    <task id="LOCAL-00003" summary="AI">
+      <created>1666438400281</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1666438400281</updated>
+    </task>
+    <task id="LOCAL-00004" summary="AI change">
+      <created>1666439256814</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1666439256814</updated>
+    </task>
+    <task id="LOCAL-00005" summary="AI change">
+      <created>1666440685314</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1666440685314</updated>
+    </task>
+    <task id="LOCAL-00006" summary="AI change">
+      <created>1666442536693</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1666442536693</updated>
+    </task>
+    <task id="LOCAL-00007" summary="AI change">
+      <created>1666444108816</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1666444108816</updated>
+    </task>
+    <task id="LOCAL-00008" summary="AI change">
+      <created>1666444980403</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1666444980403</updated>
+    </task>
+    <task id="LOCAL-00009" summary="AI changes">
+      <created>1666449610994</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1666449610994</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -444,6 +554,9 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="5" />
     </layout>
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -454,6 +567,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="AI" />
+    <MESSAGE value="AI change" />
+    <MESSAGE value="AI changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="AI changes" />
   </component>
   <component name="VssConfiguration">
     <CheckoutOptions>
