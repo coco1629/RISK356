@@ -1,16 +1,15 @@
-package Application;
+package group.riskgame.Application;
 
-import View.LoginView;
+import group.riskgame.Application.View.LoginView;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
-
-import java.io.IOException;
 
 
 public class RiskGame extends Application {
@@ -20,7 +19,7 @@ public class RiskGame extends Application {
     public void start(Stage primaryStage) {
         try {
             // Read file fxml and draw interface.
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/group.riskgame.Application/LoginView.fxml"));
             Parent root = loader.load();
             primaryStage.setResizable(false);
             primaryStage.setTitle("Risk Game");
@@ -28,18 +27,19 @@ public class RiskGame extends Application {
             final String[] style = {"light"};
             Scene scene = new Scene(root);
             ComboBox<String> theme =loginController.theme;
-            scene.getStylesheets().setAll("view/css/LoginViewLightCss.css");
+//            System.out.println(getClass().getResource("/group.riskgame.Application/view/css/LoginViewLightCss.css").getPath());
+            scene.getStylesheets().setAll(getClass().getResource("/group.riskgame.Application/css/LoginViewLightCss.css").toExternalForm());
             theme.setOnAction((event -> {
                 String topic = (String) theme.getValue();
                 if(topic.equals("Dark Theme")){
                     style[0] = "dark";
-                    scene.getStylesheets().setAll("view/css/LoginViewCss.css");
+                    scene.getStylesheets().setAll(getClass().getResource("/group.riskgame.Application/css/LoginViewCss.css").toExternalForm());
                     loginController.setStyle("dark");
                 }
                 if(topic.equals("Light Theme")){
                     style[0] = "light";
                     scene.getStylesheets().removeAll();
-                    scene.getStylesheets().setAll("view/css/LoginViewLightCss.css");
+                    scene.getStylesheets().setAll(getClass().getResource("/group.riskgame.Application/css/LoginViewLightCss.css").toExternalForm());
                     loginController.setStyle("light");
                 }
             }));
