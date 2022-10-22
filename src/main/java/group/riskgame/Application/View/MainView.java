@@ -451,7 +451,7 @@ public class MainView implements Initializable {
                 if (!randomCountry.isOccupied()){
                     Random randomNum = new Random();
                     if (this.player.getAllowedTroops() > 1){
-                        randomtroopNum = randomNum.nextInt(1,this.player.getAllowedTroops()/restCountryPath.size());
+                        randomtroopNum = randomNum.nextInt(1,this.player.getAllowedTroops()/2);
                     } else if (this.player.getAllowedTroops() == 1) {
                         randomtroopNum = 1;
                     }
@@ -597,7 +597,7 @@ public class MainView implements Initializable {
                 }
                 if (this.player.getAllowedTroops() > 1){
                     Random randomAdd = new Random();
-                    addNum = randomAdd.nextInt(1 ,this.player.getAllowedTroops()/this.player.getOccupiedCountries().size());
+                    addNum = randomAdd.nextInt(1 ,this.player.getAllowedTroops()/2);
                 }else {
                     addNum = 1;
                 }
