@@ -72,7 +72,7 @@ public class ServerThread extends Thread{
                         for(int i = 0; i < territories.size(); i++){
                             sendObjectToAll(this.territories.get(i));
                         }
-                        if(territories.size() >= 6){
+                        if(territories.size() >= 42){
                             Server.getGameModel().nextPhase();
                             server.setUpdateplayers(0);
                         }

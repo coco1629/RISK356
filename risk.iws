@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI change">
       <change beforePath="$PROJECT_DIR$/risk.iws" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/Connection/ServerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/Connection/ServerThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -451,7 +452,7 @@
       <updated>1662645254579</updated>
       <workItem from="1666336884835" duration="9076000" />
       <workItem from="1666391016549" duration="28846000" />
-      <workItem from="1666438010080" duration="6548000" />
+      <workItem from="1666438010080" duration="11046000" />
     </task>
     <task id="LOCAL-00001" summary="AI">
       <created>1666436144447</created>
@@ -502,7 +503,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666444108816</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="AI change">
+      <created>1666444980403</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1666444980403</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">

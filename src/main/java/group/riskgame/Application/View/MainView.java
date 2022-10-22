@@ -449,20 +449,22 @@ public class MainView implements Initializable {
                 CountryPath randomCountry = restCountryPath.get(random.nextInt(restCountryPath.size()));
                 Country temp = Country.valueOf(randomCountry.getName());
                 if (!randomCountry.isOccupied()){
-                    if (this.player.getAllowedTroops() >= 1){
+                    if (this.player.getAllowedTroops() != 0){
                         Random randomNum = new Random();
-                        randomtroopNum = randomNum.nextInt(2,3);
+                        randomtroopNum = randomNum.nextInt(2,4);
                         if (randomtroopNum <= this.player.getAllowedTroops()){
                             temp.setPopulation(randomtroopNum);
                             this.player.setAllowedTroops(this.player.getAllowedTroops() - randomtroopNum);
+                            svgUtil.setPathColor(this.color, temp);
+                            this.player.addToOccupiedCountries(temp);
                         }else {
                             temp.setPopulation(this.player.getAllowedTroops());
                             this.player.setAllowedTroops(0);
+                            svgUtil.setPathColor(this.color, temp);
+                            this.player.addToOccupiedCountries(temp);
                         }
                     }
                 }
-                svgUtil.setPathColor(this.color, temp);
-                this.player.addToOccupiedCountries(temp);
                 troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
                 this.player.getClientHandler().sendObject(Operation.OCCUPY);
                 this.player.getClientHandler().sendObject(this.player.getName());
@@ -482,6 +484,7 @@ public class MainView implements Initializable {
             case Attack -> {
                 String attackCountry = "";
                 String defendCountry = "";
+                int defendNum = 1000;
                 ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
                 ArrayList<String> attackList = new ArrayList<>();
                 ArrayList<String> defendList = new ArrayList<>();
@@ -503,9 +506,13 @@ public class MainView implements Initializable {
                         }
                     }
                 }
-                System.out.println(defendList);
-                Random randomDefender = new Random();
-                defendCountry = defendList.get(randomDefender.nextInt(defendList.size()));
+                for (String i:defendList){
+                    if (Country.valueOf(i).getPopulation() < defendNum && Country.valueOf(i).getPopulation() <= Country.valueOf(attackCountry).getPopulation()){
+                        defendCountry = i;
+                    }
+                }
+//                Random randomDefender = new Random();
+//                defendCountry = defendList.get(randomDefender.nextInt(defendList.size()));
                 CountryPath attacker = svgUtil.getCountryPathHashMap().get(attackCountry);
                 CountryPath defender = svgUtil.getCountryPathHashMap().get(defendCountry);
                 autoSelectedTwo.add(attacker);
@@ -641,7 +648,9 @@ public class MainView implements Initializable {
                     stringArrayList.add(j.getKey());
                 }
                 CountryPath from = svgUtil.getCountryPathHashMap().get(stringArrayList.get(0));
-                CountryPath to = svgUtil.getCountryPathHashMap().get(stringArrayList.get(stringArrayList.size()-1));
+                Random random = new Random();
+                int randomTransfer = random.nextInt(stringArrayList.size()/2,stringArrayList.size()-1);
+                CountryPath to = svgUtil.getCountryPathHashMap().get(stringArrayList.get(randomTransfer));
                 autoSelectedTwo.add(from);
                 autoSelectedTwo.add(to);
                 // 这个数字根据战略需要改，这里固定是为了方便测试(
@@ -665,8 +674,12 @@ public class MainView implements Initializable {
                         });
 
                     }
-                    timeline.stop();
-                    handleTimer();
+                    Platform.runLater(()->{
+                        timeline.stop();
+                        handleTimer();
+                    });
+//                    timeline.stop();
+//                    handleTimer();
                 }).start();
 
 
@@ -816,7 +829,7 @@ public class MainView implements Initializable {
                             }
                         }
                         // the game end
-                        if(owned >= 6 ){
+                        if(owned >= 42 ){
                             this.player.getClientHandler().sendObject(Operation.END);
                             this.player.setPhase(currentProcess.END);
                             svgUtil.unselectAllPaths();
@@ -830,7 +843,7 @@ public class MainView implements Initializable {
                         }
                     }
 
-                    if(obj.size() >= 6 && this.player.getPhase() == currentProcess.Preparation){
+                    if(obj.size() >= 42 && this.player.getPhase() == currentProcess.Preparation){
                         // go to attack phase
                         this.player.nextPhase();
                         svgUtil.unselectAllPaths();
