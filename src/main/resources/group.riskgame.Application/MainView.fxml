@@ -112,16 +112,22 @@
          </children>
       </Pane>
       <Label fx:id="instructions" layoutX="715.0" layoutY="251.0" prefHeight="184.0" prefWidth="122.0" wrapText="true" />
-      <Label fx:id="timerLabel" layoutX="105.0" layoutY="576.0" prefHeight="23.0" prefWidth="57.0">
+      <Label fx:id="timerLabel" layoutX="133.0" layoutY="537.0" prefHeight="23.0" prefWidth="27.0">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <ImageView fitHeight="51.0" fitWidth="65.0" layoutX="44.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="51.0" fitWidth="65.0" layoutX="50.0" layoutY="523.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/timer2.gif" />
          </image>
       </ImageView>
-      <Label fx:id="targetText" layoutX="14.0" layoutY="502.0" text="Target Occupy:" />
-      <Label fx:id="leftCountries" layoutX="14.0" layoutY="526.0" />
+      <Label fx:id="targetText" layoutX="14.0" layoutY="581.0" text="Target Occupy:">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label fx:id="leftCountries" layoutX="133.0" layoutY="581.0" prefHeight="20.0" prefWidth="38.0">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
    </children>
 </AnchorPane>

@@ -11,8 +11,7 @@ public class ClientHandler{
     public static ArrayList<ClientHandler> clientArrayList = new ArrayList<>();
     private Socket socket;
     private String username;
-    private String serverIP = "127.0.0.1";
-//    private String serverIP = "104.208.109.169";
+    private String serverIP = "104.208.109.169";
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 

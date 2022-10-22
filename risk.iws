@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI change">
+      <change beforePath="$PROJECT_DIR$/risk.iml" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/risk.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/risk.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/risk.iws" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group/riskgame/Application/View/MainView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/group.riskgame.Application/CardDark.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/group.riskgame.Application/DiceDark.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/group.riskgame.Application/MainView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group.riskgame.Application/MainView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/group.riskgame.Application/MainViewDark.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,6 +228,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="17" />
+  </component>
   <component name="PerforceConfiguration">
     <option name="PORT" value="magic:1666" />
     <option name="USER" value="" />
@@ -279,7 +287,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.runner&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;c6142b27f1385bc163ffe7f4ebfc52ac&quot;
   }
 }</component>
@@ -297,7 +305,7 @@
       <recent name="group.riskgame.Application" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.group.riskgame.Application.Connection.Server">
+  <component name="RunManager" selected="Application.RiskGame3">
     <configuration selected="false" default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -404,10 +412,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
         <item itemvalue="Application.RiskGame3" />
         <item itemvalue="Application.RiskGame2" />
         <item itemvalue="Application.RiskGame" />
+        <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
         <item itemvalue="Application.Application.RiskGame2" />
       </list>
     </recent_temporary>
