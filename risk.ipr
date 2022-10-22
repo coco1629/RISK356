@@ -669,6 +669,11 @@
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
       <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
@@ -728,17 +733,6 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.google.protobuf:protobuf-java:3.6.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: com.microsoft.sqlserver:mssql-jdbc:7.4.1.jre8">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/com/microsoft/sqlserver/mssql-jdbc/7.4.1.jre8/mssql-jdbc-7.4.1.jre8.jar!/" />
@@ -770,17 +764,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.14/log4j-1.2.14-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: mysql:mysql-connector-java:8.0.20">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/8.0.20/mysql-connector-java-8.0.20.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/8.0.20/mysql-connector-java-8.0.20-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/8.0.20/mysql-connector-java-8.0.20-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.apiguardian:apiguardian-api:1.1.2">
@@ -849,6 +832,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: org.openjfx:javafx-base:18">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/18/javafx-base-18.jar!/" />
@@ -860,9 +854,9 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/18/javafx-base-18-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openjfx:javafx-base:mac:18">
+    <library name="Maven: org.openjfx:javafx-base:win:18">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/18/javafx-base-18-mac.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/18/javafx-base-18-win.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/18/javafx-base-18-javadoc.jar!/" />
@@ -882,9 +876,9 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/18/javafx-controls-18-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openjfx:javafx-controls:mac:18">
+    <library name="Maven: org.openjfx:javafx-controls:win:18">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/18/javafx-controls-18-mac.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/18/javafx-controls-18-win.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/18/javafx-controls-18-javadoc.jar!/" />
@@ -904,9 +898,9 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/18/javafx-fxml-18-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openjfx:javafx-fxml:mac:18">
+    <library name="Maven: org.openjfx:javafx-fxml:win:18">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/18/javafx-fxml-18-mac.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/18/javafx-fxml-18-win.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/18/javafx-fxml-18-javadoc.jar!/" />
@@ -926,9 +920,9 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openjfx:javafx-graphics:mac:18">
+    <library name="Maven: org.openjfx:javafx-graphics:win:18">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-mac.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-win.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-javadoc.jar!/" />

@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/risk.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/risk.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/risk.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/risk.iws" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/JDBC/DBUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JDBC/DBUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/JDBC/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JDBC/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/MainView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/SvgUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/SvgUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,6 +185,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HierarchyBrowserManager">
@@ -264,20 +268,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "F:/RISK356",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "spring.configuration.checksum": "c6142b27f1385bc163ffe7f4ebfc52ac"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="Websocket" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.WebsocketClient">
+  <component name="RunManager" selected="Application.Application.RiskGame2">
     <configuration selected="false" default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -287,6 +294,34 @@
       <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <option name="VM_PARAMETERS" />
+    </configuration>
+    <configuration name="Application.RiskGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Application.RiskGame" />
+      <module name="risk" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;F:\javafx-sdk-18.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application.RiskGame2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Application.RiskGame2" />
+      <module name="risk" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;F:\javafx-sdk-18.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="ClientTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Websocket.ClientTest" />
@@ -302,13 +337,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RunSocketServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Websocket.RunSocketServer" />
+    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Connection.Server" />
       <module name="risk" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Websocket.*" />
+          <option name="PATTERN" value="Connection.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -318,20 +353,6 @@
     </configuration>
     <configuration name="WebsocketClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Websocket.WebsocketClient" />
-      <module name="risk" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Websocket.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Websocket.Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Websocket.Client" />
       <module name="risk" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -361,11 +382,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.ClientTest" />
+      <item itemvalue="Application.Application.RiskGame" />
+      <item itemvalue="Application.Application.RiskGame2" />
+      <item itemvalue="Application.Server" />
+      <item itemvalue="Application.WebsocketClient" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Application.RiskGame2" />
+        <item itemvalue="Application.Application.RiskGame" />
+        <item itemvalue="Application.Server" />
         <item itemvalue="Application.WebsocketClient" />
         <item itemvalue="Application.ClientTest" />
-        <item itemvalue="Application.Websocket.Client" />
       </list>
     </recent_temporary>
   </component>
@@ -406,6 +436,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1662645254579</updated>
+      <workItem from="1666336884835" duration="9076000" />
+      <workItem from="1666391016549" duration="27213000" />
     </task>
     <servers />
   </component>
@@ -443,6 +475,9 @@
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="3" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="5" />
     </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

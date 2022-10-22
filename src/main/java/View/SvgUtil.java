@@ -33,9 +33,20 @@ public class SvgUtil extends Region {
     private Group group;
     private String pathName = "map/Risk_game_board.svg";
     private HashMap<String, CountryPath> countryPathHashMap = new HashMap<>();
+
+    public HashMap<String, CountryPath> getRestMap() {
+        return restMap;
+    }
+
+    private HashMap<String, CountryPath> restMap = new HashMap<>();
     private static HashMap<String, Continent>  countryContinentHashMap = new HashMap<>();
     private Player currentPlayer;
     private static String pressedColorCode = "#ff9900";
+
+    public Map<String, List<String>> getNeighbourList() {
+        return neighbourList;
+    }
+
     Map<String,List<String>> neighbourList = new HashMap<>();
 
     /**
@@ -136,6 +147,7 @@ public class SvgUtil extends Region {
                 Country country = Country.valueOf(name);
                 CountryPath path = new CountryPath(name,content,0);
                 countryPathHashMap.put(name, path);
+                restMap.put(name,path);
                 if(i<=9){
                     countryContinentHashMap.put(name,Continent.NORTH_AMERICA);
                 }

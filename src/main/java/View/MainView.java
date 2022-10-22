@@ -2,17 +2,12 @@ package View;
 
 import Connection.Operation;
 import Model.*;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -160,6 +155,7 @@ public class MainView implements Initializable {
     @FXML private Label textToShow;
     @FXML private VBox cardVbox;
 
+
 //    private int playerNum;
 //
 //    private int currentNum = 0;
@@ -168,7 +164,6 @@ public class MainView implements Initializable {
 
     public MainView(){
         svgUtil = new SvgUtil();
-
     }
 
     @Override
@@ -217,11 +212,22 @@ public class MainView implements Initializable {
                     svgUtil.getSelectedCountry().setPopulation(numBox.getValue());
                     svgUtil.getSelectedPath().getText().setText(String.valueOf(numBox.getValue()));
                     svgUtil.getSelectedPath().setOccupied(true);
+//                    System.out.println(svgUtil.getRestMap().size());
                     Country country = svgUtil.getSelectedCountry();
+//                    Set<String> set = svgUtil.getRestMap().keySet();
+//                    Iterator<String> iterator = set.iterator();
+//                    while (iterator.hasNext()){
+//                        String key = iterator.next();
+//                        if (key == country.getName()){
+//                            iterator.remove();
+//                        }
+//                    }
                     country.setPopulation(numBox.getValue());
                     this.player.setAllowedTroops(this.player.getAllowedTroops() - numBox.getValue());
                     troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
                     this.player.addToOccupiedCountries(country);
+//                    System.out.println(svgUtil.getRestMap().size());
+//                    System.out.println(svgUtil.getRestMap().containsKey("alaska"));
                 }
 
             }
@@ -437,34 +443,71 @@ public class MainView implements Initializable {
 
     @FXML
     void auto(ActionEvent event) throws InterruptedException {
-        HashMap<String,CountryPath> map = svgUtil.getCountryPathHashMap();
-        String country1 = "alaska";
-        String country2 = "alberta";
-        int troops = 5;
+        HashMap<String,CountryPath> restMap = svgUtil.getCountryPathHashMap();
+        List<CountryPath> restCountryPath = new ArrayList<>();
+        for (CountryPath countryPath : restMap.values()){
+            if (!countryPath.isOccupied()){
+                restCountryPath.add(countryPath);
+            }
+        }
+//        String country1 = "alaska";
+//        String country2 = "alberta";
+//        int troops = this.player.getAllowedTroops();
+        int randomtroopNum = 0;
         switch (this.player.getPhase()){
             case Preparation -> {
                 // country should not be occupied.
-                Country temp = Country.valueOf(country1);
-                temp.setPopulation(troops);
-                svgUtil.setPathColor(this.color,temp);
-//                map.get(country1).setSelect(true);
-//                map.get(country1).setStrokeWidth(3);
-//                svgUtil.setSelectedCountry(temp);
-//                svgUtil.setSelectedPath(map.get(country1));
+                Random random = new Random();
+                CountryPath randomCountry = restCountryPath.get(random.nextInt(restCountryPath.size()));
+                Country temp = Country.valueOf(randomCountry.getName());
+                if (!randomCountry.isOccupied()){
+                    Random randomNum = new Random();
+                    if (this.player.getAllowedTroops() > 1){
+                        randomtroopNum = randomNum.nextInt(1,this.player.getAllowedTroops()/restCountryPath.size());
+                    } else if (this.player.getAllowedTroops() == 1) {
+                        randomtroopNum = 1;
+                    }
+                    temp.setPopulation(randomtroopNum);
+                    this.player.setAllowedTroops(this.player.getAllowedTroops() - randomtroopNum);
+                }
+//                for (String i : svgUtil.getNeighbourList().get(temp.getName())) {
+//                    if (Country.valueOf(i).getPopulation() > 0 && svgUtil.getCountryPathHashMap().get(i).isOccupied() && !this.player.getOccupiedCountries().contains(Country.valueOf(i))) {
+//                        if (Country.valueOf(i).getPopulation() > neighbourTroopNum) {
+//                            neighbourTroopNum = Country.valueOf(i).getPopulation();
+//                        }
+//                    }
+//                }
+//                if (troops > 0) {
+//                    if (neighbourTroopNum == 0) {
+//                        Random random1 = new Random();
+//                        int occupyNum = random1.nextInt(1, troops / 3);
+//                        temp.setPopulation(occupyNum);
+//                        this.player.setAllowedTroops(this.player.getAllowedTroops() - occupyNum);
+//                    } else {
+//                        if (troops <= neighbourTroopNum) {
+//                            temp.setPopulation(troops);
+//                            this.player.setAllowedTroops(this.player.getAllowedTroops() - troops);
+////                            System.out.println(temp.getPopulation());
+//                        } else {
+//                            temp.setPopulation(neighbourTroopNum + 1);
+//                            this.player.setAllowedTroops(this.player.getAllowedTroops() - troops);
+//                        }
+//                    }
+//                }
+                svgUtil.setPathColor(this.color, temp);
                 this.player.addToOccupiedCountries(temp);
-                this.player.setAllowedTroops(this.player.getAllowedTroops() - troops);
                 troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
                 this.player.getClientHandler().sendObject(Operation.OCCUPY);
                 this.player.getClientHandler().sendObject(this.player.getName());
                 this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
-                for(int i = 0; i < this.player.getOccupiedCountries().size(); i++){
-                    Country country =this.player.getOccupiedCountries().get(i);
-                    //            System.out.println(country.getName() + "troops num " + country.getPopulation());
+                for (int i = 0; i < this.player.getOccupiedCountries().size(); i++) {
+                    Country country = this.player.getOccupiedCountries().get(i);
+                        //            System.out.println(country.getName() + "troops num " + country.getPopulation());
                     this.player.getClientHandler().sendObject(country);
                     this.player.getClientHandler().sendObject(country.getPopulation());
-                    //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
+                        //            System.out.println("country name: " + country.getName() + " num: " + country.getPopulation());
                 }
-                if(gainedCard == 0){
+                if (gainedCard == 0) {
                     gainedCard += 1;
                     player.addRandomCard();
                 }
@@ -473,11 +516,40 @@ public class MainView implements Initializable {
             }
             case Attack -> {
                 // country 1 should be owned country, the other one is others'
+                int attackCountryNum = 0;
+                int defenderCountryNum = 100;
+                String attackCountry = "";
+                String defendCountry = "";
                 ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
-                autoSelectedTwo.add(map.get(country1));
-                autoSelectedTwo.add(map.get(country2));
-                CountryPath attacker = map.get(country1);
-                CountryPath defender = map.get(country2);
+                ArrayList<String> attackList = new ArrayList<>();
+                ArrayList<String> defendList = new ArrayList<>();
+//                Random randomAttacker = new Random();
+//                String attackCountry = this.player.getOccupiedCountries().get(randomAttacker.nextInt(this.player.getOccupiedCountries().size())).getName();
+                for (Territory i:this.territories){
+                    if (i.getOwner().equals(this.player.getName())){
+                        if (i.getNum() > 1){
+                            attackList.add(i.getName());
+                        }
+                    }
+                }
+                Random randomAttacker = new Random();
+                attackCountry = attackList.get(randomAttacker.nextInt(attackList.size()));
+                for (String i:svgUtil.getNeighbourList().get(attackCountry)){
+                    for (Territory j:this.territories){
+                        if (j.getName().equals(i)){
+                            if (!j.getOwner().equals(this.player.getName())){
+                                defendList.add(i);
+                            }
+                        }
+                    }
+                }
+                System.out.println(defendList);
+                Random randomDefender = new Random();
+                defendCountry = defendList.get(randomDefender.nextInt(defendList.size()));
+                CountryPath attacker = svgUtil.getCountryPathHashMap().get(attackCountry);
+                CountryPath defender = svgUtil.getCountryPathHashMap().get(defendCountry);
+                autoSelectedTwo.add(attacker);
+                autoSelectedTwo.add(defender);
                 svgUtil.setTwoSelectedPaths(autoSelectedTwo);
                 svgUtil.setStartX(attacker.getText().getX() + 17);
                 svgUtil.setEndX(defender.getText().getX() + 17);
@@ -513,12 +585,14 @@ public class MainView implements Initializable {
 
                         if(diceController.getWinner().equals(this.player.getName())){
                             System.out.println("win");
+//                            this.player.addToOccupiedCountries(Country.valueOf(defendCountry));
                             int attackerNum = diceController.getAttackNum();
                             int defenderNum = diceController.getDefendNum();
                             for(int i = 0; i < territories.size();i++){
                                 if(territories.get(i).getName().equals(defender.getName())){
                                     territories.get(i).setOwner(player.getName());
                                     territories.get(i).setNum(1);
+//                                    this.player.addToOccupiedCountries(Country.valueOf(finalDefendCountry));
                                 }
                                 if(territories.get(i).getName().equals(attacker.getName())){
 //                            territories.get(i).setOwner(this.player.getName());
@@ -563,10 +637,24 @@ public class MainView implements Initializable {
             case Reinforcement -> {
                 // 这个数字根据战略需要改，这里固定是为了方便测试
                 // 国家要是自己占有的国家，territory.getOwner等于玩家
-                int addNum = 5;
-                Country country = Country.valueOf(country1);
-                CountryPath countryPath = map.get(country1);
-                country.setPopulation(troops);
+                int addNum;
+                String reinforceCountry = "";
+                int reinfoceNum = 100;
+                for (Country i:this.player.getOccupiedCountries()){
+                    if (i.getPopulation() < reinfoceNum){
+                        reinfoceNum = i.getPopulation();
+                        reinforceCountry = i.getName();
+                    }
+                }
+                if (this.player.getAllowedTroops() > 1){
+                    Random randomAdd = new Random();
+                    addNum = randomAdd.nextInt(1 ,this.player.getAllowedTroops());
+                }else {
+                    addNum = 1;
+                }
+                Country country = Country.valueOf(reinforceCountry);
+                CountryPath countryPath = svgUtil.getCountryPathHashMap().get(reinforceCountry);
+                country.setPopulation(country.getPopulation() + addNum);
                 this.player.setAllowedTroops(this.player.getAllowedTroops() - addNum);
                 troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
                 for(Territory territory: territories){
@@ -584,12 +672,28 @@ public class MainView implements Initializable {
                 // 两个国家都需要是自己占领的
                 System.out.println("auto-fortify");
                 ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
-                autoSelectedTwo.add(map.get(country1));
-                autoSelectedTwo.add(map.get(country2));
-                CountryPath from = map.get(country1);
-                CountryPath to = map.get(country2);
+                int country2Num = 100;
+                HashMap<String,Integer> ownCountry = new HashMap<String, Integer>();
+                Map<String,Integer> ownCountry2 = new LinkedHashMap<String, Integer>();
+                ArrayList<String> stringArrayList = new ArrayList<>();
+                for (Territory i:this.territories){
+                    if (i.getOwner().equals(this.player.getName())){
+                        ownCountry.put(i.getName(),i.getNum());
+                    }
+                }
+                ownCountry.entrySet().stream()
+                        .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                        .forEachOrdered(e -> ownCountry2.put(e.getKey(),e.getValue()));
+                for (Map.Entry<String,Integer> j:ownCountry2.entrySet()){
+                    stringArrayList.add(j.getKey());
+                }
+                System.out.println(ownCountry2);
+                CountryPath from = svgUtil.getCountryPathHashMap().get(stringArrayList.get(0));
+                CountryPath to = svgUtil.getCountryPathHashMap().get(stringArrayList.get(stringArrayList.size()-1));
+                autoSelectedTwo.add(from);
+                autoSelectedTwo.add(to);
                 // 这个数字根据战略需要改，这里固定是为了方便测试(
-                int num = 1;
+                int num = Country.valueOf(from.getName()).getPopulation() / 2;
                 svgUtil.setTwoSelectedPaths(autoSelectedTwo);
                 svgUtil.setStartX(from.getText().getX() + 17);
                 svgUtil.setEndX(to.getText().getX() + 17);
