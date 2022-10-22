@@ -589,7 +589,7 @@ public class MainView implements Initializable {
             case Reinforcement -> {
                 // 这个数字根据战略需要改，这里固定是为了方便测试
                 // 国家要是自己占有的国家，territory.getOwner等于玩家
-                int addNum;
+                int addNum = 0;
                 String reinforceCountry = "";
                 int reinfoceNum = 100;
                 for (Country i:this.player.getOccupiedCountries()){
@@ -598,11 +598,12 @@ public class MainView implements Initializable {
                         reinforceCountry = i.getName();
                     }
                 }
-                if (this.player.getAllowedTroops() > 1){
+                if (this.player.getAllowedTroops() >=1 ){
                     Random randomAdd = new Random();
-                    addNum = randomAdd.nextInt(1 ,this.player.getAllowedTroops()/2);
-                }else {
-                    addNum = 1;
+                    addNum = randomAdd.nextInt(4 ,10);
+                    if (addNum > this.player.getAllowedTroops()){
+                        addNum = this.player.getAllowedTroops();
+                    }
                 }
                 Country country = Country.valueOf(reinforceCountry);
                 CountryPath countryPath = svgUtil.getCountryPathHashMap().get(reinforceCountry);
