@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI changes" />
+    <list default="true" id="571604b6-eee7-44cb-ac88-434c7b3feab9" name="Changes" comment="AI changes">
+      <change afterPath="$PROJECT_DIR$/src/test/java/group/riskgame/Application/JDBC/DBUtilTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/group/riskgame/Application/JDBC/UserDaoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/group/riskgame/Application/JDBC/UserTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/group/riskgame/Application/Model/CardTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/group/riskgame/Application/Model/CountryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/group/riskgame/Application/Model/ModelTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/group/riskgame/Application/Model/PlayerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/group/riskgame/Application/Model/TerritoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/risk.iml" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/risk.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/risk.ipr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/risk.iws" beforeDir="false" afterPath="$PROJECT_DIR$/risk.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/DatabaseTest.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -176,6 +190,7 @@
       <list>
         <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
@@ -269,32 +284,44 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit4",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "create.test.in.the.same.root": "true",
-    "last_opened_file_path": "F:/RISK356",
-    "project.structure.last.edited": "Modules",
+    "last_opened_file_path": "F:/RISK356/src/test",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15429688",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
     "spring.configuration.checksum": "c6142b27f1385bc163ffe7f4ebfc52ac"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\RISK356\src\test" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\RISK356\src\test\java" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="Websocket" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="group.riskgame.Application.Model" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="group.riskgame.Application.JDBC" />
       <recent name="group.riskgame.Application.Model" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="group.riskgame.Application" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.RiskGame3">
+  <component name="RunManager" selected="JUnit.UserTest.getName">
     <configuration selected="false" default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -305,78 +332,112 @@
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <option name="VM_PARAMETERS" />
     </configuration>
-    <configuration name="Application.RiskGame2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Application.RiskGame2" />
-      <module name="risk" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;F:\javafx-sdk-18.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Application.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RiskGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.RiskGame" />
-      <module name="risk" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="group.riskgame.Application.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RiskGame2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.RiskGame2" />
-      <module name="risk" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="group.riskgame.Application.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RiskGame3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.RiskGame3" />
-      <module name="risk" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="group.riskgame.Application.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="group.riskgame.Application.Connection.Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.Connection.Server" />
+    <configuration name="CardTest.getTerritory" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="risk" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="group.riskgame.Application.Connection.*" />
+          <option name="PATTERN" value="group.riskgame.Application.Model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="group.riskgame.Application.Model" />
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.Model.CardTest" />
+      <option name="METHOD_NAME" value="getTerritory" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ModelTest.validCardExchange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="risk" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group.riskgame.Application.Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="group.riskgame.Application.Model" />
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.Model.ModelTest" />
+      <option name="METHOD_NAME" value="validCardExchange" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TerritoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="risk" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group.riskgame.Application.Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="group.riskgame.Application.Model" />
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.Model.TerritoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserTest.getId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="risk" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group.riskgame.Application.JDBC.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="group.riskgame.Application.JDBC" />
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.JDBC.UserTest" />
+      <option name="METHOD_NAME" value="getId" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserTest.getName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="risk" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group.riskgame.Application.JDBC.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="group.riskgame.Application.JDBC" />
+      <option name="MAIN_CLASS_NAME" value="group.riskgame.Application.JDBC.UserTest" />
+      <option name="METHOD_NAME" value="getName" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -393,19 +454,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.RiskGame" />
-      <item itemvalue="Application.RiskGame2" />
-      <item itemvalue="Application.RiskGame3" />
-      <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
-      <item itemvalue="Application.Application.RiskGame2" />
+      <item itemvalue="JUnit.CardTest.getTerritory" />
+      <item itemvalue="JUnit.ModelTest.validCardExchange" />
+      <item itemvalue="JUnit.TerritoryTest" />
+      <item itemvalue="JUnit.UserTest.getId" />
+      <item itemvalue="JUnit.UserTest.getName" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.RiskGame3" />
-        <item itemvalue="Application.RiskGame2" />
-        <item itemvalue="Application.RiskGame" />
-        <item itemvalue="Application.group.riskgame.Application.Connection.Server" />
-        <item itemvalue="Application.Application.RiskGame2" />
+        <item itemvalue="JUnit.UserTest.getName" />
+        <item itemvalue="JUnit.UserTest.getId" />
+        <item itemvalue="JUnit.CardTest.getTerritory" />
+        <item itemvalue="JUnit.ModelTest.validCardExchange" />
+        <item itemvalue="JUnit.TerritoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -448,7 +509,9 @@
       <updated>1662645254579</updated>
       <workItem from="1666336884835" duration="9076000" />
       <workItem from="1666391016549" duration="28846000" />
-      <workItem from="1666438010080" duration="11345000" />
+      <workItem from="1666438010080" duration="12332000" />
+      <workItem from="1666450644882" duration="4291000" />
+      <workItem from="1666478910726" duration="8045000" />
     </task>
     <task id="LOCAL-00001" summary="AI">
       <created>1666436144447</created>
@@ -513,7 +576,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666449610994</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="AI changes">
+      <created>1666449817324</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1666449817324</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -622,5 +692,20 @@
   </component>
   <component name="WebViewSettings">
     <webview flattenPackages="false" showMembers="false" autoscrollToSource="false" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/group/riskgame/Application/JDBC/UserDaoTest.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
