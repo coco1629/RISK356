@@ -436,251 +436,273 @@ public class MainView implements Initializable {
 
     @FXML
     void auto(ActionEvent event) throws InterruptedException {
-        HashMap<String,CountryPath> restMap = svgUtil.getCountryPathHashMap();
-        List<CountryPath> restCountryPath = new ArrayList<>();
-        for (CountryPath countryPath : restMap.values()){
-            if (!countryPath.isOccupied()){
-                restCountryPath.add(countryPath);
+        try{
+            HashMap<String,CountryPath> restMap = svgUtil.getCountryPathHashMap();
+            List<CountryPath> restCountryPath = new ArrayList<>();
+            for (CountryPath countryPath : restMap.values()){
+                if (!countryPath.isOccupied()){
+                    restCountryPath.add(countryPath);
+                }
             }
-        }
-        int randomtroopNum = 0;
-        switch (this.player.getPhase()){
-            case Preparation -> {
-                // country should not be occupied.
-                Random random = new Random();
-                CountryPath randomCountry = restCountryPath.get(random.nextInt(restCountryPath.size()));
-                Country temp = Country.valueOf(randomCountry.getName());
-                if (!randomCountry.isOccupied()){
-                    if (this.player.getAllowedTroops() != 0){
-                        Random randomNum = new Random();
-                        randomtroopNum = randomNum.nextInt(2,4);
-                        if (randomtroopNum <= this.player.getAllowedTroops()){
-                            temp.setPopulation(randomtroopNum);
-                            this.player.setAllowedTroops(this.player.getAllowedTroops() - randomtroopNum);
-                            svgUtil.setPathColor(this.color, temp);
-                            this.player.addToOccupiedCountries(temp);
-                        }else {
-                            temp.setPopulation(this.player.getAllowedTroops());
-                            this.player.setAllowedTroops(0);
-                            svgUtil.setPathColor(this.color, temp);
-                            this.player.addToOccupiedCountries(temp);
-                        }
-                    }
-                }
-                troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
-                this.player.getClientHandler().sendObject(Operation.OCCUPY);
-                this.player.getClientHandler().sendObject(this.player.getName());
-                this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
-                for (int i = 0; i < this.player.getOccupiedCountries().size(); i++) {
-                    Country country = this.player.getOccupiedCountries().get(i);
-                    this.player.getClientHandler().sendObject(country);
-                    this.player.getClientHandler().sendObject(country.getPopulation());
-                }
-                if (gainedCard == 0) {
-                    gainedCard += 1;
-                    player.addRandomCard();
-                }
-                Platform.runLater(()->{
-                    timeline.stop();
-                    handleTimer();
-                    int left = Integer.parseInt(leftCountries.getText()) - 1;
-                    if(left < 0) left = 0;
-                    leftCountries.setText(String.valueOf(left));
-                });
+            int randomtroopNum = 0;
+            switch (this.player.getPhase()){
+                case Preparation -> {
+                    // country should not be occupied.
 
-            }
-            case Attack -> {
-                String attackCountry = "";
-                String defendCountry = "";
-                int defendNum = 1000;
-                ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
-                ArrayList<String> attackList = new ArrayList<>();
-                ArrayList<String> defendList = new ArrayList<>();
-                for (Territory i:this.territories){
-                    if (i.getOwner().equals(this.player.getName())){
-                        if (i.getNum() > 1){
-                            attackList.add(i.getName());
-                        }
-                    }
-                }
-                Random randomAttacker = new Random();
-                attackCountry = attackList.get(randomAttacker.nextInt(attackList.size()));
-                for (String i:svgUtil.getNeighbourList().get(attackCountry)){
-                    for (Territory j:this.territories){
-                        if (j.getName().equals(i)){
-                            if (!j.getOwner().equals(this.player.getName())){
-                                defendList.add(i);
+                    Random random = new Random();
+                    CountryPath randomCountry = restCountryPath.get(random.nextInt(restCountryPath.size()));
+                    Country temp = Country.valueOf(randomCountry.getName());
+                    if (!randomCountry.isOccupied()){
+                        if (this.player.getAllowedTroops() != 0){
+                            Random randomNum = new Random();
+                            randomtroopNum = randomNum.nextInt(2,4);
+                            if (randomtroopNum <= this.player.getAllowedTroops()){
+                                temp.setPopulation(randomtroopNum);
+                                this.player.setAllowedTroops(this.player.getAllowedTroops() - randomtroopNum);
+                                svgUtil.setPathColor(this.color, temp);
+                                this.player.addToOccupiedCountries(temp);
+                            }else {
+                                temp.setPopulation(this.player.getAllowedTroops());
+                                this.player.setAllowedTroops(0);
+                                svgUtil.setPathColor(this.color, temp);
+                                this.player.addToOccupiedCountries(temp);
                             }
                         }
                     }
-                }
-                for (String i:defendList){
-                    if (Country.valueOf(i).getPopulation() < defendNum && Country.valueOf(i).getPopulation() <= Country.valueOf(attackCountry).getPopulation()){
-                        defendCountry = i;
+                    troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+                    this.player.getClientHandler().sendObject(Operation.OCCUPY);
+                    this.player.getClientHandler().sendObject(this.player.getName());
+                    this.player.getClientHandler().sendObject(this.player.getOccupiedCountries().size());
+                    for (int i = 0; i < this.player.getOccupiedCountries().size(); i++) {
+                        Country country = this.player.getOccupiedCountries().get(i);
+                        this.player.getClientHandler().sendObject(country);
+                        this.player.getClientHandler().sendObject(country.getPopulation());
                     }
-                }
-                CountryPath attacker = svgUtil.getCountryPathHashMap().get(attackCountry);
-                CountryPath defender = svgUtil.getCountryPathHashMap().get(defendCountry);
-                autoSelectedTwo.add(attacker);
-                autoSelectedTwo.add(defender);
-                svgUtil.setTwoSelectedPaths(autoSelectedTwo);
-                svgUtil.setStartX(attacker.getText().getX() + 17);
-                svgUtil.setEndX(defender.getText().getX() + 17);
-                svgUtil.setStartY(attacker.getText().getY() - 5);
-                svgUtil.setEndY(defender.getText().getY() - 5);
-                svgUtil.showArrow();
-                isAuto = true;
-                Thread.sleep(1000);
-                AttackPhase.fire();
-                DiceStage.setOnCloseRequest(eventHandler);
-                Thread thread = new Thread(()->{
-                    while (!diceController.isEnd){
-                        if(!diceController.rollButton.isDisable()){
-                            diceController.rollButton.fire();
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }
-                });
-                thread.start();
-                Thread endThread= new Thread(()->{
-                    try {
-                        thread.join();
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Platform.runLater(()-> {
-
-                        if(diceController.getWinner().equals(this.player.getName())){
-                            int attackerNum = diceController.getAttackNum();
-                            int defenderNum = diceController.getDefendNum();
-                            for(int i = 0; i < territories.size();i++){
-                                if(territories.get(i).getName().equals(defender.getName())){
-                                    territories.get(i).setOwner(player.getName());
-                                    territories.get(i).setNum(1);
-                                }
-                                if(territories.get(i).getName().equals(attacker.getName())){
-                                    territories.get(i).setNum(attackerNum-1);
-                                    if(gainedCard == 0){
-                                        gainedCard += 1;
-                                        player.addRandomCard();
-                                    }
-
-                                }
-                            }
-                        }
-                        else {
-                            int attackerNum = diceController.getAttackNum();
-                            int defenderNum = diceController.getDefendNum();
-                            for(int i = 0; i < territories.size();i++){
-                                if(territories.get(i).getName().equals(defender.getName())){
-                                    territories.get(i).setNum(defenderNum);
-                                }
-                                if(territories.get(i).getName().equals(attacker.getName())){
-                                    territories.get(i).setNum(1);
-                                }
-                            }
-                        }
-                        DiceStage.close();
-                        timeline.stop();
-                        handleTimer();
-                        isAuto = false;
-                        svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
-                        svgUtil.deleteArrow();
-                        player.getClientHandler().sendObject(Operation.ATTACK);
-                        player.getClientHandler().sendObject(territories);
-                    });
-                });
-                endThread.start();
-            }
-            case Reinforcement -> {
-                int addNum = 0;
-                String reinforceCountry = "";
-                int reinfoceNum = 100;
-                for (Country i:this.player.getOccupiedCountries()){
-                    if (i.getPopulation() < reinfoceNum){
-                        reinfoceNum = i.getPopulation();
-                        reinforceCountry = i.getName();
-                    }
-                }
-                if (this.player.getAllowedTroops() >=1 ){
-                    Random randomAdd = new Random();
-                    addNum = randomAdd.nextInt(4 ,10);
-                    if (addNum > this.player.getAllowedTroops()){
-                        addNum = this.player.getAllowedTroops();
-                    }
-                }
-                Country country = Country.valueOf(reinforceCountry);
-                CountryPath countryPath = svgUtil.getCountryPathHashMap().get(reinforceCountry);
-                country.setPopulation(country.getPopulation() + addNum);
-                this.player.setAllowedTroops(this.player.getAllowedTroops() - addNum);
-                troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
-                for(Territory territory: territories){
-                    if(territory.getName().equals(country.getName())){
-                        territory.setNum(territory.getNum() + addNum);
-                        countryPath.getText().setText(String.valueOf(territory.getNum()));
-                    }
-                }
-                this.player.getClientHandler().sendObject(Operation.REINFORCE);
-                this.player.getClientHandler().sendObject(territories);
-                timeline.stop();
-                handleTimer();
-            }
-            case Fortify -> {
-                ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
-                int country2Num = 100;
-                HashMap<String,Integer> ownCountry = new HashMap<String, Integer>();
-                Map<String,Integer> ownCountry2 = new LinkedHashMap<String, Integer>();
-                ArrayList<String> stringArrayList = new ArrayList<>();
-                for (Territory i:this.territories){
-                    if (i.getOwner().equals(this.player.getName())){
-                        ownCountry.put(i.getName(),i.getNum());
-                    }
-                }
-                ownCountry.entrySet().stream()
-                        .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-                        .forEachOrdered(e -> ownCountry2.put(e.getKey(),e.getValue()));
-                for (Map.Entry<String,Integer> j:ownCountry2.entrySet()){
-                    stringArrayList.add(j.getKey());
-                }
-                CountryPath from = svgUtil.getCountryPathHashMap().get(stringArrayList.get(0));
-                Random random = new Random();
-                int randomTransfer = random.nextInt(stringArrayList.size()/2,stringArrayList.size()-1);
-                CountryPath to = svgUtil.getCountryPathHashMap().get(stringArrayList.get(randomTransfer));
-                autoSelectedTwo.add(from);
-                autoSelectedTwo.add(to);
-                int num = Country.valueOf(from.getName()).getPopulation() / 2;
-                svgUtil.setTwoSelectedPaths(autoSelectedTwo);
-                svgUtil.setStartX(from.getText().getX() + 17);
-                svgUtil.setEndX(to.getText().getX() + 17);
-                svgUtil.setStartY(from.getText().getY() - 5);
-                svgUtil.setEndY(to.getText().getY() - 5);
-                svgUtil.showArrow();
-                numBox.getValueFactory().setValue(num);
-                new Thread(()->{
-                    try {
-                        Thread.sleep(500);
-                        TransferPhase.fire();
-                        svgUtil.deleteArrow();
-                    } catch (Exception e) {
-                        Platform.runLater(()->{
-                            svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
-                            svgUtil.deleteArrow();
-                        });
-
+                    if (gainedCard == 0) {
+                        gainedCard += 1;
+                        player.addRandomCard();
                     }
                     Platform.runLater(()->{
                         timeline.stop();
                         handleTimer();
+                        int left = Integer.parseInt(leftCountries.getText()) - 1;
+                        if(left < 0) left = 0;
+                        leftCountries.setText(String.valueOf(left));
                     });
-                }).start();
+
+                }
+                case Attack -> {
+                    try {
+
+                        String attackCountry = "";
+                        String defendCountry = "";
+                        int defendNum = 1000;
+                        ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
+                        ArrayList<String> attackList = new ArrayList<>();
+                        ArrayList<String> defendList = new ArrayList<>();
+                        for (Territory i:this.territories){
+                            if (i.getOwner().equals(this.player.getName())){
+                                if (i.getNum() > 1){
+                                    attackList.add(i.getName());
+                                }
+                            }
+                        }
+                        Random randomAttacker = new Random();
+                        attackCountry = attackList.get(randomAttacker.nextInt(attackList.size()));
+                        for (String i:svgUtil.getNeighbourList().get(attackCountry)){
+                            for (Territory j:this.territories){
+                                if (j.getName().equals(i)){
+                                    if (!j.getOwner().equals(this.player.getName())){
+                                        defendList.add(i);
+                                    }
+                                }
+                            }
+                        }
+                        for (String i:defendList){
+                            if (Country.valueOf(i).getPopulation() < defendNum && Country.valueOf(i).getPopulation() <= Country.valueOf(attackCountry).getPopulation()){
+                                defendCountry = i;
+                            }
+                        }
+                        CountryPath attacker = svgUtil.getCountryPathHashMap().get(attackCountry);
+                        CountryPath defender = svgUtil.getCountryPathHashMap().get(defendCountry);
+                        autoSelectedTwo.add(attacker);
+                        autoSelectedTwo.add(defender);
+                        svgUtil.setTwoSelectedPaths(autoSelectedTwo);
+                        svgUtil.setStartX(attacker.getText().getX() + 17);
+                        svgUtil.setEndX(defender.getText().getX() + 17);
+                        svgUtil.setStartY(attacker.getText().getY() - 5);
+                        svgUtil.setEndY(defender.getText().getY() - 5);
+                        svgUtil.showArrow();
+                        isAuto = true;
+                        Thread.sleep(1000);
+                        AttackPhase.fire();
+                        DiceStage.setOnCloseRequest(eventHandler);
+                        Thread thread = new Thread(()->{
+                            while (!diceController.isEnd){
+                                if(!diceController.rollButton.isDisable()){
+                                    diceController.rollButton.fire();
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            }
+                        });
+                        thread.start();
+                        Thread endThread= new Thread(()->{
+                            try {
+                                thread.join();
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            Platform.runLater(()-> {
+
+                                if(diceController.getWinner().equals(this.player.getName())){
+                                    int attackerNum = diceController.getAttackNum();
+                                    int defenderNum = diceController.getDefendNum();
+                                    for(int i = 0; i < territories.size();i++){
+                                        if(territories.get(i).getName().equals(defender.getName())){
+                                            territories.get(i).setOwner(player.getName());
+                                            territories.get(i).setNum(1);
+                                        }
+                                        if(territories.get(i).getName().equals(attacker.getName())){
+                                            territories.get(i).setNum(attackerNum-1);
+                                            if(gainedCard == 0){
+                                                gainedCard += 1;
+                                                player.addRandomCard();
+                                            }
+
+                                        }
+                                    }
+                                }
+                                else {
+                                    int attackerNum = diceController.getAttackNum();
+                                    int defenderNum = diceController.getDefendNum();
+                                    for(int i = 0; i < territories.size();i++){
+                                        if(territories.get(i).getName().equals(defender.getName())){
+                                            territories.get(i).setNum(defenderNum);
+                                        }
+                                        if(territories.get(i).getName().equals(attacker.getName())){
+                                            territories.get(i).setNum(1);
+                                        }
+                                    }
+                                }
+                                DiceStage.close();
+                                timeline.stop();
+                                handleTimer();
+                                isAuto = false;
+                                svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
+                                svgUtil.deleteArrow();
+                                player.getClientHandler().sendObject(Operation.ATTACK);
+                                player.getClientHandler().sendObject(territories);
+                            });
+                        });
+                        endThread.start();
+                    }
+                    catch (Exception e){
+
+                    }
+                }
+                case Reinforcement -> {
+                    try {
+                        int addNum = 0;
+                        String reinforceCountry = "";
+                        int reinfoceNum = 100;
+                        for (Country i:this.player.getOccupiedCountries()){
+                            if (i.getPopulation() < reinfoceNum){
+                                reinfoceNum = i.getPopulation();
+                                reinforceCountry = i.getName();
+                            }
+                        }
+                        if (this.player.getAllowedTroops() >=1 ){
+                            Random randomAdd = new Random();
+                            addNum = randomAdd.nextInt(4 ,10);
+                            if (addNum > this.player.getAllowedTroops()){
+                                addNum = this.player.getAllowedTroops();
+                            }
+                        }
+                        Country country = Country.valueOf(reinforceCountry);
+                        CountryPath countryPath = svgUtil.getCountryPathHashMap().get(reinforceCountry);
+                        country.setPopulation(country.getPopulation() + addNum);
+                        this.player.setAllowedTroops(this.player.getAllowedTroops() - addNum);
+                        troopsNum.setText(String.valueOf(this.player.getAllowedTroops()));
+                        for(Territory territory: territories){
+                            if(territory.getName().equals(country.getName())){
+                                territory.setNum(territory.getNum() + addNum);
+                                countryPath.getText().setText(String.valueOf(territory.getNum()));
+                            }
+                        }
+                        this.player.getClientHandler().sendObject(Operation.REINFORCE);
+                        this.player.getClientHandler().sendObject(territories);
+                        timeline.stop();
+                        handleTimer();
+                    }
+                    catch (Exception e){
+
+                    }
+                }
+                case Fortify -> {
+                    try {
+                        ArrayList<CountryPath> autoSelectedTwo = new ArrayList<CountryPath>();
+                        int country2Num = 100;
+                        HashMap<String,Integer> ownCountry = new HashMap<String, Integer>();
+                        Map<String,Integer> ownCountry2 = new LinkedHashMap<String, Integer>();
+                        ArrayList<String> stringArrayList = new ArrayList<>();
+                        for (Territory i:this.territories){
+                            if (i.getOwner().equals(this.player.getName())){
+                                ownCountry.put(i.getName(),i.getNum());
+                            }
+                        }
+                        ownCountry.entrySet().stream()
+                                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                                .forEachOrdered(e -> ownCountry2.put(e.getKey(),e.getValue()));
+                        for (Map.Entry<String,Integer> j:ownCountry2.entrySet()){
+                            stringArrayList.add(j.getKey());
+                        }
+                        CountryPath from = svgUtil.getCountryPathHashMap().get(stringArrayList.get(0));
+                        Random random = new Random();
+                        int randomTransfer = random.nextInt(stringArrayList.size()/2,stringArrayList.size()-1);
+                        CountryPath to = svgUtil.getCountryPathHashMap().get(stringArrayList.get(randomTransfer));
+                        autoSelectedTwo.add(from);
+                        autoSelectedTwo.add(to);
+                        int num = Country.valueOf(from.getName()).getPopulation() / 2;
+                        svgUtil.setTwoSelectedPaths(autoSelectedTwo);
+                        svgUtil.setStartX(from.getText().getX() + 17);
+                        svgUtil.setEndX(to.getText().getX() + 17);
+                        svgUtil.setStartY(from.getText().getY() - 5);
+                        svgUtil.setEndY(to.getText().getY() - 5);
+                        svgUtil.showArrow();
+                        numBox.getValueFactory().setValue(num);
+                        new Thread(()->{
+                            try {
+                                Thread.sleep(500);
+                                TransferPhase.fire();
+                                svgUtil.deleteArrow();
+                            } catch (Exception e) {
+                                Platform.runLater(()->{
+                                    svgUtil.setTwoSelectedPaths(new ArrayList<CountryPath>());
+                                    svgUtil.deleteArrow();
+                                });
+
+                            }
+                            Platform.runLater(()->{
+                                timeline.stop();
+                                handleTimer();
+                            });
+                        }).start();
+                    }
+                    catch (Exception e){
+
+                    }
 
 
+                }
             }
+        }
+        catch (Exception e){
+
         }
 
     }

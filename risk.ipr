@@ -669,7 +669,7 @@
       <module fileurl="file://$PROJECT_DIR$/risk.iml" filepath="$PROJECT_DIR$/risk.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="18" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_18" default="true" project-jdk-name="18" project-jdk-type="JavaSDK" />
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
       <option name="id" value="central" />
@@ -858,9 +858,9 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/18/javafx-base-18-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openjfx:javafx-base:mac:18">
+    <library name="Maven: org.openjfx:javafx-base:win:18">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/18/javafx-base-18-mac.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/18/javafx-base-18-win.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/18/javafx-base-18-javadoc.jar!/" />
@@ -880,9 +880,9 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/18/javafx-controls-18-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openjfx:javafx-controls:mac:18">
+    <library name="Maven: org.openjfx:javafx-controls:win:18">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/18/javafx-controls-18-mac.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/18/javafx-controls-18-win.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/18/javafx-controls-18-javadoc.jar!/" />
@@ -902,9 +902,9 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/18/javafx-fxml-18-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openjfx:javafx-fxml:mac:18">
+    <library name="Maven: org.openjfx:javafx-fxml:win:18">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/18/javafx-fxml-18-mac.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/18/javafx-fxml-18-win.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/18/javafx-fxml-18-javadoc.jar!/" />
@@ -924,9 +924,9 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openjfx:javafx-graphics:mac:18">
+    <library name="Maven: org.openjfx:javafx-graphics:win:18">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-mac.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-win.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/18/javafx-graphics-18-javadoc.jar!/" />
@@ -946,9 +946,9 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openjfx:javafx-media:mac:18">
+    <library name="Maven: org.openjfx:javafx-media:win:18">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-mac.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-win.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/18/javafx-media-18-javadoc.jar!/" />
